@@ -1,0 +1,10 @@
+api_login_check:
+   path: /login_check
+
+api:
+    type: rest
+    resource: "routing_rest.yml"
+
+#api_preflight:
+#    path: /preflight
+#    defaults: { _controller: CoreBundle:Cors:preflight }
