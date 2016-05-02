@@ -1,7 +1,3 @@
-UrbanPotager
-====
+# UrbanPotagerApi / Super Potager Api
 
-Projet université LPDW 
-
-API pour UrbanPotager
-
+Projet 2 - API pour UrbanPotager
