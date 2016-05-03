@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Type
 {
+    const PLANT     = 0;
+    const SENSOR    = 1;
+
     /**
      * @var int
      *
@@ -34,6 +37,13 @@ class Type
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="type", type="smallint")
+     */
+    private $type;
 
 
     /**
@@ -93,5 +103,24 @@ class Type
     {
         return $this->description;
     }
-}
 
+    /**
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param int $type
+     *
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+}
