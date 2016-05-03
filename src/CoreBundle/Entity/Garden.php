@@ -10,6 +10,7 @@ use CoreBundle\Entity\Traits\LocalizableTrait;
  *
  * @ORM\Table(name="garden")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\GardenRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Garden
 {
@@ -23,6 +24,11 @@ class Garden
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="guid")
+     */
+    private $apiKey;
 
     /**
      * @var string
@@ -168,5 +174,43 @@ class Garden
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * Set apiKey
+     *
+     * @param string $apiKey
+     *
+     * @return Garden
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Get apiKey
+     *
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function generateGuid()
+    {
+        $this->apiKey = sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0x0fff ) | 0x4000,
+            mt_rand( 0, 0x3fff ) | 0x8000,
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+        );
     }
 }
