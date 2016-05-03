@@ -45,6 +45,14 @@ class Garden
      */
     private $isPublic;
 
+    /**
+     * @var \UserBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $owner;
+
 
     /**
      * Get id
@@ -126,5 +134,39 @@ class Garden
     public function getIsPublic()
     {
         return $this->isPublic;
+    }
+
+    /**
+     * Get showLocation
+     *
+     * @return boolean
+     */
+    public function getShowLocation()
+    {
+        return $this->showLocation;
+    }
+
+    /**
+     * Set owner
+     *
+     * @param \UserBundle\Entity\User $owner
+     *
+     * @return Garden
+     */
+    public function setOwner(\UserBundle\Entity\User $owner = null)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
     }
 }
