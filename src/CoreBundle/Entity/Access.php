@@ -28,6 +28,21 @@ class Access
      */
     private $isPublic;
 
+    /**
+     * @var Garden
+     *
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
+     */
+    private $garden;
+
+    /**
+     * @var Type
+     *
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $type;
+
 
     /**
      * Get id
@@ -62,5 +77,52 @@ class Access
     {
         return $this->isPublic;
     }
-}
 
+    /**
+     * Set garden
+     *
+     * @param \CoreBundle\Entity\Garden $garden
+     *
+     * @return Access
+     */
+    public function setGarden(\CoreBundle\Entity\Garden $garden = null)
+    {
+        $this->garden = $garden;
+
+        return $this;
+    }
+
+    /**
+     * Get garden
+     *
+     * @return \CoreBundle\Entity\Garden
+     */
+    public function getGarden()
+    {
+        return $this->garden;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \CoreBundle\Entity\Type $type
+     *
+     * @return Access
+     */
+    public function setType(\CoreBundle\Entity\Type $type = null)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \CoreBundle\Entity\Type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+}

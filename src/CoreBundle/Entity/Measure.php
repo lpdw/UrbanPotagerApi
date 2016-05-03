@@ -28,6 +28,22 @@ class Measure
      */
     private $value;
 
+    /**
+     * @var Type
+     *
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $type;
+
+    /**
+     * @var Garden
+     *
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $garden;
+
 
     /**
      * Get id
@@ -62,5 +78,52 @@ class Measure
     {
         return $this->value;
     }
-}
 
+    /**
+     * Set type
+     *
+     * @param \CoreBundle\Entity\Type $type
+     *
+     * @return Measure
+     */
+    public function setType(\CoreBundle\Entity\Type $type = null)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \CoreBundle\Entity\Type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set garden
+     *
+     * @param \CoreBundle\Entity\Garden $garden
+     *
+     * @return Measure
+     */
+    public function setGarden(\CoreBundle\Entity\Garden $garden = null)
+    {
+        $this->garden = $garden;
+
+        return $this;
+    }
+
+    /**
+     * Get garden
+     *
+     * @return \CoreBundle\Entity\Garden
+     */
+    public function getGarden()
+    {
+        return $this->garden;
+    }
+}
