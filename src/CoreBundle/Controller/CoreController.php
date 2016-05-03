@@ -8,6 +8,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 abstract class CoreController extends Controller
 {
+    const NO_CONTENT    = 204;
+    const BAD_REQUEST   = 400;
+
     /**
      * @param string $name
      *

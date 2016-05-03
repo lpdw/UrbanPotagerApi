@@ -55,7 +55,7 @@ class TypeController extends CoreController
         $this->getManager()->remove($type);
         $this->getManager()->flush();
 
-        return new JsonResponse([], 204);
+        return new JsonResponse([], self::NO_CONTENT);
     }
 
     private function formType(Type $type, Request $request, $method = 'post')
@@ -73,7 +73,7 @@ class TypeController extends CoreController
             ];
         }
 
-        return new JsonResponse($this->getAllErrors($form), 400);
+        return new JsonResponse($this->getAllErrors($form), self::BAD_REQUEST);
     }
 
     /**
