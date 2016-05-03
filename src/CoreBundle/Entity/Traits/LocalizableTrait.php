@@ -21,11 +21,11 @@ Trait LocalizableTrait
     private $longitude;
 
     /**
-     * @var boolean $isPublic
+     * @var boolean $showLocation
      *
-     * @ORM\Column(name="isPublic", type="boolean")
+     * @ORM\Column(name="showLocation", type="boolean")
      */
-    private $isPublic;
+    private $showLocation;
 
     /**
      * @return float
@@ -70,19 +70,19 @@ Trait LocalizableTrait
     /**
      * @return boolean
      */
-    public function isIsPublic()
+    public function isShowLocation()
     {
-        return $this->isPublic;
+        return $this->showLocation;
     }
 
     /**
-     * @param boolean $isPublic
+     * @param boolean $showLocation
      *
      * @return $this
      */
-    public function setIsPublic($isPublic)
+    public function setShowLocation($showLocation)
     {
-        $this->isPublic = $isPublic;
+        $this->showLocation = $showLocation;
 
         return $this;
     }
