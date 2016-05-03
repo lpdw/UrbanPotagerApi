@@ -48,6 +48,7 @@ class Type
      * @var string
      *
      * @ORM\Column(type="text")
+     * @Assert\NotNull()
      */
     private $description;
 
@@ -55,6 +56,7 @@ class Type
      * @var int
      *
      * @ORM\Column(type="smallint")
+     * @Assert\NotBlank()
      * @Assert\Range(
      *      min = 0,
      *      max = 1

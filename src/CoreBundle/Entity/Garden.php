@@ -45,6 +45,7 @@ class Garden
      * @var string
      *
      * @ORM\Column(type="text")
+     * @Assert\NotNull()
      */
     private $description;
 
