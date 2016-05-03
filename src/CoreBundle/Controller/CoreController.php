@@ -4,24 +4,10 @@ namespace CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
-use CoreBundle\Security\Voter;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 abstract class CoreController extends Controller
 {
-    /**
-     * @param int|string $id
-     * @param string $access
-     * @param array $options
-     *
-     * @return object
-     */
-    protected function getEntity($id, $access = Voter::VIEW, array $options = [])
-    {
-        $options = $this->getOptions($options);
-
-        return $this->get("core.get_entity")->get($id, $access, $options);
-    }
-
     /**
      * @param string $name
      *
@@ -60,6 +46,13 @@ abstract class CoreController extends Controller
         return $errorsString;
     }
 
+    protected function isGranted($attributes, $object = null)
+    {
+        if (!parent::isGranted($attributes, $object)) {
+            throw new AccessDeniedException();
+        }
+    }
+
     /**
      * @param string $message
      * @return string
@@ -67,20 +60,6 @@ abstract class CoreController extends Controller
     protected function t($message)
     {
         return $this->get('translator')->trans($message);
-    }
-
-    /**
-     * @param array $options
-     * @return array
-     */
-    private function getOptions(array $options)
-    {
-        $defaultOptions = [
-            "repository" => $this->getRepositoryName(),
-            "method" => "find"
-        ];
-
-        return array_merge($defaultOptions, $options);
     }
 
     /**
