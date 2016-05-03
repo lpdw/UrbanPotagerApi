@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Type
 {
+    // Need change ? See constraint Range for $type
     const PLANT     = 0;
     const SENSOR    = 1;
 
