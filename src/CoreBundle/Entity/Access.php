@@ -15,7 +15,7 @@ class Access
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,7 +24,7 @@ class Access
     /**
      * @var bool
      *
-     * @ORM\Column(name="isPublic", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $isPublic;
 

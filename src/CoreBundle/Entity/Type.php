@@ -19,7 +19,7 @@ class Type
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -28,7 +28,7 @@ class Type
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
 
@@ -43,14 +43,14 @@ class Type
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(type="text")
      */
     private $description;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="type", type="smallint")
+     * @ORM\Column(type="smallint")
      */
     private $type;
 

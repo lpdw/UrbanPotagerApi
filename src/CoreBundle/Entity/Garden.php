@@ -18,7 +18,7 @@ class Garden
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -27,21 +27,21 @@ class Garden
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(type="text")
      */
     private $description;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="isPublic", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $isPublic;
 
