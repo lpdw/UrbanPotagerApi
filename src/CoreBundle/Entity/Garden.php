@@ -3,6 +3,7 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use CoreBundle\Entity\Traits\LocalizableTrait;
 
 /**
  * Garden
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Garden
 {
+    use LocalizableTrait;
+
     /**
      * @var int
      *
@@ -125,4 +128,3 @@ class Garden
         return $this->isPublic;
     }
 }
-
