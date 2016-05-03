@@ -3,6 +3,7 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Access
@@ -25,6 +26,9 @@ class Access
      * @var bool
      *
      * @ORM\Column(type="boolean")
+     * @Assert\Type(
+     *     type="bool"
+     * )
      */
     private $isPublic;
 
@@ -32,6 +36,7 @@ class Access
      * @var Garden
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
+     * @Assert\Valid
      */
     private $garden;
 
@@ -40,6 +45,7 @@ class Access
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
      * @ORM\JoinColumn(onDelete="SET NULL")
+     * @Assert\Valid
      */
     private $type;
 

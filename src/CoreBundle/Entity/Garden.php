@@ -4,6 +4,7 @@ namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use CoreBundle\Entity\Traits\LocalizableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Garden
@@ -27,6 +28,7 @@ class Garden
 
     /**
      * @ORM\Column(type="guid")
+     * @Assert\Uuid
      */
     private $apiKey;
 
@@ -34,6 +36,8 @@ class Garden
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $name;
 
@@ -48,6 +52,9 @@ class Garden
      * @var bool
      *
      * @ORM\Column(type="boolean")
+     * @Assert\Type(
+     *     type="bool"
+     * )
      */
     private $isPublic;
 
@@ -56,6 +63,7 @@ class Garden
      *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="SET NULL")
+     * @Assert\Valid
      */
     private $owner;
 

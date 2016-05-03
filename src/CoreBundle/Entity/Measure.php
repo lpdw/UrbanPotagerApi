@@ -3,6 +3,7 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Measure
@@ -25,6 +26,7 @@ class Measure
      * @var float
      *
      * @ORM\Column(type="float")
+     * @Assert\NotBlank()
      */
     private $value;
 
@@ -33,6 +35,7 @@ class Measure
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
      * @ORM\JoinColumn(onDelete="SET NULL")
+     * @Assert\Valid
      */
     private $type;
 
@@ -41,6 +44,7 @@ class Measure
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
      * @ORM\JoinColumn(onDelete="SET NULL")
+     * @Assert\Valid
      */
     private $garden;
 

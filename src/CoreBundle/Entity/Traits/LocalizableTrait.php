@@ -3,6 +3,7 @@
 namespace CoreBundle\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 Trait LocalizableTrait
 {
@@ -10,6 +11,10 @@ Trait LocalizableTrait
      * @var float $latitude
      *
      * @ORM\Column(name="latitude", type="decimal", precision=13, scale=10)
+     * @Assert\NotNull()
+     * @Assert\Type(
+     *     type="float"
+     * )
      */
     private $latitude;
 
@@ -17,6 +22,10 @@ Trait LocalizableTrait
      * @var float $longitude
      *
      * @ORM\Column(name="longitude", type="decimal", precision=13, scale=10)
+     * @Assert\NotNull()
+     * @Assert\Type(
+     *     type="float"
+     * )
      */
     private $longitude;
 
@@ -24,6 +33,9 @@ Trait LocalizableTrait
      * @var boolean $showLocation
      *
      * @ORM\Column(name="showLocation", type="boolean")
+     * @Assert\Type(
+     *     type="bool"
+     * )
      */
     private $showLocation;
 
