@@ -64,6 +64,6 @@ class Voter extends BaseVoter
 
     private function isAdmin($token)
     {
-        return ($this->decisionManager->decide($token, array('ROLE_SUPER_ADMIN')));
+        return ($this->decisionManager->decide($token, ['ROLE_SUPER_ADMIN']));
     }
 }
