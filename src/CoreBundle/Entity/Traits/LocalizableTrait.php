@@ -17,7 +17,7 @@ Trait LocalizableTrait
     /**
      * @var float $latitude
      *
-     * @ORM\Column(name="latitude", type="decimal", precision=13, scale=10)
+     * @ORM\Column(type="decimal", precision=13, scale=10)
      * @Assert\NotNull(message="constraints.not_null")
      * @Assert\Type(
      *     type="float",
@@ -35,7 +35,7 @@ Trait LocalizableTrait
     /**
      * @var float $longitude
      *
-     * @ORM\Column(name="longitude", type="decimal", precision=13, scale=10)
+     * @ORM\Column(type="decimal", precision=13, scale=10)
      * @Assert\NotNull(message="constraints.not_null")
      * @Assert\Type(
      *     type="float",
@@ -53,7 +53,7 @@ Trait LocalizableTrait
     /**
      * @var boolean $showLocation
      *
-     * @ORM\Column(name="showLocation", type="boolean")
+     * @ORM\Column(type="boolean")
      * @Assert\Type(
      *     type="bool",
      *     message="constraints.type"
