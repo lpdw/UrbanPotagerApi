@@ -43,7 +43,7 @@ class TypeController extends CoreController
     }
 
     /**
-     * @View(serializerGroups={"Default", "detail-type"})
+     * @View(serializerGroups={"Default", "detail-type"}, statusCode=201)
      */
     public function postTypeAction(Request $request)
     {
@@ -72,8 +72,6 @@ class TypeController extends CoreController
 
         $this->getManager()->remove($type);
         $this->getManager()->flush();
-
-        return new JsonResponse([], self::NO_CONTENT);
     }
 
     private function formType(Type $type, Request $request, $method = 'post')
@@ -86,11 +84,9 @@ class TypeController extends CoreController
             $em->persist($type);
             $em->flush();
 
-            return new JsonResponse([
-                    'type' => $type,
-                ],
-                'post' === $method ? self::CREATED : self::OK
-            );
+            return [
+                'type' => $type,
+            ];
         }
 
         return new JsonResponse($this->getAllErrors($form), self::BAD_REQUEST);

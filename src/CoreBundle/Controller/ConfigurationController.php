@@ -43,7 +43,7 @@ class ConfigurationController extends CoreController
     }
 
     /**
-     * @View(serializerGroups={"Default", "detail-configuration"})
+     * @View(serializerGroups={"Default", "detail-configuration"}, statusCode=201)
      */
     public function postConfigurationAction(Request $request)
     {
@@ -74,8 +74,6 @@ class ConfigurationController extends CoreController
 
         $this->getManager()->remove($configuration);
         $this->getManager()->flush();
-
-        return new JsonResponse([], self::NO_CONTENT);
     }
 
     private function formType(Configuration $configuration, Request $request, $method = 'post')
@@ -88,11 +86,9 @@ class ConfigurationController extends CoreController
             $em->persist($configuration);
             $em->flush();
 
-            return new JsonResponse([
-                    'configuration' => $configuration,
-                ],
-                'post' === $method ? self::CREATED : self::OK
-            );
+            return [
+                'configuration' => $configuration,
+            ];
         }
 
         return new JsonResponse($this->getAllErrors($form), self::BAD_REQUEST);
