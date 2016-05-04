@@ -6,8 +6,14 @@ services:
         tags:
             - { name: security.voter }
 
-    type.type_voter:
+    type.voter:
         class: CoreBundle\Security\TypeVoter
+        parent: core.base_voter
+        tags:
+            - { name: security.voter }
+
+    garden.voter:
+        class: CoreBundle\Security\GardenVoter
         parent: core.base_voter
         tags:
             - { name: security.voter }
