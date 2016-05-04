@@ -4,6 +4,7 @@ namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use CoreBundle\Entity\Traits\LocalizableTrait;
+use CoreBundle\Entity\Traits\AddressableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
@@ -18,6 +19,7 @@ use JMS\Serializer\Annotation as JMS;
 class Garden
 {
     use LocalizableTrait;
+    use AddressableTrait;
 
     /**
      * @var int
