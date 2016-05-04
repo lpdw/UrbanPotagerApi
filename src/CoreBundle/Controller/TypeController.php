@@ -68,9 +68,11 @@ class TypeController extends CoreController
             $em->persist($type);
             $em->flush();
 
-            return [
-                'type' => $type,
-            ];
+            return new JsonResponse([
+                    'type' => $type,
+                ],
+                'post' === $method ? self::CREATED : self::OK
+            );
         }
 
         return new JsonResponse($this->getAllErrors($form), self::BAD_REQUEST);
