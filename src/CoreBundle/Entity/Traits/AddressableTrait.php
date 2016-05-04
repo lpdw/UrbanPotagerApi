@@ -18,7 +18,7 @@ Trait AddressableTrait
      * @var string
      *
      * @ORM\Column(length=100, nullable=true)
-     * @Assert\Length(max=100)
+     * @Assert\Length(max=100, maxMessage="constraints.length.max")
      * @JMS\Expose()
      * @JMS\Groups({"detail-garden"})
      */
@@ -28,7 +28,7 @@ Trait AddressableTrait
      * @var string
      *
      * @ORM\Column(length=100, nullable=true)
-     * @Assert\Length(max=100)
+     * @Assert\Length(max=100, maxMessage="constraints.length.max")
      * @JMS\Expose()
      * @JMS\Groups({"detail-garden"})
      */
@@ -38,7 +38,7 @@ Trait AddressableTrait
      * @var string
      *
      * @ORM\Column(length=10, nullable=true)
-     * @Assert\Length(max=10)
+     * @Assert\Length(max=10, maxMessage="constraints.length.max")
      * @JMS\Expose()
      * @JMS\Groups({"detail-garden"})
      */
@@ -48,7 +48,7 @@ Trait AddressableTrait
      * @var string
      *
      * @ORM\Column(length=255, nullable=true)
-     * @Assert\Length(max=255)
+     * @Assert\Length(max=255, maxMessage="constraints.length.max")
      * @JMS\Expose()
      * @JMS\Groups({"detail-garden"})
      */
@@ -58,7 +58,7 @@ Trait AddressableTrait
      * @var string
      *
      * @ORM\Column(length=255, nullable=true)
-     * @Assert\Length(max=255)
+     * @Assert\Length(max=255, maxMessage="constraints.length.max")
      * @JMS\Expose()
      * @JMS\Groups({"detail-garden"})
      */

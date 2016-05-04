@@ -29,7 +29,7 @@ class Measure
      * @var float
      *
      * @ORM\Column(type="float")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="constraints.not_blank")
      * @JMS\Expose()
      */
     private $value;

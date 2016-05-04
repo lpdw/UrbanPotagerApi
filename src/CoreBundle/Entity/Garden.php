@@ -33,7 +33,7 @@ class Garden
 
     /**
      * @ORM\Column(type="guid")
-     * @Assert\Uuid
+     * @Assert\Uuid(message="constraints.uuid")
      * @JMS\Expose()
      */
     private $apiKey;
@@ -42,8 +42,8 @@ class Garden
      * @var string
      *
      * @ORM\Column(type="string", length=250)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=250)
+     * @Assert\NotBlank(message="constraints.not_blank")
+     * @Assert\Length(max=250, maxMessage="constraints.length.max")
      * @JMS\Expose()
      */
     private $name;
@@ -61,7 +61,7 @@ class Garden
      * @var string
      *
      * @ORM\Column(type="text")
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="constraints.not_null")
      * @JMS\Expose()
      */
     private $description;
@@ -71,7 +71,8 @@ class Garden
      *
      * @ORM\Column(type="boolean")
      * @Assert\Type(
-     *     type="bool"
+     *     type="bool",
+     *     message="constraints.type"
      * )
      * @JMS\Expose()
      * @JMS\Groups({"me-garden"})

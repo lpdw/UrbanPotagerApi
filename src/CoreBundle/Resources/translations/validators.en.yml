@@ -1,0 +1,10 @@
+constraints:
+    length:
+        max: "This value is too long. It should have {{ limit }} characters or less."
+    not_null: "This value should not be null."
+    not_blank: "This value should not be blank."
+    type: "This value should be of type {{ type }}."
+    uuid: "This is not a valid UUID."
+    range:
+        min: "This value should be {{ limit }} or more."
+        max: "This value should be {{ limit }} or less."

@@ -29,7 +29,8 @@ class Access
      *
      * @ORM\Column(type="boolean")
      * @Assert\Type(
-     *     type="bool"
+     *     type="bool",
+     *     message="constraints.type"
      * )
      * @JMS\Expose()
      */

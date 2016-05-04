@@ -18,9 +18,16 @@ Trait LocalizableTrait
      * @var float $latitude
      *
      * @ORM\Column(name="latitude", type="decimal", precision=13, scale=10)
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="constraints.not_null")
      * @Assert\Type(
-     *     type="float"
+     *     type="float",
+     *     message="constraints.type"
+     * )
+     * @Assert\Range(
+     *      min = -90,
+     *      max = 90,
+     *      minMessage = "constraints.range.min",
+     *      maxMessage = "constraints.range.max",
      * )
      * @JMS\Expose()
      */
@@ -30,9 +37,16 @@ Trait LocalizableTrait
      * @var float $longitude
      *
      * @ORM\Column(name="longitude", type="decimal", precision=13, scale=10)
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="constraints.not_null")
      * @Assert\Type(
-     *     type="float"
+     *     type="float",
+     *     message="constraints.type"
+     * )
+     * @Assert\Range(
+     *      min = -180,
+     *      max = 180,
+     *      minMessage = "constraints.range.min",
+     *      maxMessage = "constraints.range.max",
      * )
      * @JMS\Expose()
      */
@@ -43,7 +57,8 @@ Trait LocalizableTrait
      *
      * @ORM\Column(name="showLocation", type="boolean")
      * @Assert\Type(
-     *     type="bool"
+     *     type="bool",
+     *     message="constraints.type"
      * )
      * @JMS\Expose()
      * @JMS\Groups({"me-garden"})

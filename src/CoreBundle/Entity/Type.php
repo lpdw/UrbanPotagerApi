@@ -33,8 +33,8 @@ class Type
      * @var string
      *
      * @ORM\Column(type="string", length=250, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=250)
+     * @Assert\NotBlank(message="constraints.not_blank")
+     * @Assert\Length(max=250, maxMessage="constraints.length.max")
      * @JMS\Expose()
      */
     private $name;
@@ -52,7 +52,7 @@ class Type
      * @var string
      *
      * @ORM\Column(type="text")
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="constraints.not_null")
      * @JMS\Expose()
      */
     private $description;
@@ -61,10 +61,12 @@ class Type
      * @var int
      *
      * @ORM\Column(type="smallint")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="constraints.not_blank")
      * @Assert\Range(
      *      min = 0,
-     *      max = 1
+     *      max = 1,
+     *      minMessage = "constraints.range.min",
+     *      maxMessage = "constraints.range.max",
      * )
      * @JMS\Expose()
      */
