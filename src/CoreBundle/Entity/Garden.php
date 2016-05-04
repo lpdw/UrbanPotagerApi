@@ -91,6 +91,16 @@ class Garden
      */
     private $owner;
 
+    /**
+     * @var \CoreBundle\Entity\Configuration
+     *
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Configuration")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @Assert\Valid
+     * @JMS\Expose()
+     */
+    private $configuration;
+
 
     /**
      * Get id
@@ -264,5 +274,149 @@ class Garden
             mt_rand( 0, 0x3fff ) | 0x8000,
             mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
         );
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     *
+     * @return Garden
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return Garden
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set zipCode
+     *
+     * @param string $zipCode
+     *
+     * @return Garden
+     */
+    public function setZipCode($zipCode)
+    {
+        $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    /**
+     * Get zipCode
+     *
+     * @return string
+     */
+    public function getZipCode()
+    {
+        return $this->zipCode;
+    }
+
+    /**
+     * Set address1
+     *
+     * @param string $address1
+     *
+     * @return Garden
+     */
+    public function setAddress1($address1)
+    {
+        $this->address1 = $address1;
+
+        return $this;
+    }
+
+    /**
+     * Get address1
+     *
+     * @return string
+     */
+    public function getAddress1()
+    {
+        return $this->address1;
+    }
+
+    /**
+     * Set address2
+     *
+     * @param string $address2
+     *
+     * @return Garden
+     */
+    public function setAddress2($address2)
+    {
+        $this->address2 = $address2;
+
+        return $this;
+    }
+
+    /**
+     * Get address2
+     *
+     * @return string
+     */
+    public function getAddress2()
+    {
+        return $this->address2;
+    }
+
+    /**
+     * Set configuration
+     *
+     * @param \CoreBundle\Entity\Configuration $configuration
+     *
+     * @return Garden
+     */
+    public function setConfiguration(\CoreBundle\Entity\Configuration $configuration = null)
+    {
+        $this->configuration = $configuration;
+
+        return $this;
+    }
+
+    /**
+     * Get configuration
+     *
+     * @return \CoreBundle\Entity\Configuration
+     */
+    public function getConfiguration()
+    {
+        return $this->configuration;
     }
 }
