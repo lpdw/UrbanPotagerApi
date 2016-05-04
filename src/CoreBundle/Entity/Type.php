@@ -32,9 +32,9 @@ class Type
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, unique=true) // TODO decrease length (avoid bug with duplicate slug)
+     * @ORM\Column(type="string", length=250, unique=true)
      * @Assert\NotBlank()
-     * @Assert\Length(max=255)
+     * @Assert\Length(max=250)
      * @JMS\Expose()
      */
     private $name;

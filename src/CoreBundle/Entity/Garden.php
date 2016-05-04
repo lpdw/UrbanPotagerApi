@@ -38,9 +38,9 @@ class Garden
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255) // TODO decrease length (avoid bug with duplicate slug)
+     * @ORM\Column(type="string", length=250)
      * @Assert\NotBlank()
-     * @Assert\Length(max=255)
+     * @Assert\Length(max=250)
      * @JMS\Expose()
      */
     private $name;
