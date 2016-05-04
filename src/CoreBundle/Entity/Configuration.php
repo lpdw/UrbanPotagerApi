@@ -60,6 +60,7 @@ class Configuration
      * @var float
      *
      * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @Assert\NotNull(message="constraints.not_null")
      * @Assert\Type(
      *     type="float",
      *     message="constraints.type"
@@ -79,6 +80,7 @@ class Configuration
      * @var \DateTime
      *
      * @ORM\Column(type="time")
+     * @Assert\NotNull(message="constraints.not_null")
      * @Assert\Time(message="constraint.time")
      * @JMS\Expose()
      * @JMS\Groups({"detail-configuration"})
@@ -89,6 +91,7 @@ class Configuration
      * @var \DateTime
      *
      * @ORM\Column(type="time")
+     * @Assert\NotNull(message="constraints.not_null")
      * @Assert\Time(message="constraint.time")
      * @JMS\Expose()
      * @JMS\Groups({"detail-configuration"})
@@ -99,6 +102,7 @@ class Configuration
      * @var bool
      *
      * @ORM\Column(type="boolean")
+     * @Assert\NotNull(message="constraints.not_null")
      * @Assert\Type(
      *     type="bool",
      *     message="constraints.type"
@@ -112,6 +116,7 @@ class Configuration
      * @var \DateTime
      *
      * @ORM\Column(type="time")
+     * @Assert\NotNull(message="constraints.not_null")
      * @Assert\Time(message="constraint.time")
      * @JMS\Expose()
      * @JMS\Groups({"detail-configuration"})
@@ -122,6 +127,7 @@ class Configuration
      * @var \DateTime
      *
      * @ORM\Column(type="time")
+     * @Assert\NotNull(message="constraints.not_null")
      * @Assert\Time(message="constraint.time")
      * @JMS\Expose()
      * @JMS\Groups({"detail-configuration"})
