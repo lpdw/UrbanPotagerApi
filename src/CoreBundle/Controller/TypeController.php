@@ -54,6 +54,7 @@ class TypeController extends CoreController
 
     /**
      * @View(serializerGroups={"Default", "detail-type"})
+     * @ParamConverter("type", options={"mapping": {"type": "slug"}})
      */
     public function patchTypeAction(Type $type, Request $request)
     {
@@ -62,6 +63,9 @@ class TypeController extends CoreController
         return $this->formType($type, $request, 'patch'); // TODO form for edit (can not change name ?)
     }
 
+    /**
+     * @ParamConverter("type", options={"mapping": {"type": "slug"}})
+     */
     public function deleteTypeAction(Type $type)
     {
         $this->isGranted(TypeVoter::DELETE, $type);
