@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use CoreBundle\Entity\Traits\LocalizableTrait;
 use CoreBundle\Entity\Traits\AddressableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
 
 /**
