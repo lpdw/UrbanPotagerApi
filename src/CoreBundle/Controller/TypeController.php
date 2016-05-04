@@ -6,12 +6,16 @@ use CoreBundle\Security\TypeVoter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations\View;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use CoreBundle\Entity\Type;
 use CoreBundle\Form\Type\TypeType;
 
 class TypeController extends CoreController
 {
     // TODO add filter
+    /**
+     * @View(serializerGroups={"Default"})
+     */
     public function getTypesAction()
     {
         /** @var \CoreBundle\Repository\TypeRepository $repo */
@@ -25,9 +29,9 @@ class TypeController extends CoreController
         ];
     }
 
-    // TODO param converter
     /**
      * @View(serializerGroups={"Default", "detail-type"})
+     * @ParamConverter("type", options={"mapping": {"type": "slug"}})
      */
     public function getTypeAction(Type $type)
     {
@@ -50,7 +54,7 @@ class TypeController extends CoreController
 
     /**
      * @View(serializerGroups={"Default", "detail-type"})
-     */g
+     */
     public function patchTypeAction(Type $type, Request $request)
     {
         $this->isGranted(TypeVoter::EDIT, $type);
