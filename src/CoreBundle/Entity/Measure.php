@@ -43,8 +43,6 @@ class Measure
      */
     private $type;
 
-    // TODO expose slug type
-
     /**
      * @var Garden
      *
@@ -55,6 +53,14 @@ class Measure
      * @JMS\Groups({"detail-measure"})
      */
     private $garden;
+
+    /**
+     * @JMS\VirtualProperty()
+     */
+    public function type()
+    {
+        return !is_null($this->type) ? $this->type->getSlug() : null;
+    }
 
 
     /**
