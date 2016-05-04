@@ -4,6 +4,7 @@ namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
@@ -19,6 +20,8 @@ class Type
     // Need change ? See constraint Range for $type
     const PLANT     = 0;
     const SENSOR    = 1;
+
+    use TimestampableEntity;
 
     /**
      * @var int

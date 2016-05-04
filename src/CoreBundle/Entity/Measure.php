@@ -5,6 +5,7 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Measure
@@ -15,6 +16,8 @@ use JMS\Serializer\Annotation as JMS;
  */
 class Measure
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *

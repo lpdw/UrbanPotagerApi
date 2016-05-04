@@ -7,6 +7,7 @@ use CoreBundle\Entity\Traits\LocalizableTrait;
 use CoreBundle\Entity\Traits\AddressableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -21,6 +22,7 @@ class Garden
 {
     use LocalizableTrait;
     use AddressableTrait;
+    use TimestampableEntity;
 
     /**
      * @var int
