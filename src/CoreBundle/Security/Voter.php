@@ -5,6 +5,7 @@ namespace CoreBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter as BaseVoter;
+use UserBundle\Entity\User;
 
 class Voter extends BaseVoter
 {
@@ -62,11 +63,23 @@ class Voter extends BaseVoter
 
     protected function isAdmin($token)
     {
-        return $this->decisionManager->decide($token, ['ROLE_SUPER_ADMIN']);
+        return $this->isGranted($token, ['ROLE_SUPER_ADMIN']);
     }
 
     protected function isConnected($token)
     {
-        return $this->decisionManager->decide($token, ['IS_AUTHENTICATED_FULLY']);
+        return $this->isGranted($token, ['IS_AUTHENTICATED_FULLY']);
+    }
+
+    protected function isGranted(TokenInterface $token, array $roles)
+    {
+        return $this->decisionManager->decide($token, $roles);
+    }
+
+    protected function getUser(TokenInterface $token)
+    {
+        $user = $token->getUser();
+
+        return ($user instanceof User) ? $user : null;
     }
 }
