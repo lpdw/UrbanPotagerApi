@@ -7,11 +7,9 @@ use CoreBundle\Entity\Type;
 
 class TypeVoter extends Voter
 {
-    const CREATE = 'create';
-
     protected function supports($attribute, $subject)
     {
-        return (parent::supports($attribute, $subject) || self::CREATE === $attribute) && $subject instanceof Type;
+        return parent::supports($attribute, $subject) && $subject instanceof Type;
     }
 
     protected function canView($entity, TokenInterface $token)

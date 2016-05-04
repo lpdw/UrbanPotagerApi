@@ -8,11 +8,9 @@ use UserBundle\Entity\User;
 
 class GardenVoter extends Voter
 {
-    const CREATE = 'create';
-
     protected function supports($attribute, $subject)
     {
-        return (parent::supports($attribute, $subject) || self::CREATE === $attribute) && $subject instanceof Garden;
+        return parent::supports($attribute, $subject) && $subject instanceof Garden;
     }
 
     /**

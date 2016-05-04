@@ -9,6 +9,7 @@ use UserBundle\Entity\User;
 
 class Voter extends BaseVoter
 {
+    const CREATE    = 'create';
     const VIEW      = 'view';
     const EDIT      = 'edit';
     const DELETE    = 'delete';
@@ -44,6 +45,11 @@ class Voter extends BaseVoter
         }
 
         throw new \LogicException('This code should not be reached!');
+    }
+
+    protected function canCreate($entity, TokenInterface $token)
+    {
+        return false;
     }
 
     protected function canView($entity, TokenInterface $token)
