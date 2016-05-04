@@ -5,6 +5,7 @@ namespace CoreBundle\Controller;
 use CoreBundle\Security\TypeVoter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use FOS\RestBundle\Controller\Annotations\View;
 use CoreBundle\Entity\Type;
 use CoreBundle\Form\Type\TypeType;
 
@@ -25,6 +26,9 @@ class TypeController extends CoreController
     }
 
     // TODO param converter
+    /**
+     * @View(serializerGroups={"Default", "detail-type"})
+     */
     public function getTypeAction(Type $type)
     {
         $this->isGranted(TypeVoter::VIEW, $type);
@@ -34,6 +38,9 @@ class TypeController extends CoreController
         ];
     }
 
+    /**
+     * @View(serializerGroups={"Default", "detail-type"})
+     */
     public function postTypeAction(Request $request)
     {
         $this->isGranted(TypeVoter::CREATE, $type = new Type());
@@ -41,6 +48,9 @@ class TypeController extends CoreController
         return $this->formType($type, $request, 'post');
     }
 
+    /**
+     * @View(serializerGroups={"Default", "detail-type"})
+     */g
     public function patchTypeAction(Type $type, Request $request)
     {
         $this->isGranted(TypeVoter::EDIT, $type);
