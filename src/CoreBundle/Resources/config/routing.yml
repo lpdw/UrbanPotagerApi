@@ -5,3 +5,7 @@ default:
 type:
     type:     rest
     resource: CoreBundle\Controller\TypeController
+
+configuration:
+    type:     rest
+    resource: CoreBundle\Controller\ConfigurationController
