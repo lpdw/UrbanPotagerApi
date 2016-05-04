@@ -23,7 +23,7 @@ class GardenVoter extends Voter
      */
     protected function canView($entity, TokenInterface $token)
     {
-        return $entity->getIsPublic();
+        return $entity->getIsPublic() || $this->isOwner($entity, $this->getUser($token));
     }
 
     /**
