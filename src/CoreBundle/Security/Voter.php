@@ -36,34 +36,37 @@ class Voter extends BaseVoter
             return true;
         }
 
-        $user = $token->getUser();
-
         $method = 'can' . ucfirst($access);
 
         if (method_exists($this, $method)) {
-            return $this->$method($entity, $user);
+            return $this->$method($entity, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
     }
 
-    protected function canView($entity, $user)
+    protected function canView($entity, TokenInterface $token)
     {
         return false;
     }
 
-    protected function canEdit($entity, $user)
+    protected function canEdit($entity, TokenInterface $token)
     {
         return false;
     }
 
-    protected function canDelete($entity, $user)
+    protected function canDelete($entity, TokenInterface $token)
     {
         return false;
     }
 
-    private function isAdmin($token)
+    protected function isAdmin($token)
     {
-        return ($this->decisionManager->decide($token, ['ROLE_SUPER_ADMIN']));
+        return $this->decisionManager->decide($token, ['ROLE_SUPER_ADMIN']);
+    }
+
+    protected function isConnected($token)
+    {
+        return $this->decisionManager->decide($token, ['IS_AUTHENTICATED_FULLY']);
     }
 }

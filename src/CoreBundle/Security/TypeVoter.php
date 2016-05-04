@@ -2,6 +2,7 @@
 
 namespace CoreBundle\Security;
 
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use CoreBundle\Entity\Type;
 
 class TypeVoter extends Voter
@@ -13,7 +14,7 @@ class TypeVoter extends Voter
         return (parent::supports($attribute, $subject) || self::CREATE === $attribute) && $subject instanceof Type;
     }
 
-    protected function canView($entity, $user)
+    protected function canView($entity, TokenInterface $token)
     {
         return true;
     }
