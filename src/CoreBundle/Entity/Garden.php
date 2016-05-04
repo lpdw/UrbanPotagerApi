@@ -243,7 +243,7 @@ class Garden
     /**
      * @param string $slug
      *
-     * @return Type
+     * @return Garden
      */
     public function setSlug($slug)
     {
