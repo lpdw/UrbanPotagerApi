@@ -8,3 +8,4 @@ constraints:
     range:
         min: "Cette valeur doit être {{ limit }} ou plus."
         max: "Cette valeur doit être {{ limit }} ou moins."
+    time: "Cette valeur n'est pas une heure valide"
