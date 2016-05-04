@@ -4,7 +4,14 @@ namespace CoreBundle\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
+/**
+ * Class LocalizableTrait
+ * @package CoreBundle\Entity\Traits
+ *
+ * @JMS\ExclusionPolicy("all")
+ */
 Trait LocalizableTrait
 {
     /**
@@ -15,6 +22,7 @@ Trait LocalizableTrait
      * @Assert\Type(
      *     type="float"
      * )
+     * @JMS\Expose()
      */
     private $latitude;
 
@@ -26,6 +34,7 @@ Trait LocalizableTrait
      * @Assert\Type(
      *     type="float"
      * )
+     * @JMS\Expose()
      */
     private $longitude;
 
@@ -36,6 +45,8 @@ Trait LocalizableTrait
      * @Assert\Type(
      *     type="bool"
      * )
+     * @JMS\Expose()
+     * @JMS\Groups({"me-garden"})
      */
     private $showLocation;
 

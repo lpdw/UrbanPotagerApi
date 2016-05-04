@@ -5,6 +5,7 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use CoreBundle\Entity\Traits\LocalizableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Garden
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="garden")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\GardenRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @JMS\ExclusionPolicy("all")
  */
 class Garden
 {
@@ -29,23 +31,35 @@ class Garden
     /**
      * @ORM\Column(type="guid")
      * @Assert\Uuid
+     * @JMS\Expose()
      */
     private $apiKey;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255) // TODO decrease length (avoid bug with duplicate slug)
      * @Assert\NotBlank()
      * @Assert\Length(max=255)
+     * @JMS\Expose()
      */
     private $name;
 
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=255, unique=true)
+     * @JMS\Expose()
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="text")
      * @Assert\NotNull()
+     * @JMS\Expose()
      */
     private $description;
 
@@ -56,6 +70,8 @@ class Garden
      * @Assert\Type(
      *     type="bool"
      * )
+     * @JMS\Expose()
+     * @JMS\Groups({"me-garden"})
      */
     private $isPublic;
 
@@ -65,6 +81,7 @@ class Garden
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @Assert\Valid
+     * @JMS\Expose()
      */
     private $owner;
 
@@ -207,6 +224,26 @@ class Garden
     public function getApiKey()
     {
         return $this->apiKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     *
+     * @return Type
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 
     /**

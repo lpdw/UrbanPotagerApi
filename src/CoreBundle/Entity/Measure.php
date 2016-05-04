@@ -4,12 +4,14 @@ namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Measure
  *
  * @ORM\Table(name="measure")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\MeasureRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Measure
 {
@@ -19,6 +21,7 @@ class Measure
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose()
      */
     private $id;
 
@@ -27,6 +30,7 @@ class Measure
      *
      * @ORM\Column(type="float")
      * @Assert\NotBlank()
+     * @JMS\Expose()
      */
     private $value;
 
@@ -39,12 +43,16 @@ class Measure
      */
     private $type;
 
+    // TODO expose slug type
+
     /**
      * @var Garden
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @Assert\Valid
+     * @JMS\Expose()
+     * @JMS\Groups({"detail-measure"})
      */
     private $garden;
 

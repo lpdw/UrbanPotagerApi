@@ -5,12 +5,14 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Type
  *
  * @ORM\Table(name="type")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\TypeRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Type
 {
@@ -30,9 +32,10 @@ class Type
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true) // TODO decrease length (avoid bug with duplicate slug)
      * @Assert\NotBlank()
      * @Assert\Length(max=255)
+     * @JMS\Expose()
      */
     private $name;
 
@@ -41,6 +44,7 @@ class Type
      *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(length=255, unique=true)
+     * @JMS\Expose()
      */
     private $slug;
 
@@ -49,6 +53,7 @@ class Type
      *
      * @ORM\Column(type="text")
      * @Assert\NotNull()
+     * @JMS\Expose()
      */
     private $description;
 
@@ -61,6 +66,7 @@ class Type
      *      min = 0,
      *      max = 1
      * )
+     * @JMS\Expose()
      */
     private $type;
 

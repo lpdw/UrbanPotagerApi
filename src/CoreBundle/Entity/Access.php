@@ -4,12 +4,14 @@ namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Access
  *
  * @ORM\Table(name="access")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\AccessRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Access
 {
@@ -29,6 +31,7 @@ class Access
      * @Assert\Type(
      *     type="bool"
      * )
+     * @JMS\Expose()
      */
     private $isPublic;
 
@@ -46,6 +49,7 @@ class Access
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @Assert\Valid
+     * @JMS\Expose()
      */
     private $type;
 
