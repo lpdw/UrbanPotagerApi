@@ -61,6 +61,46 @@ class Type
     private $description;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(type="decimal", precision=6, scale=2)
+     * @Assert\NotNull(message="constraints.not_null")
+     * @Assert\Type(
+     *     type="float",
+     *     message="constraints.type"
+     * )
+     * @Assert\Range(
+     *      min = -9999.99,
+     *      max = 9999.99,
+     *      minMessage = "constraints.range.min",
+     *      maxMessage = "constraints.range.max",
+     * )
+     * @JMS\Expose()
+     * @JMS\Groups({"detail-type"})
+     */
+    private $min;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="decimal", precision=6, scale=2)
+     * @Assert\NotNull(message="constraints.not_null")
+     * @Assert\Type(
+     *     type="float",
+     *     message="constraints.type"
+     * )
+     * @Assert\Range(
+     *      min = -9999.99,
+     *      max = 9999.99,
+     *      minMessage = "constraints.range.min",
+     *      maxMessage = "constraints.range.max",
+     * )
+     * @JMS\Expose()
+     * @JMS\Groups({"detail-type"})
+     */
+    private $max;
+
+    /**
      * @var int
      *
      * @ORM\Column(type="smallint")
@@ -172,5 +212,53 @@ class Type
         $this->slug = $slug;
 
         return $this;
+    }
+
+    /**
+     * Set min
+     *
+     * @param string $min
+     *
+     * @return Type
+     */
+    public function setMin($min)
+    {
+        $this->min = $min;
+
+        return $this;
+    }
+
+    /**
+     * Get min
+     *
+     * @return string
+     */
+    public function getMin()
+    {
+        return $this->min;
+    }
+
+    /**
+     * Set max
+     *
+     * @param string $max
+     *
+     * @return Type
+     */
+    public function setMax($max)
+    {
+        $this->max = $max;
+
+        return $this;
+    }
+
+    /**
+     * Get max
+     *
+     * @return string
+     */
+    public function getMax()
+    {
+        return $this->max;
     }
 }
