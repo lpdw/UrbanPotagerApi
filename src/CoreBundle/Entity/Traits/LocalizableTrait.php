@@ -29,7 +29,6 @@ Trait LocalizableTrait
      *      minMessage = "constraints.range.min",
      *      maxMessage = "constraints.range.max",
      * )
-     * @JMS\Expose()
      */
     private $latitude;
 
@@ -48,7 +47,6 @@ Trait LocalizableTrait
      *      minMessage = "constraints.range.min",
      *      maxMessage = "constraints.range.max",
      * )
-     * @JMS\Expose()
      */
     private $longitude;
 
@@ -64,6 +62,21 @@ Trait LocalizableTrait
      * @JMS\Groups({"me-garden"})
      */
     private $showLocation;
+
+    /**
+     * @JMS\VirtualProperty()
+     */
+    public function coordinate()
+    {
+        if (!$this->showLocation) {
+            return null;
+        }
+
+        return [
+            'lng' => $this->longitude,
+            'lat' => $this->latitude,
+        ];
+    }
 
     /**
      * @return float
