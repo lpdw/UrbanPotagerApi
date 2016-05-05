@@ -1,6 +1,7 @@
 <?php
 
 namespace CoreBundle\Repository;
+use UserBundle\Entity\User;
 
 /**
  * ConfigurationRepository
@@ -10,4 +11,16 @@ namespace CoreBundle\Repository;
  */
 class ConfigurationRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param User $user
+     * @return \Doctrine\ORM\Query
+     */
+    public function queryMeConfiguration(User $user)
+    {
+        $qb = $this->createQueryBuilder('c')
+                ->where('c.owner = :user')
+                ->setParameter('user', $user);
+
+        return $qb->getQuery();
+    }
 }

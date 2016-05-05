@@ -12,20 +12,26 @@ use CoreBundle\Form\Type\ConfigurationType;
 
 class ConfigurationController extends CoreController
 {
+    const CONFIGURATION_PER_PAGE = 10; // TODO put into config.yml
+
     // TODO add filter
     /**
      * @View(serializerGroups={"Default"})
      */
-    public function getConfigurationsAction()
+    public function getConfigurationsAction(Request $request)
     {
+        // TODO is connected
         /** @var \CoreBundle\Repository\ConfigurationRepository $repo */
         $repo = $this->getRepository();
 
-        $configurations = $repo->findAll();
+        $query = $repo->queryMeConfiguration($this->getUser());
+
+        $pagination = $this->getPagination($request, $query, self::CONFIGURATION_PER_PAGE);
 
         return [
-            'count' => count($configurations),
-            'configurations' => $configurations,
+            'total_items' => $pagination->getTotalItemCount(),
+            'item_per_page' => self::CONFIGURATION_PER_PAGE,
+            'configurations' => $pagination->getItems(),
         ];
     }
 
