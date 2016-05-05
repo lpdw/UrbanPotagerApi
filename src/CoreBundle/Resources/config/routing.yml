@@ -9,3 +9,15 @@ type:
 configuration:
     type:     rest
     resource: CoreBundle\Controller\ConfigurationController
+
+garden:
+    type:     rest
+    resource: CoreBundle\Controller\GardenController
+
+measure:
+    type:     rest
+    resource: CoreBundle\Controller\MeasureController
+
+access:
+    type:     rest
+    resource: CoreBundle\Controller\AccessController
