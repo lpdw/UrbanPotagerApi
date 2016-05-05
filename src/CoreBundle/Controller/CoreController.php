@@ -4,7 +4,9 @@ namespace CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Doctrine\ORM\Query;
 
 abstract class CoreController extends Controller
 {
@@ -65,6 +67,27 @@ abstract class CoreController extends Controller
     protected function t($message)
     {
         return $this->get('translator')->trans($message);
+    }
+
+    /**
+     * @param Request $request
+     * @param Query $query
+     * @param int $limit
+     *
+     * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+     */
+    protected function getPagination(Request $request, Query $query, $limit = 10)
+    {
+        /** @var \Knp\Component\Pager\Paginator $paginator */
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            $limit
+        );
+
+        return $pagination;
     }
 
     /**
