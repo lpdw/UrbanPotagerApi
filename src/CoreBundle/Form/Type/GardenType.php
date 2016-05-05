@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use CoreBundle\Entity\Garden;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class GardenType extends AbstractType
 {
@@ -22,8 +22,12 @@ class GardenType extends AbstractType
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
             ->add('isPublic', CheckboxType::class)
-            ->add('latitude', TextType::class)
-            ->add('longitude', TextType::class)
+            ->add('latitude', NumberType::class, [
+                'scale' => 2,
+            ])
+            ->add('longitude', NumberType::class, [
+                'scale' => 2,
+            ])
             ->add('show_location', CheckboxType::class)
             ->add('country', TextType::class)
             ->add('city', TextType::class)

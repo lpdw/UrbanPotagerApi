@@ -77,7 +77,6 @@ class Garden
      *     message="constraints.type"
      * )
      * @JMS\Expose()
-     * @JMS\Groups({"me-garden"})
      */
     private $isPublic;
 

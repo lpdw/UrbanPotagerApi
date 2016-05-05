@@ -10,4 +10,11 @@ namespace CoreBundle\Repository;
  */
 class GardenRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function queryPublicGarden()
+    {
+        $qb = $this->createQueryBuilder('g')
+                    ->where('g.isPublic = true');
+
+        return $qb->getQuery();
+    }
 }
