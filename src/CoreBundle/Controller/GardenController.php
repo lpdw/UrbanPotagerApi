@@ -38,12 +38,17 @@ class GardenController extends CoreController
     $form = $this->createForm(GardenType::class, $garden, array('method' => $method));
     $form->handleRequest($request);
 
-
+    if ($form->isSubmitted() && $form->isValid()) {
       $em = $this->getDoctrine()->getManager();
       $em->persist($garden);
       $em->flush();
 
-      return $garden;
+      return [
+          'garden' => $garden,
+      ];
+    }
+
+    return new JsonResponse("error", self::BAD_REQUEST);
 
   }
 
