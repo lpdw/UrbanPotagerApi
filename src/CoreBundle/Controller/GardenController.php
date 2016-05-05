@@ -4,59 +4,49 @@ namespace CoreBundle\Controller;
 
 use CoreBundle\Entity\Garden;
 use CoreBundle\Form\Type\GardenType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class GardenController extends CoreController
 {
-  public function getGardensAction()
-  {
-    $repo = $this->getRepository();
-
-    $gardens = $repo->findAll();
-    return [
-        'count' => count($gardens),
-        'gardens' => $gardens,
-    ];
-  } // "get_gardens"            [GET] /gardens
-
-  public function postGardensAction(Request $request)
-  {
-    return $this->formGarden(new Garden(), $request, "post");
-
-  } // "post_gardens"           [POST] /gardens
-
-  public function getGardenAction($id)
+    public function getGardensAction()
     {
+        $repo = $this->getRepository();
 
-    } // "get_garden"            [GET] /gardens/:id
+        $gardens = $repo->findAll();
 
-  private function formGarden(Garden $garden, Request $request, $method='post')
-  {
-    $form = $this->createForm(GardenType::class, $garden, array('method' => $method));
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-      $em = $this->getDoctrine()->getManager();
-      $em->persist($garden);
-      $em->flush();
-
-      return [
-          'garden' => $garden,
-      ];
+        return [
+            'count' => count($gardens),
+            'gardens' => $gardens,
+        ];
     }
 
-    return new JsonResponse("error", self::BAD_REQUEST);
+    public function postGardensAction(Request $request)
+    {
+        return $this->formGarden(new Garden(), $request, "post");
+    }
 
-  }
+    public function getGardenAction($id)
+    {
+    }
 
-  /**
-   * @return string
-   */
-  protected function getRepositoryName()
-  {
-      return 'CoreBundle:Garden';
-  }
+    private function formGarden(Garden $garden, Request $request, $method = 'post')
+    {
+      if ($form->isSubmitted() && $form->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($garden);
+        $em->flush();
+
+        return [
+            'garden' => $garden,
+        ];
+      }
+
+      return new JsonResponse("error", self::BAD_REQUEST);
+    }
+
+    protected function getRepositoryName()
+    {
+        return 'CoreBundle:Garden';
+    }
 }
