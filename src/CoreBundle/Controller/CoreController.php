@@ -56,7 +56,7 @@ abstract class CoreController extends Controller
     protected function isGranted($attributes, $object = null)
     {
         if (!parent::isGranted($attributes, $object)) {
-            $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
     }
 

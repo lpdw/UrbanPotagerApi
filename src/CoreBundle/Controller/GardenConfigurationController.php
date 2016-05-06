@@ -20,7 +20,7 @@ class GardenConfigurationController extends GardenController
         $configuration = $garden->getConfiguration();
 
         if (is_null($configuration)) {
-            return $this->createNotFoundException();
+            throw $this->createNotFoundException();
         }
 
         $this->isGranted(ConfigurationVoter::VIEW, $configuration);
