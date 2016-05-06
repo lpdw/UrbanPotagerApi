@@ -140,7 +140,6 @@ class Configuration
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @Assert\Valid
-     * @JMS\Expose()
      */
     private $owner;
 
