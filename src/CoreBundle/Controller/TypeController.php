@@ -24,7 +24,7 @@ class TypeController extends CoreController
         $types = $repo->findAll();
 
         return [
-            'count' => count($types),
+            'total_items' => count($types),
             'types' => $types,
         ];
     }
