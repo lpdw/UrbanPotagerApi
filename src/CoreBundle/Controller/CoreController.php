@@ -14,6 +14,7 @@ abstract class CoreController extends Controller
     const CREATED       = 201;
     const NO_CONTENT    = 204;
     const BAD_REQUEST   = 400;
+    const CONFLICT      = 409;
 
     /**
      * @param string $name
