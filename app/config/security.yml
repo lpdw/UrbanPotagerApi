@@ -36,3 +36,4 @@ security:
 
     access_control:
         - { path: ^/me, roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/configurations$, role: IS_AUTHENTICATED_FULLY }

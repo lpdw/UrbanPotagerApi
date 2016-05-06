@@ -20,7 +20,6 @@ class ConfigurationController extends CoreController
      */
     public function getConfigurationsAction(Request $request)
     {
-        // TODO is connected
         /** @var \CoreBundle\Repository\ConfigurationRepository $repo */
         $repo = $this->getRepository();
 
