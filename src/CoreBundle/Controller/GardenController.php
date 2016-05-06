@@ -89,38 +89,6 @@ class GardenController extends CoreController
         $this->getManager()->flush();
     }
 
-    /**
-     * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
-     * @ParamConverter("configuration", options={"mapping": {"configuration": "slug"}})
-     */
-    public function postGardenConfigurationAction(Garden $garden, Configuration $configuration)
-    {
-        $this->isGranted(GardenVoter::EDIT, $garden);
-        $this->isGranted(ConfigurationVoter::VIEW, $configuration);
-
-        if (!is_null($garden->getConfiguration())) {
-            return new JsonResponse([], self::CONFLICT);
-        }
-
-        $garden->setConfiguration($configuration);
-
-        $this->getManager()->flush();
-
-        return new JsonResponse([], self::OK);
-    }
-
-    /**
-     * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
-     */
-    public function deleteGardenConfigurationsAction(Garden $garden)
-    {
-        $this->isGranted(GardenVoter::EDIT, $garden);
-
-        $garden->setConfiguration(null);
-
-        $this->getManager()->flush();
-    }
-
     private function formGarden(Garden $garden, Request $request, $method = 'post')
     {
         $form = $this->createForm(GardenType::class, $garden, ['method' => $method]);
@@ -149,7 +117,7 @@ class GardenController extends CoreController
      *
      * @return bool
      */
-    private function isOwner(Garden $garden, User $user)
+    protected function isOwner(Garden $garden, User $user)
     {
         $owner = $garden->getOwner();
 

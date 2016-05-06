@@ -17,3 +17,8 @@ garden:
 measure:
     type:     rest
     resource: CoreBundle\Controller\MeasureController
+
+garden_configuration:
+    type:     rest
+    parent:   garden
+    resource: CoreBundle\Controller\GardenConfigurationController

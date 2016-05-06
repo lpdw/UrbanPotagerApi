@@ -5,7 +5,6 @@ namespace CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\Query;
 
 abstract class CoreController extends Controller
@@ -57,7 +56,7 @@ abstract class CoreController extends Controller
     protected function isGranted($attributes, $object = null)
     {
         if (!parent::isGranted($attributes, $object)) {
-            throw new AccessDeniedException();
+            $this->createAccessDeniedException();
         }
     }
 
