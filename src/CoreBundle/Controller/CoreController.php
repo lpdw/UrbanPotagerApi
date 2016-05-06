@@ -46,7 +46,7 @@ abstract class CoreController extends Controller
             $errors = $child->getErrors(true, false);
 
             foreach($errors as $error) {
-                $errorsString[$child->getName()] = $error->getMessage(); // TODO translate ?
+                $errorsString[$child->getName()] = $error->getMessage();
             }
         }
 
@@ -88,6 +88,14 @@ abstract class CoreController extends Controller
         );
 
         return $pagination;
+    }
+
+    protected function addSerializerGroup($groupToAdd, Request $request)
+    {
+        $groups = $request->attributes->get('_view')->getSerializerGroups();
+        $groups[] = $groupToAdd;
+
+        $request->attributes->get('_view')->setSerializerGroups($groups);
     }
 
     /**

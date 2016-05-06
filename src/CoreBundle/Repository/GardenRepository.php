@@ -2,6 +2,8 @@
 
 namespace CoreBundle\Repository;
 
+use UserBundle\Entity\User;
+
 /**
  * GardenRepository
  *
@@ -10,10 +12,19 @@ namespace CoreBundle\Repository;
  */
 class GardenRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function queryPublicGarden()
+    public function queryPublicGardens()
     {
         $qb = $this->createQueryBuilder('g')
                     ->where('g.isPublic = true');
+
+        return $qb->getQuery();
+    }
+
+    public function queryMeGardens(User $user)
+    {
+        $qb = $this->createQueryBuilder('g')
+                    ->where('g.owner = :user')
+                    ->setParameter('user', $user);
 
         return $qb->getQuery();
     }

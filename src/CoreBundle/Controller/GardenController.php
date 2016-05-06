@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use CoreBundle\Entity\Garden;
 use CoreBundle\Security\GardenVoter;
 use CoreBundle\Form\Type\GardenType;
+use UserBundle\Entity\User;
 
 class GardenController extends CoreController
 {
@@ -20,11 +21,10 @@ class GardenController extends CoreController
      */
     public function getGardensAction(Request $request)
     {
-        // TODO is connected
         /** @var \CoreBundle\Repository\GardenRepository $repo */
         $repo = $this->getRepository();
 
-        $query = $repo->queryPublicGarden();
+        $query = $repo->queryPublicGardens();
 
         $pagination = $this->getPagination($request, $query, self::GARDEN_PER_PAGE);
 
@@ -39,9 +39,13 @@ class GardenController extends CoreController
      * @View(serializerGroups={"Default", "detail-garden"})
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      */
-    public function getGardenAction(Garden $garden)
+    public function getGardenAction(Garden $garden, Request $request)
     {
         $this->isGranted(GardenVoter::VIEW, $garden);
+
+        if ($this->isOwner($garden, $this->getUser())) {
+            $this->addSerializerGroup('me-garden', $request);
+        }
 
         return [
             'garden' => $garden,
@@ -104,5 +108,21 @@ class GardenController extends CoreController
     protected function getRepositoryName()
     {
         return 'CoreBundle:Garden';
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return bool
+     */
+    private function isOwner(Garden $garden, User $user)
+    {
+        $owner = $garden->getOwner();
+
+        if (is_null($owner) || is_null($user)) {
+            return false;
+        }
+
+        return $owner->getId() === $user->getId();
     }
 }
