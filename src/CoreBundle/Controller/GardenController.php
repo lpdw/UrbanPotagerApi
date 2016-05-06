@@ -7,7 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use CoreBundle\Entity\Garden;
+use CoreBundle\Entity\Configuration;
 use CoreBundle\Security\GardenVoter;
+use CoreBundle\Security\ConfigurationVoter;
 use CoreBundle\Form\Type\GardenType;
 use UserBundle\Entity\User;
 
@@ -84,6 +86,38 @@ class GardenController extends CoreController
         $this->isGranted(GardenVoter::DELETE, $garden);
 
         $this->getManager()->remove($garden);
+        $this->getManager()->flush();
+    }
+
+    /**
+     * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
+     * @ParamConverter("configuration", options={"mapping": {"configuration": "slug"}})
+     */
+    public function postGardenConfigurationAction(Garden $garden, Configuration $configuration)
+    {
+        $this->isGranted(GardenVoter::EDIT, $garden);
+        $this->isGranted(ConfigurationVoter::VIEW, $configuration);
+
+        if (!is_null($garden->getConfiguration())) {
+            return new JsonResponse([], self::CONFLICT);
+        }
+
+        $garden->setConfiguration($configuration);
+
+        $this->getManager()->flush();
+
+        return new JsonResponse([], self::OK);
+    }
+
+    /**
+     * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
+     */
+    public function deleteGardenConfigurationsAction(Garden $garden)
+    {
+        $this->isGranted(GardenVoter::EDIT, $garden);
+
+        $garden->setConfiguration(null);
+
         $this->getManager()->flush();
     }
 
