@@ -2,6 +2,9 @@
 
 namespace CoreBundle\Repository;
 
+use CoreBundle\Entity\Garden;
+use CoreBundle\Entity\Type;
+
 /**
  * AccessRepository
  *
@@ -10,4 +13,16 @@ namespace CoreBundle\Repository;
  */
 class AccessRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByGardenAndType(Garden $garden, Type $type)
+    {
+        $qb = $this->createQueryBuilder('a')
+                    ->where('a.garden = :garden')
+                    ->andWhere('a.type = :type')
+                    ->setParameters([
+                        'garden' => $garden,
+                        'type' => $type,
+                    ]);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

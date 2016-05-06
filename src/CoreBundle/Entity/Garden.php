@@ -103,6 +103,14 @@ class Garden
      */
     private $configuration;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Access", mappedBy="garden")
+     * @JMS\Expose()
+     * @JMS\Groups({"detail-garden"})
+     */
+    private $access;
 
     /**
      * Get id
@@ -420,5 +428,46 @@ class Garden
     public function getConfiguration()
     {
         return $this->configuration;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->access = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add access
+     *
+     * @param \CoreBundle\Entity\Access $access
+     *
+     * @return Garden
+     */
+    public function addAccess(\CoreBundle\Entity\Access $access)
+    {
+        $this->access[] = $access;
+
+        return $this;
+    }
+
+    /**
+     * Remove access
+     *
+     * @param \CoreBundle\Entity\Access $access
+     */
+    public function removeAccess(\CoreBundle\Entity\Access $access)
+    {
+        $this->access->removeElement($access);
+    }
+
+    /**
+     * Get access
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAccess()
+    {
+        return $this->access;
     }
 }

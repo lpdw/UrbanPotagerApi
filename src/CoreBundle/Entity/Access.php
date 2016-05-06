@@ -5,12 +5,14 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Access
  *
  * @ORM\Table(name="access")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\AccessRepository")
+ * @UniqueEntity(fields={"garden", "type"})
  * @JMS\ExclusionPolicy("all")
  */
 class Access
@@ -39,8 +41,7 @@ class Access
     /**
      * @var Garden
      *
-     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
-     * @Assert\Valid
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden", inversedBy="access")
      */
     private $garden;
 
@@ -49,7 +50,6 @@ class Access
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
      * @ORM\JoinColumn(onDelete="SET NULL")
-     * @Assert\Valid
      * @JMS\Expose()
      */
     private $type;

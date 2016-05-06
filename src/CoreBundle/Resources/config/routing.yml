@@ -22,3 +22,8 @@ garden_configuration:
     type:     rest
     parent:   garden
     resource: CoreBundle\Controller\GardenConfigurationController
+
+garden_access:
+    type:     rest
+    parent:   garden
+    resource: CoreBundle\Controller\GardenAccessController
