@@ -37,6 +37,7 @@ class Garden
      * @ORM\Column(type="guid")
      * @Assert\Uuid(message="constraints.uuid")
      * @JMS\Expose()
+     * @JMS\Groups({"me-garden"})
      */
     private $apiKey;
 
@@ -87,6 +88,7 @@ class Garden
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @Assert\Valid
      * @JMS\Expose()
+     * @JMS\Groups({"detail-garden"})
      */
     private $owner;
 
@@ -97,6 +99,7 @@ class Garden
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @Assert\Valid
      * @JMS\Expose()
+     * @JMS\Groups({"me-garden"})
      */
     private $configuration;
 
