@@ -33,3 +33,6 @@ security:
             stateless: true
             anonymous: true
             lexik_jwt: ~
+
+    access_control:
+        - { path: ^/me, roles: IS_AUTHENTICATED_REMEMBERED }
