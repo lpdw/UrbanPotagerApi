@@ -56,7 +56,7 @@ class ConfigurationController extends CoreController
 
         $configuration->setOwner($this->getUser());
 
-        return $this->formType($configuration, $request, 'post');
+        return $this->formConfiguration($configuration, $request, 'post');
     }
 
     /**
@@ -67,7 +67,7 @@ class ConfigurationController extends CoreController
     {
         $this->isGranted(ConfigurationVoter::EDIT, $configuration);
 
-        return $this->formType($configuration, $request, 'patch');
+        return $this->formConfiguration($configuration, $request, 'patch');
     }
 
     /**
@@ -81,7 +81,7 @@ class ConfigurationController extends CoreController
         $this->getManager()->flush();
     }
 
-    private function formType(Configuration $configuration, Request $request, $method = 'post')
+    private function formConfiguration(Configuration $configuration, Request $request, $method = 'post')
     {
         $form = $this->createForm(ConfigurationType::class, $configuration, ['method' => $method]);
         $form->handleRequest($request);
