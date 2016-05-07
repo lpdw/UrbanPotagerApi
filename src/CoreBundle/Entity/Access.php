@@ -42,6 +42,7 @@ class Access
      * @var Garden
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden", inversedBy="access")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $garden;
 
