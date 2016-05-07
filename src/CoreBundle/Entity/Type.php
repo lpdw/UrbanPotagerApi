@@ -8,6 +8,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use CoreBundle\Validator\Constraints as CoreAssert;
 
 /**
  * Type
@@ -15,6 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="type")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\TypeRepository")
  * @UniqueEntity("name")
+ * @CoreAssert\MinMax
  * @JMS\ExclusionPolicy("all")
  */
 class Type

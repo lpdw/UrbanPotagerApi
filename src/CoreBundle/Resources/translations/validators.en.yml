@@ -9,3 +9,4 @@ constraints:
         min: "This value should be {{ limit }} or more."
         max: "This value should be {{ limit }} or less."
     time: "This value is not a valid time."
+    min_max: "The minimum value must be less than the max"
