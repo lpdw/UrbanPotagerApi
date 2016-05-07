@@ -4,8 +4,9 @@ namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation as JMS;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JMS\Serializer\Annotation as JMS;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Access
@@ -17,6 +18,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Access
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *
