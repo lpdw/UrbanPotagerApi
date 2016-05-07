@@ -50,7 +50,7 @@ class Access
      * @var Type
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @JMS\Expose()
      */
     private $type;
