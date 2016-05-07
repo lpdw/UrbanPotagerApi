@@ -68,6 +68,8 @@ class ConfigurationController extends CoreController
     {
         $this->isGranted(ConfigurationVoter::EDIT, $configuration);
 
+        $configuration->setIsWateringActive(false); // TODO increase system
+
         return $this->formConfiguration($configuration, $request, 'patch');
     }
 

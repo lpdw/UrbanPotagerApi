@@ -76,6 +76,8 @@ class GardenController extends CoreController
     {
         $this->isGranted(GardenVoter::EDIT, $garden);
 
+        $garden->setIsPublic(false); // TODO increase system
+
         return $this->formGarden($garden, $request, 'patch');
     }
 
