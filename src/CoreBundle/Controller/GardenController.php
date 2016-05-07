@@ -16,8 +16,6 @@ use UserBundle\Entity\User;
 
 class GardenController extends CoreController
 {
-    const GARDEN_PER_PAGE = 10; // TODO put into config.yml
-
     // TODO add filter
     /**
      * @View(serializerGroups={"Default"})
@@ -27,13 +25,15 @@ class GardenController extends CoreController
         /** @var \CoreBundle\Repository\GardenRepository $repo */
         $repo = $this->getRepository();
 
+        $itemPerPage = $this->getItemPerPage('garden');
+
         $query = $repo->queryPublicGardens();
 
-        $pagination = $this->getPagination($request, $query, self::GARDEN_PER_PAGE);
+        $pagination = $this->getPagination($request, $query, $itemPerPage);
 
         return [
             'total_items' => $pagination->getTotalItemCount(),
-            'item_per_page' => self::GARDEN_PER_PAGE,
+            'item_per_page' => $itemPerPage,
             'gardens' => $pagination->getItems(),
         ];
     }

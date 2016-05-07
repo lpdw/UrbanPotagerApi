@@ -9,6 +9,8 @@ use Doctrine\ORM\Query;
 
 abstract class CoreController extends Controller
 {
+    const DEFAULT_ITEM_PER_PAGE = 10;
+
     /**
      * @param string $name
      *
@@ -90,6 +92,20 @@ abstract class CoreController extends Controller
         $groups[] = $groupToAdd;
 
         $request->attributes->get('_view')->setSerializerGroups($groups);
+    }
+
+    /**
+     * @param $item
+     *
+     * @return int
+     */
+    protected function getItemPerPage($item)
+    {
+        try {
+            return $this->getParameter($item . '_per_page');
+        } catch (\InvalidArgumentException $e) {
+            return self::DEFAULT_ITEM_PER_PAGE;
+        }
     }
 
     /**

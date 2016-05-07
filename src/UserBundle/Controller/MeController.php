@@ -8,8 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MeController extends CoreController
 {
-    const GARDEN_PER_PAGE = 10; // TODO put into config.yml
-
     /**
      * @View(serializerGroups={"Default", "details-user", "me"})
      */
@@ -28,13 +26,15 @@ class MeController extends CoreController
         /** @var \CoreBundle\Repository\GardenRepository $repo */
         $repo = $this->getRepository('CoreBundle:Garden');
 
+        $itemPerPage = $this->getItemPerPage('garden');
+
         $query = $repo->queryMeGardens($this->getUser());
 
-        $pagination = $this->getPagination($request, $query, self::GARDEN_PER_PAGE);
+        $pagination = $this->getPagination($request, $query, $itemPerPage);
 
         return [
             'total_items' => $pagination->getTotalItemCount(),
-            'item_per_page' => self::GARDEN_PER_PAGE,
+            'item_per_page' => $itemPerPage,
             'gardens' => $pagination->getItems(),
         ];
     }
