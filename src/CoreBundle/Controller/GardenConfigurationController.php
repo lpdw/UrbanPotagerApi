@@ -7,11 +7,12 @@ use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use CoreBundle\Entity\Garden;
+use UserBundle\Entity\User;
 use CoreBundle\Entity\Configuration;
 use CoreBundle\Security\GardenVoter;
 use CoreBundle\Security\ConfigurationVoter;
 
-class GardenConfigurationController extends GardenController
+class GardenConfigurationController extends CoreController
 {
     /**
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
@@ -61,5 +62,26 @@ class GardenConfigurationController extends GardenController
         $garden->setConfiguration(null);
 
         $this->getManager()->flush();
+    }
+
+    protected function getRepositoryName()
+    {
+        return 'CoreBundle:Garden';
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return bool
+     */
+    protected function isOwner(Garden $garden, User $user)
+    {
+        $owner = $garden->getOwner();
+
+        if (is_null($owner) || is_null($user)) {
+            return false;
+        }
+
+        return $owner->getId() === $user->getId();
     }
 }

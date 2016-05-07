@@ -3,9 +3,11 @@
 namespace CoreBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Delete;
+use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,13 +19,18 @@ use CoreBundle\Form\Type\AccessEditType;
 use CoreBundle\Entity\Access;
 use CoreBundle\Entity\Type;
 
+
+/**
+ * @RouteResource("Access")
+ */
 class GardenAccessController extends CoreController
 {
     /**
      * @View(serializerGroups={"Default"})
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
+     * @Get("/gardens/{garden}/access")
      */
-    public function cgetAccessAction(Garden $garden)
+    public function cgetAction(Garden $garden)
     {
         $this->isGranted(GardenVoter::VIEW, $garden);
 
@@ -36,8 +43,9 @@ class GardenAccessController extends CoreController
      * @View(serializerGroups={"Default", "detail-access"})
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      * @ParamConverter("type", options={"mapping": {"type": "slug"}})
+     * @Get("/gardens/{garden}/access/{type}")
      */
-    public function getAccessAction(Garden $garden, Type $type)
+    public function getAction(Garden $garden, Type $type)
     {
         $this->isGranted(GardenVoter::VIEW, $garden);
 
@@ -53,7 +61,7 @@ class GardenAccessController extends CoreController
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      * @Post("/gardens/{garden}/access")
      */
-    public function postAccessAction(Garden $garden, Request $request)
+    public function postAction(Garden $garden, Request $request)
     {
         $this->isGranted(GardenVoter::EDIT, $garden);
 
@@ -69,7 +77,7 @@ class GardenAccessController extends CoreController
      * @ParamConverter("type", options={"mapping": {"type": "slug"}})
      * @Patch("/gardens/{garden}/access/{type}")
      */
-    public function patchAccessAction(Garden $garden, Type $type, Request $request)
+    public function patchAction(Garden $garden, Type $type, Request $request)
     {
         $this->isGranted(GardenVoter::EDIT, $garden);
 
@@ -84,7 +92,7 @@ class GardenAccessController extends CoreController
      * @ParamConverter("type", options={"mapping": {"type": "slug"}})
      * @Delete("/gardens/{garden}/access/{type}")
      */
-    public function deleteAccessAction(Garden $garden, Type $type)
+    public function deleteAction(Garden $garden, Type $type)
     {
         $this->isGranted(GardenVoter::EDIT, $garden);
 
