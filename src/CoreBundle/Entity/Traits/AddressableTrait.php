@@ -19,8 +19,6 @@ Trait AddressableTrait
      *
      * @ORM\Column(length=100, nullable=true)
      * @Assert\Length(max=100, maxMessage="constraints.length.max")
-     * @JMS\Expose()
-     * @JMS\Groups({"detail-garden"})
      */
     private $country;
 
@@ -29,8 +27,6 @@ Trait AddressableTrait
      *
      * @ORM\Column(length=100, nullable=true)
      * @Assert\Length(max=100, maxMessage="constraints.length.max")
-     * @JMS\Expose()
-     * @JMS\Groups({"detail-garden"})
      */
     private $city;
 
@@ -39,8 +35,6 @@ Trait AddressableTrait
      *
      * @ORM\Column(length=10, nullable=true)
      * @Assert\Length(max=10, maxMessage="constraints.length.max")
-     * @JMS\Expose()
-     * @JMS\Groups({"detail-garden"})
      */
     private $zipCode;
 
@@ -49,8 +43,6 @@ Trait AddressableTrait
      *
      * @ORM\Column(length=255, nullable=true)
      * @Assert\Length(max=255, maxMessage="constraints.length.max")
-     * @JMS\Expose()
-     * @JMS\Groups({"detail-garden"})
      */
     private $address1;
 
@@ -59,8 +51,6 @@ Trait AddressableTrait
      *
      * @ORM\Column(length=255, nullable=true)
      * @Assert\Length(max=255, maxMessage="constraints.length.max")
-     * @JMS\Expose()
-     * @JMS\Groups({"detail-garden"})
      */
     private $address2;
 }

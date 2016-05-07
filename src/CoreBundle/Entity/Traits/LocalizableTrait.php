@@ -17,7 +17,7 @@ Trait LocalizableTrait
     /**
      * @var float $latitude
      *
-     * @ORM\Column(type="decimal", precision=13, scale=10)
+     * @ORM\Column(type="decimal", precision=12, scale=10)
      * @Assert\NotNull(message="constraints.not_null")
      * @Assert\Type(
      *     type="float",

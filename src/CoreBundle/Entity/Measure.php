@@ -43,6 +43,7 @@ class Measure
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @Assert\Valid
+     * @JMS\Expose()
      */
     private $type;
 
@@ -56,14 +57,6 @@ class Measure
      * @JMS\Groups({"detail-measure"})
      */
     private $garden;
-
-    /**
-     * @JMS\VirtualProperty()
-     */
-    public function type()
-    {
-        return !is_null($this->type) ? $this->type->getSlug() : null;
-    }
 
 
     /**

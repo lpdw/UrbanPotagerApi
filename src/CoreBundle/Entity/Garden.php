@@ -114,6 +114,25 @@ class Garden implements OwnableInterface
     private $access;
 
     /**
+     * @JMS\VirtualProperty()
+     * @JMS\Groups({"detail-garden"})
+     */
+    public function address()
+    {
+        if (!$this->showLocation) {
+            return null;
+        }
+
+        return [
+            'country' => $this->country,
+            'zipCode' => $this->zipCode,
+            'city' => $this->city,
+            'line1' => $this->address1,
+            'line2' => $this->address2,
+        ];
+    }
+
+    /**
      * Get id
      *
      * @return int
