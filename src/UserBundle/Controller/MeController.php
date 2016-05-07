@@ -11,6 +11,16 @@ class MeController extends CoreController
     const GARDEN_PER_PAGE = 10; // TODO put into config.yml
 
     /**
+     * @View(serializerGroups={"Default", "details-user", "me"})
+     */
+    public function getMeAction()
+    {
+        return [
+            'user' => $this->getUser(),
+        ];
+    }
+
+    /**
      * @View(serializerGroups={"Default", "me-garden"})
      */
     public function getMeGardensAction(Request $request)
