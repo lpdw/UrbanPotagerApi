@@ -56,15 +56,4 @@ class ConfigurationVoter extends Voter
     {
         return $this->canEdit($entity, $token);
     }
-
-    private function isOwner(Configuration $configuration, User $user)
-    {
-        $owner = $configuration->getOwner();
-
-        if (is_null($owner) || is_null($user)) {
-            return false;
-        }
-
-        return $owner->getId() === $user->getId();
-    }
 }

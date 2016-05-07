@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as JMS;
+use CoreBundle\Entity\Interfaces\OwnableInterface;
 
 /**
  * Garden
@@ -18,7 +19,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\HasLifecycleCallbacks()
  * @JMS\ExclusionPolicy("all")
  */
-class Garden
+class Garden implements OwnableInterface
 {
     use LocalizableTrait;
     use AddressableTrait;

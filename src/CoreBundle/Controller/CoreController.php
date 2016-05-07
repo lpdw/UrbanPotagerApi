@@ -2,10 +2,12 @@
 
 namespace CoreBundle\Controller;
 
+use CoreBundle\Entity\Interfaces\OwnableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\Query;
+use UserBundle\Entity\User;
 
 abstract class CoreController extends Controller
 {
@@ -106,6 +108,24 @@ abstract class CoreController extends Controller
         } catch (\InvalidArgumentException $e) {
             return self::DEFAULT_ITEM_PER_PAGE;
         }
+    }
+
+    /**
+     * @param OwnableInterface $ownable
+     * @param User|null $user
+     *
+     * @return bool
+     */
+    protected function isOwner(OwnableInterface $ownable, User $user = null)
+    {
+        $owner = $ownable->getOwner();
+        $user = $user ?: $this->getUser();
+
+        if (is_null($owner) || is_null($user)) {
+            return false;
+        }
+
+        return $owner->getId() === $user->getId();
     }
 
     /**

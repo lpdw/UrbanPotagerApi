@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as JMS;
+use CoreBundle\Entity\Interfaces\OwnableInterface;
 
 /**
  * Configuration
@@ -15,7 +16,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\ConfigurationRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Configuration
+class Configuration implements OwnableInterface
 {
     use TimestampableEntity;
 

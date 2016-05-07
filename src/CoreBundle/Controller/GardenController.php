@@ -112,20 +112,4 @@ class GardenController extends CoreController
     {
         return 'CoreBundle:Garden';
     }
-
-    /**
-     * @param User $user
-     *
-     * @return bool
-     */
-    protected function isOwner(Garden $garden, User $user)
-    {
-        $owner = $garden->getOwner();
-
-        if (is_null($owner) || is_null($user)) {
-            return false;
-        }
-
-        return $owner->getId() === $user->getId();
-    }
 }

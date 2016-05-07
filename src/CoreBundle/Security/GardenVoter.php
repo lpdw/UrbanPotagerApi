@@ -56,15 +56,4 @@ class GardenVoter extends Voter
     {
         return $this->canEdit($entity, $token);
     }
-
-    private function isOwner(Garden $garden, User $user)
-    {
-        $owner = $garden->getOwner();
-
-        if (is_null($owner) || is_null($user)) {
-            return false;
-        }
-
-        return $owner->getId() === $user->getId();
-    }
 }

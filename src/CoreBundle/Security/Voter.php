@@ -5,6 +5,7 @@ namespace CoreBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter as BaseVoter;
+use CoreBundle\Entity\Interfaces\OwnableInterface;
 use UserBundle\Entity\User;
 
 class Voter extends BaseVoter
@@ -87,5 +88,16 @@ class Voter extends BaseVoter
         $user = $token->getUser();
 
         return ($user instanceof User) ? $user : null;
+    }
+
+    protected function isOwner(OwnableInterface $ownable, User $user)
+    {
+        $owner = $ownable->getOwner();
+
+        if (is_null($owner) || is_null($user)) {
+            return false;
+        }
+
+        return $owner->getId() === $user->getId();
     }
 }
