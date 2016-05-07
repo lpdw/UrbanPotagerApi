@@ -2,12 +2,7 @@
 
 namespace CoreBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations\View;
-use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\Annotations\Post;
-use FOS\RestBundle\Controller\Annotations\Patch;
-use FOS\RestBundle\Controller\Annotations\Delete;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
+use FOS\RestBundle\Controller\Annotations as FOSRest;
 use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,14 +16,14 @@ use CoreBundle\Entity\Type;
 
 
 /**
- * @RouteResource("Access")
+ * @FOSRest\RouteResource("Access")
  */
 class GardenAccessController extends CoreController
 {
     /**
-     * @View(serializerGroups={"Default"})
+     * @FOSRest\View(serializerGroups={"Default"})
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
-     * @Get("/gardens/{garden}/access")
+     * @FOSRest\Get("/gardens/{garden}/access")
      */
     public function cgetAction(Garden $garden)
     {
@@ -40,10 +35,10 @@ class GardenAccessController extends CoreController
     }
 
     /**
-     * @View(serializerGroups={"Default", "detail-access"})
+     * @FOSRest\View(serializerGroups={"Default", "detail-access"})
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      * @ParamConverter("type", options={"mapping": {"type": "slug"}})
-     * @Get("/gardens/{garden}/access/{type}")
+     * @FOSRest\Get("/gardens/{garden}/access/{type}")
      */
     public function getAction(Garden $garden, Type $type)
     {
@@ -57,9 +52,9 @@ class GardenAccessController extends CoreController
     }
 
     /**
-     * @View(serializerGroups={"Default"}, statusCode=201)
+     * @FOSRest\View(serializerGroups={"Default"}, statusCode=201)
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
-     * @Post("/gardens/{garden}/access")
+     * @FOSRest\Post("/gardens/{garden}/access")
      */
     public function postAction(Garden $garden, Request $request)
     {
@@ -72,10 +67,10 @@ class GardenAccessController extends CoreController
     }
 
     /**
-     * @View(serializerGroups={"Default"})
+     * @FOSRest\View(serializerGroups={"Default"})
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      * @ParamConverter("type", options={"mapping": {"type": "slug"}})
-     * @Patch("/gardens/{garden}/access/{type}")
+     * @FOSRest\Patch("/gardens/{garden}/access/{type}")
      */
     public function patchAction(Garden $garden, Type $type, Request $request)
     {
@@ -90,7 +85,7 @@ class GardenAccessController extends CoreController
     /**
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      * @ParamConverter("type", options={"mapping": {"type": "slug"}})
-     * @Delete("/gardens/{garden}/access/{type}")
+     * @FOSRest\Delete("/gardens/{garden}/access/{type}")
      */
     public function deleteAction(Garden $garden, Type $type)
     {
