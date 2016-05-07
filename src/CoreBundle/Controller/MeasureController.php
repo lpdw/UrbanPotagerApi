@@ -2,6 +2,7 @@
 
 namespace CoreBundle\Controller;
 
+use FOS\RestBundle\Util\Codes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,7 +64,7 @@ class MeasureController extends Controller
             ];
         }
 
-        return new JsonResponse("error", self::BAD_REQUEST);
+        return new JsonResponse("error", Codes::HTTP_BAD_REQUEST);
 
     }
 

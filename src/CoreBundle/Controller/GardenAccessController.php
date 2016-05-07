@@ -6,6 +6,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Patch;
 use FOS\RestBundle\Controller\Annotations\Delete;
+use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -111,7 +112,7 @@ class GardenAccessController extends CoreController
             ];
         }
 
-        return new JsonResponse($this->getAllErrors($form), self::BAD_REQUEST);
+        return new JsonResponse($this->getAllErrors($form), Codes::HTTP_BAD_REQUEST);
     }
 
     /**

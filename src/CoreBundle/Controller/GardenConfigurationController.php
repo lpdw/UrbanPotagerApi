@@ -3,6 +3,7 @@
 namespace CoreBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use CoreBundle\Entity\Garden;
@@ -40,14 +41,14 @@ class GardenConfigurationController extends GardenController
         $this->isGranted(ConfigurationVoter::VIEW, $configuration);
 
         if (!is_null($garden->getConfiguration())) {
-            return new JsonResponse([], self::CONFLICT);
+            return new JsonResponse([], Codes::HTTP_CONFLICT);
         }
 
         $garden->setConfiguration($configuration);
 
         $this->getManager()->flush();
 
-        return new JsonResponse([], self::OK);
+        return new JsonResponse([], Codes::HTTP_OK);
     }
 
     /**

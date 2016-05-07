@@ -6,6 +6,7 @@ use CoreBundle\Security\ConfigurationVoter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use CoreBundle\Entity\Configuration;
 use CoreBundle\Form\Type\ConfigurationType;
@@ -96,7 +97,7 @@ class ConfigurationController extends CoreController
             ];
         }
 
-        return new JsonResponse($this->getAllErrors($form), self::BAD_REQUEST);
+        return new JsonResponse($this->getAllErrors($form), Codes::HTTP_BAD_REQUEST);
     }
 
     /**

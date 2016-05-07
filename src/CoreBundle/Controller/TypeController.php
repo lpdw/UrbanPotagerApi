@@ -2,12 +2,13 @@
 
 namespace CoreBundle\Controller;
 
-use CoreBundle\Security\TypeVoter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use CoreBundle\Entity\Type;
+use CoreBundle\Security\TypeVoter;
 use CoreBundle\Form\Type\TypeType;
 
 class TypeController extends CoreController
@@ -89,7 +90,7 @@ class TypeController extends CoreController
             ];
         }
 
-        return new JsonResponse($this->getAllErrors($form), self::BAD_REQUEST);
+        return new JsonResponse($this->getAllErrors($form), Codes::HTTP_BAD_REQUEST);
     }
 
     /**
