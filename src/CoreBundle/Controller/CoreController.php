@@ -38,14 +38,12 @@ abstract class CoreController extends Controller
     {
         $errorsString = [];
 
-        /** @var \Symfony\Component\Form\FormInterface $child */
-        foreach ($form->all() as $child)
-        {
-            $errors = $child->getErrors(true, false);
+        foreach ($form->getErrors() as $error) {
+            $errorsString['form_error'] = $error->getMessage();
+        }
 
-            foreach($errors as $error) {
-                $errorsString[$child->getName()] = $error->getMessage();
-            }
+        foreach ($form->all() as $name => $child) {
+            $errorsString[$name] = $this->getAllErrors($child);
         }
 
         return $errorsString;
