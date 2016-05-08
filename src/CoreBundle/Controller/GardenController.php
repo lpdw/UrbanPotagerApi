@@ -56,7 +56,7 @@ class GardenController extends CoreController
     }
 
     /**
-     * @View(serializerGroups={"Default", "detail-garden"}, statusCode=201)
+     * @View(serializerGroups={"Default", "detail-garden", "me-garden"}, statusCode=201)
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      */
     public function postGardenAction(Request $request)
@@ -69,7 +69,7 @@ class GardenController extends CoreController
     }
 
     /**
-     * @View(serializerGroups={"Default", "detail-garden"})
+     * @View(serializerGroups={"Default", "detail-garden", "me-garden"})
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      */
     public function patchGardenAction(Garden $garden, Request $request)
