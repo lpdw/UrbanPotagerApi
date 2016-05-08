@@ -23,6 +23,11 @@ security:
             stateless: true
             gfreeau_get_jwt: ~
 
+        refresh: # TODO voir si refactoring pas possible (avec gettoken)
+            pattern:  ^/token/refresh
+            stateless: true
+            anonymous: true
+
         api:
             pattern:   ^/
             stateless: true
@@ -30,5 +35,6 @@ security:
             lexik_jwt: ~
 
     access_control:
+        - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/me, roles: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/configurations$, role: IS_AUTHENTICATED_FULLY }
