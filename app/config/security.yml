@@ -18,15 +18,10 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        login:
-            pattern:  ^/login
+        gettoken:
+            pattern:  ^/token$
             stateless: true
-            anonymous: true
-            form_login:
-                check_path:               /login_check
-                success_handler:          lexik_jwt_authentication.handler.authentication_success
-                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
-                require_previous_session: false
+            gfreeau_get_jwt: ~
 
         api:
             pattern:   ^/
