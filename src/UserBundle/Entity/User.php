@@ -5,6 +5,7 @@ namespace UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User
@@ -12,6 +13,14 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
  * @JMS\ExclusionPolicy("all")
+ * @UniqueEntity(
+ *     fields={"username"},
+ *     message="constraints.unique",
+ * )
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="constraints.unique",
+ * )
  */
 class User extends BaseUser
 {
@@ -35,4 +44,3 @@ class User extends BaseUser
         return $this->id;
     }
 }
-

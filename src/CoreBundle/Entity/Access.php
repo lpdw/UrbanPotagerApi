@@ -13,7 +13,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *
  * @ORM\Table(name="access")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\AccessRepository")
- * @UniqueEntity(fields={"garden", "type"})
+ * @UniqueEntity(fields={"garden", "type"}, message="constraints.unique")
  * @JMS\ExclusionPolicy("all")
  */
 class Access

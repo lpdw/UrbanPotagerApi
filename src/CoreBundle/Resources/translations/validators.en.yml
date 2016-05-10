@@ -1,12 +1,15 @@
 constraints:
     length:
-        max: "This value is too long. It should have {{ limit }} characters or less."
-    not_null: "This value should not be null."
-    not_blank: "This value should not be blank."
-    type: "This value should be of type {{ type }}."
-    uuid: "This is not a valid UUID."
+        max: "This value is too long. It should have {{ limit }} characters or less"
+    not_null: "This value should not be null"
+    not_blank: "This value should not be blank"
+    type: "This value should be of type {{ type }}"
+    uuid: "This is not a valid UUID"
     range:
-        min: "This value should be {{ limit }} or more."
-        max: "This value should be {{ limit }} or less."
-    time: "This value is not a valid time."
+        min: "This value should be {{ limit }} or more"
+        max: "This value should be {{ limit }} or less"
+    time: "This value is not a valid time"
     min_max: "The minimum value must be less than the max"
+    email: "The email '{{ value }}' is not a valid email"
+    unique: "This value is already used"
+

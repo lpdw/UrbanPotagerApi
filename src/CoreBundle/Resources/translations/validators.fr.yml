@@ -10,3 +10,5 @@ constraints:
         max: "Cette valeur doit être {{ limit }} ou moins."
     time: "Cette valeur n'est pas une heure valide"
     min_max: "La valeur min doit-être inférieur à la valeur max"
+    email: "L'email '{{ value }}' n'est pas une email valide"
+    unique: "Cette valeur est déjà utilisée"
