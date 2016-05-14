@@ -60,9 +60,9 @@ abstract class CoreController extends Controller
      * @param string $message
      * @return string
      */
-    protected function t($message)
+    protected function t($message, $domain = 'messages')
     {
-        return $this->get('translator')->trans($message);
+        return $this->get('translator')->trans($message, [], $domain);
     }
 
     /**
