@@ -90,7 +90,7 @@ class Voter extends BaseVoter
         return ($user instanceof User) ? $user : null;
     }
 
-    protected function isOwner(OwnableInterface $ownable, User $user)
+    protected function isOwner(OwnableInterface $ownable, User $user = null)
     {
         $owner = $ownable->getOwner();
 

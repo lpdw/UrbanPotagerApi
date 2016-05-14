@@ -2,6 +2,8 @@
 
 namespace CoreBundle\Controller;
 
+use CoreBundle\Form\Type\CollectionAccessType;
+use CoreBundle\Model\CollectionAccess;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
 use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -60,10 +62,10 @@ class GardenAccessController extends CoreController
     {
         $this->isGranted(GardenVoter::EDIT, $garden);
 
-        $access = new Access();
-        $access->setGarden($garden);
+        $collectionAccess = new CollectionAccess();
+        $collectionAccess->setAccess($garden->getAccess());
 
-        return $this->formAccess($access, $request, 'post');
+        return $this->formAccess($garden, $collectionAccess, $request, 'post');
     }
 
     /**
@@ -97,21 +99,27 @@ class GardenAccessController extends CoreController
         $this->getManager()->flush();
     }
 
-    private function formAccess(Access $access, Request $request, $method = 'post')
+    private function formAccess(Garden $garden, CollectionAccess $collectionAccess, Request $request, $method = 'post')
     {
-        $formType = 'post' === $method ? AccessType::class : AccessEditType::class;
+        $formType = 'post' === $method ? CollectionAccessType::class : AccessEditType::class;
 
-        $form = $this->createForm($formType, $access, ['method' => $method]);
-
+        $form = $this->createForm($formType, $collectionAccess, ['method' => $method]);
         $form->handleRequest($request);
+
+        $cAccess = $collectionAccess->getAccess();
+
+        /** @var \CoreBundle\Entity\Access $access */
+        foreach($cAccess as $access) {
+            $access->setGarden($garden);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getManager();
-            $em->persist($access);
+            $em->persist($garden);
             $em->flush();
 
             return [
-                'access' => $access,
+                'access' => $garden->getAccess(),
             ];
         }
 

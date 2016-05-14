@@ -107,7 +107,7 @@ class Garden implements OwnableInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Access", mappedBy="garden")
+     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Access", mappedBy="garden", cascade={"persist"})
      * @JMS\Expose()
      * @JMS\Groups({"detail-garden"})
      */
@@ -449,12 +449,25 @@ class Garden implements OwnableInterface
     {
         return $this->configuration;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->access = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $access
+     *
+     * @return Garden
+     */
+    public function setAccess(\Doctrine\Common\Collections\ArrayCollection $cAccess)
+    {
+        $this->access = $cAccess;
+
+        return $this;
     }
 
     /**

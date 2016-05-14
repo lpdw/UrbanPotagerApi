@@ -5,11 +5,9 @@ namespace CoreBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use CoreBundle\Entity\Type;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-class AccessType extends AbstractType
+class CollectionAccessType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -18,12 +16,11 @@ class AccessType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('isPublic', CheckboxType::class)
-            ->add('type', EntityType::class, [
-                'class' => 'CoreBundle:Type',
-                'choice_value' => function(Type $type) {
-                    return $type->getSlug();
-                }
+            ->add('access', CollectionType::class, [
+                'entry_type' => AccessType::class,
+                'allow_add' => true,
+                //'allow_delete' => true,
+                //'delete_empty' => true,
             ])
         ;
     }
@@ -33,9 +30,9 @@ class AccessType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'CoreBundle\Entity\Access'
-        ));
+        $resolver->setDefaults([
+            'data_class' => 'CoreBundle\Model\CollectionAccess'
+        ]);
     }
 
     public function getBlockPrefix()
