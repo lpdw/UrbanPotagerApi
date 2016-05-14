@@ -2,7 +2,7 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-	app_name: myapp
+    app_name: myapp
 
     database_host:     127.0.0.1
     database_port:     ~
@@ -30,5 +30,5 @@ parameters:
     configuration_per_page: 10
     garden_per_page: 10
 
-	# mail
-	mail_sender: 'no-reply@domain.tld'
+    # mail
+    mail_sender: 'no-reply@domain.tld'
