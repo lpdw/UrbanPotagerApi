@@ -11,5 +11,11 @@
 {% endblock %}
 
 {% block body_html %}
-    {# TODO template html #}
+    <!DOCTYPE html>
+    <html>
+        <head></head>
+        <body>
+            {{ 'resetting.email.message'|trans({'%username%': user.username, '%token%': token}) }}
+        </body>
+    </html>
 {% endblock %}
