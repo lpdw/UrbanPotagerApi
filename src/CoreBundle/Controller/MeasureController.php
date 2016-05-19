@@ -2,66 +2,30 @@
 
 namespace CoreBundle\Controller;
 
+use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Util\Codes;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use CoreBundle\Entity\Measure;
-use CoreBundle\Entity\Garden;
 use CoreBundle\Form\Type\MeasureType;
+use CoreBundle\Entity\Measure;
 
-class MeasureController extends Controller
+class MeasureController extends CoreController
 {
-
     /**
-    * Get entity instance
-    * @var integer $id Id of the entity
-    * @return Organisation
-    */
-    private function getMeasures($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $garden = $em
-        ->getRepository('CoreBundle:Garden')
-        ->find($id)
-        ;
-        $measures = $em
-        ->getRepository('CoreBundle:Measure')
-        ->findBy(array('garden' => $garden))
-        ;
-
-        return $measures;
-    }
-
-    private function getGarden($id)
-    {
-    $em = $this->getDoctrine()->getManager();
-    $garden = $em
-        ->getRepository('CoreBundle:Garden')
-        ->findBy(array('id' => $id))
-    ;
-
-
-    return $garden;
-    }
-
+     * @View(serializerGroups={"Default"}, statusCode=201)
+     */
     public function postMeasureAction(Request $request)
     {
-        $this->$measure = new Measure();
-        $request->query->get($apiKey);
+        $measure = new Measure();
+
+        $apiKey = $request->query->get('api_key');
+        $garden = $this->getGardenByApiKey($apiKey);
+        $measure->setGarden($garden);
+
         return $this->formMeasure($measure, $request, "post");
     }
 
-    public function getGardenDatasAction($id)
-    {
-        $measures = $this->getMeasures($id);
-
-        return array(
-            'measures' => $measures,
-            );
-    }
-
-    private function formMeasure(Measure $measure, Request $request, $method='post')
+    private function formMeasure(Measure $measure, Request $request, $method = 'post')
     {
         $form = $this->createForm(MeasureType::class, $measure, array('method' => $method));
         $form->handleRequest($request);
@@ -76,8 +40,20 @@ class MeasureController extends Controller
             ];
         }
 
-        return new JsonResponse("error", Codes::HTTP_BAD_REQUEST);
+        return new JsonResponse($this->getAllErrors($form), Codes::HTTP_BAD_REQUEST);
+    }
 
+    private function getGardenByApiKey($apiKey)
+    {
+        /** @var \CoreBundle\Repository\GardenRepository $repo */
+        $repo = $this->getRepository('CoreBundle:Garden');
+        $garden = $repo->findByApiKey($apiKey);
+
+        if (is_null($garden)) {
+            throw $this->createNotFoundException();
+        }
+
+        return $garden;
     }
 
     /**

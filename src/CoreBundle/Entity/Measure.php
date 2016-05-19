@@ -42,7 +42,6 @@ class Measure
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
      * @ORM\JoinColumn(onDelete="SET NULL")
-     * @Assert\Valid
      * @JMS\Expose()
      */
     private $type;
@@ -52,7 +51,6 @@ class Measure
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
      * @ORM\JoinColumn(onDelete="SET NULL")
-     * @Assert\Valid
      * @JMS\Expose()
      * @JMS\Groups({"detail-measure"})
      */
