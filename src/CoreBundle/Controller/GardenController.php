@@ -57,7 +57,6 @@ class GardenController extends CoreController
 
     /**
      * @View(serializerGroups={"Default", "detail-garden", "me-garden"}, statusCode=201)
-     * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      */
     public function postGardenAction(Request $request)
     {
