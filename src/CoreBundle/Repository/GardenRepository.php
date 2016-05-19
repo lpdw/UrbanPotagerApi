@@ -28,4 +28,13 @@ class GardenRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery();
     }
+
+    public function findByApiKey($apiKey)
+    {
+        $qb = $this->createQueryBuilder('g')
+                    ->where('g.apiKey = :apiKey')
+                    ->setParameter('apiKey', $apiKey);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }
