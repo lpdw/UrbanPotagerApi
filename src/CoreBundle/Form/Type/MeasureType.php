@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use CoreBundle\Entity\Type;
 
 class MeasureType extends AbstractType
 {
@@ -18,6 +20,12 @@ class MeasureType extends AbstractType
         $builder
             ->add('value', NumberType::class, [
                 'scale' => 2,
+            ])
+            ->add('type', EntityType::class, [
+                'class' => 'CoreBundle:Type',
+                'choice_value' => function(Type $type) {
+                    return $type->getSlug();
+                }
             ])
         ;
     }
