@@ -13,44 +13,56 @@ use CoreBundle\Form\Type\MeasureType;
 class MeasureController extends Controller
 {
 
-    /**
-    * Get entity instance
-    * @var integer $id Id of the entity
-    * @return Organisation
-    */
-    private function getMeasures($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $garden = $em
+  /**
+   * Get entity instance
+   * @var integer $id Id of the entity
+   * @return Organisation
+   */
+  private function getMeasures($id)
+  {
+      $em = $this->getDoctrine()->getManager();
+      $garden = $em
         ->getRepository('CoreBundle:Garden')
         ->find($id)
-        ;
-        $measures = $em
+      ;
+      $measures = $em
         ->getRepository('CoreBundle:Measure')
         ->findBy(array('garden' => $garden))
+      ;
+
+      return $measures;
+  }
+
+  private function getGarden($id)
+  {
+        $em = $this->getDoctrine()->getManager();
+        $garden = $em
+            ->getRepository('CoreBundle:Garden')
+            ->findBy(array('id' => $id))
         ;
 
-        return $measures;
-    }
 
+        return $garden;
+  }
 
-    public function getGardenDatasAction($id)
-    {
-        $measures = $this->getMeasures($id);
+  public function getGardenDatasAction($id)
+  {
+      $measures = $this->getMeasures($id);
 
-        return array(
-            'measures' => $measures,
-            );
-    }
+      return array(
+              'measures' => $measures,
+              );
+  }
 
-    public function postGardenDatasAction(Request $request, $id)
-    {
-        $measures = $this->getMeasures($id);
+  public function postGardenDatasAction(Request $request, $id)
+  {
+        $garden = $this->getGarden($id);
+
         return $this->formMeasure(new Measure(), $request, "post");
-    }
+  }
 
-    private function formMeasure(Measure $measure, Request $request, $method='post')
-    {
+  private function formMeasure(Measure $measure, Request $request, $method='post')
+  {
         $form = $this->createForm(MeasureType::class, $measure, array('method' => $method));
         $form->handleRequest($request);
 
@@ -68,12 +80,11 @@ class MeasureController extends Controller
 
     }
 
-    /**
-    * @return string
-    */
-    protected function getRepositoryName()
-    {
-        return 'CoreBundle:Measure';
-    }
-
+  /**
+   * @return string
+   */
+  protected function getRepositoryName()
+  {
+      return 'CoreBundle:Measure';
+  }
 }
