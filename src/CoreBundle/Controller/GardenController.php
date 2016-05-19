@@ -8,11 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use CoreBundle\Entity\Garden;
-use CoreBundle\Entity\Configuration;
 use CoreBundle\Security\GardenVoter;
-use CoreBundle\Security\ConfigurationVoter;
 use CoreBundle\Form\Type\GardenType;
-use UserBundle\Entity\User;
 
 class GardenController extends CoreController
 {
