@@ -19,7 +19,7 @@ security:
             security: false
 
         gettoken:
-            pattern:  ^/token($|refresh)
+            pattern:  ^/token($|/refresh)
             stateless: true
             anonymous: true
             gfreeau_get_jwt: ~
