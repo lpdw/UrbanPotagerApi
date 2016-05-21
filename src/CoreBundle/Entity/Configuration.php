@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as JMS;
 use CoreBundle\Entity\Interfaces\OwnableInterface;
+use CoreBundle\Entity\Traits\NameableTrait;
 
 /**
  * Configuration
@@ -19,6 +20,7 @@ use CoreBundle\Entity\Interfaces\OwnableInterface;
 class Configuration implements OwnableInterface
 {
     use TimestampableEntity;
+    use NameableTrait;
 
     /**
      * @var int
@@ -28,25 +30,6 @@ class Configuration implements OwnableInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=250)
-     * @Assert\NotBlank(message="constraints.not_blank")
-     * @Assert\Length(max=250, maxMessage="constraints.length.max")
-     * @JMS\Expose()
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(length=255, unique=true)
-     * @JMS\Expose()
-     */
-    private $slug;
 
     /**
      * @var string
@@ -153,30 +136,6 @@ class Configuration implements OwnableInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Configuration
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -345,26 +304,6 @@ class Configuration implements OwnableInterface
     public function getWateringEnd()
     {
         return $this->wateringEnd;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     *
-     * @return Configuration
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
     }
 
     /**

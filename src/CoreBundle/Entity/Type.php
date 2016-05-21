@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use CoreBundle\Validator\Constraints as CoreAssert;
+use CoreBundle\Entity\Traits\NameableTrait;
 
 /**
  * Type
@@ -26,6 +27,7 @@ class Type
     const SENSOR    = 1;
 
     use TimestampableEntity;
+    use NameableTrait;
 
     /**
      * @var int
@@ -35,25 +37,6 @@ class Type
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=250, unique=true)
-     * @Assert\NotBlank(message="constraints.not_blank")
-     * @Assert\Length(max=250, maxMessage="constraints.length.max")
-     * @JMS\Expose()
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(length=255, unique=true)
-     * @JMS\Expose()
-     */
-    private $slug;
 
     /**
      * @var string
@@ -131,30 +114,6 @@ class Type
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Type
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -194,26 +153,6 @@ class Type
     public function setType($type)
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     *
-     * @return Type
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
 
         return $this;
     }
