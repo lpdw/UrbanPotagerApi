@@ -2,6 +2,7 @@
 
 namespace CoreBundle\Entity;
 
+use CoreBundle\Entity\Interfaces\OwnableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -18,7 +19,7 @@ use CoreBundle\Validator\Constraints as CoreAssert;
  * @CoreAssert\InRangeType
  * @JMS\ExclusionPolicy("all")
  */
-class Alert
+class Alert implements OwnableInterface
 {
     public static $OPERATOR = [
         'equal'                 => 1,
@@ -102,7 +103,7 @@ class Alert
     /**
      * @var \CoreBundle\Entity\Garden
      *
-     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden", inversedBy="alerts")
+     * @ORM\ManyToMany(targetEntity="CoreBundle\Entity\Garden", inversedBy="alerts")
      * @JMS\Expose()
      * @JMS\Groups({"detail-alert"})
      */
@@ -113,8 +114,19 @@ class Alert
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
      * @JMS\Expose()
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $type;
+
+    /**
+     * @var \UserBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @JMS\Expose()
+     * @JMS\Groups({"detail-alert"})
+     */
+    private $owner;
 
 
     /**
@@ -265,5 +277,29 @@ class Alert
         $this->comparison = $comparison;
 
         return $this;
+    }
+
+    /**
+     * Set owner
+     *
+     * @param \UserBundle\Entity\User $owner
+     *
+     * @return Garden
+     */
+    public function setOwner(\UserBundle\Entity\User $owner = null)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
     }
 }

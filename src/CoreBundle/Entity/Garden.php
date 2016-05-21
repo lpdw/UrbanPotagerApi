@@ -95,7 +95,7 @@ class Garden implements OwnableInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Alert", mappedBy="garden")
+     * @ORM\ManyToMany(targetEntity="CoreBundle\Entity\Alert", mappedBy="garden")
      */
     private $alerts;
 

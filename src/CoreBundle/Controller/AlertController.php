@@ -7,8 +7,6 @@ use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use CoreBundle\Entity\Garden;
-use CoreBundle\Security\GardenVoter;
 use CoreBundle\Security\AlertVoter;
 use CoreBundle\Form\Type\AlertType;
 use CoreBundle\Entity\Alert;
@@ -17,15 +15,23 @@ class AlertController extends CoreController
 {
     /**
      * @FOSRest\View(serializerGroups={"Default"})
-     * @FOSRest\Get("/gardens/{garden}/alerts")
-     * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      */
-    public function getAlertsAction(Garden $garden)
+    public function getAlertsAction(Request $request)
     {
-        $this->isGranted(GardenVoter::VIEW, $garden); // TODO increase voter
+        /** @var \CoreBundle\Repository\AlertRepository $repo */
+        $repo = $this->getRepository();
+
+        $itemPerPage = $this->getItemPerPage('alert');
+
+        $query = $repo->queryMeAlerts($this->getUser());
+
+        $pagination = $this->getPagination($request, $query, $itemPerPage);
 
         return [
-            'alert' => $garden->getAlerts(),
+            'total_items' => $pagination->getTotalItemCount(),
+            'item_per_page' => $itemPerPage,
+            'alerts' => $pagination->getItems(),
+            'page' => $pagination->getPage() + 1,
         ];
     }
 
@@ -44,14 +50,12 @@ class AlertController extends CoreController
 
     /**
      * @FOSRest\View(serializerGroups={"Default"}, statusCode=201)
-     * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      */
-    public function postGardensAlertAction(Garden $garden, Request $request)
+    public function postAlertAction(Request $request)
     {
-        $alert = new Alert();
-        $this->isGranted(AlertVoter::CREATE, $alert);
+        $this->isGranted(AlertVoter::CREATE, $alert = new Alert());
 
-        $alert->setGarden($garden);
+        $alert->setOwner($this->getUser());
 
         return $this->formAlert($alert, $request, 'post');
     }
@@ -68,7 +72,6 @@ class AlertController extends CoreController
     }
 
     /**
-     * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      * @ParamConverter("alert", options={"mapping": {"alert": "slug"}})
      */
     public function deleteAlertAction(Alert $alert)

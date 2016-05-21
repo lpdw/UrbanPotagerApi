@@ -4,6 +4,7 @@ namespace CoreBundle\Repository;
 
 use CoreBundle\Entity\Garden;
 use CoreBundle\Entity\Type;
+use UserBundle\Entity\User;
 
 /**
  * AlertRepository
@@ -24,5 +25,14 @@ class AlertRepository extends \Doctrine\ORM\EntityRepository
                     ]);
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function queryMeAlerts(User $user)
+    {
+        $qb = $this->createQueryBuilder('a')
+                    ->where('a.owner = :user')
+                    ->setParameter('user', $user);
+
+        return $qb->getQuery();
     }
 }

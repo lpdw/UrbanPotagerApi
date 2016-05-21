@@ -20,7 +20,7 @@ class AlertVoter extends Voter
      */
     protected function canView($entity, TokenInterface $token)
     {
-        return $this->isOwner($entity->getGarden(), $this->getUser($token));
+        return $this->isOwner($entity, $this->getUser($token));
     }
 
     /**
@@ -42,7 +42,7 @@ class AlertVoter extends Voter
      */
     protected function canEdit($entity, TokenInterface $token)
     {
-        return $this->isOwner($entity->getGarden(), $this->getUser($token));
+        return $this->isOwner($entity, $this->getUser($token));
     }
 
     /**
