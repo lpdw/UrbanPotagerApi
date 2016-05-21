@@ -6,26 +6,36 @@ services:
         tags:
             - { name: security.voter }
 
-    type.voter:
+    core.type_voter:
         class: CoreBundle\Security\TypeVoter
         parent: core.base_voter
         tags:
             - { name: security.voter }
 
-    garden.voter:
+    core.garden_voter:
         class: CoreBundle\Security\GardenVoter
         parent: core.base_voter
         tags:
             - { name: security.voter }
 
-    configuration.voter:
+    core.configuration_voter:
         class: CoreBundle\Security\ConfigurationVoter
         parent: core.base_voter
         tags:
             - { name: security.voter }
 
-    alert.voter:
+    core.alert_voter:
         class: CoreBundle\Security\AlertVoter
         parent: core.base_voter
         tags:
             - { name: security.voter }
+
+    core.trigger_alert:
+        class: CoreBundle\Service\TriggerAlert
+        arguments: ['@doctrine', '@event_dispatcher']
+
+    core.event_subscriber:
+        class: CoreBundle\EventSubscriber\EventSubscriber
+        arguments: ['@core.trigger_alert']
+        tags:
+            - { name: kernel.event_subscriber }
