@@ -8,12 +8,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as JMS;
 use CoreBundle\Entity\Traits\NameableTrait;
+use CoreBundle\Validator\Constraints as CoreAssert;
 
 /**
  * Alert
  *
  * @ORM\Table(name="alert")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\AlertRepository")
+ * @CoreAssert\InRangeType
  * @JMS\ExclusionPolicy("all")
  */
 class Alert

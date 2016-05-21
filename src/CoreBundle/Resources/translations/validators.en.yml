@@ -12,3 +12,6 @@ constraints:
     min_max: "The minimum value must be less than the max"
     email: "The email '{{ value }}' is not a valid email"
     unique: "This value is already used"
+    range_type:
+        min: "The threshold should be {{ limit }} or more"
+        max: "The threshold should be {{ limit }} or less"
