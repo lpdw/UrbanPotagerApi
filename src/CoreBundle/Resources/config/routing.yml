@@ -27,3 +27,7 @@ garden_access:
     type:     rest
     parent:   garden
     resource: CoreBundle\Controller\GardenAccessController
+
+garden_alert:
+    type:     rest
+    resource: CoreBundle\Controller\AlertController

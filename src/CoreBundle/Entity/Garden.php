@@ -99,8 +99,6 @@ class Garden implements OwnableInterface
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Configuration")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @Assert\Valid
-     * @JMS\Expose()
-     * @JMS\Groups({"me-garden"})
      */
     private $configuration;
 
@@ -108,10 +106,15 @@ class Garden implements OwnableInterface
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Access", mappedBy="garden")
-     * @JMS\Expose()
-     * @JMS\Groups({"detail-garden"})
      */
     private $access;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Alert", mappedBy="garden")
+     */
+    private $alert;
 
     /**
      * @JMS\VirtualProperty()
@@ -489,5 +492,39 @@ class Garden implements OwnableInterface
     public function getAccess()
     {
         return $this->access;
+    }
+
+    /**
+     * Add alert
+     *
+     * @param \CoreBundle\Entity\Alert $alert
+     *
+     * @return Garden
+     */
+    public function addAlert(\CoreBundle\Entity\Alert $alert)
+    {
+        $this->alert[] = $alert;
+
+        return $this;
+    }
+
+    /**
+     * Remove alert
+     *
+     * @param \CoreBundle\Entity\Alert $alert
+     */
+    public function removeAlert(\CoreBundle\Entity\Alert $alert)
+    {
+        $this->alert->removeElement($alert);
+    }
+
+    /**
+     * Get alert
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAlert()
+    {
+        return $this->alert;
     }
 }
