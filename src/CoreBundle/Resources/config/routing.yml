@@ -18,6 +18,10 @@ measure:
     type:     rest
     resource: CoreBundle\Controller\MeasureController
 
+alert:
+    type:     rest
+    resource: CoreBundle\Controller\AlertController
+
 garden_configuration:
     type:     rest
     parent:   garden
@@ -30,4 +34,5 @@ garden_access:
 
 garden_alert:
     type:     rest
-    resource: CoreBundle\Controller\AlertController
+    parent:   garden
+    resource: CoreBundle\Controller\GardenAlertController

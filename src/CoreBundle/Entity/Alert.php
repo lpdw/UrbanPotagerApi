@@ -101,13 +101,13 @@ class Alert implements OwnableInterface
     private $message;
 
     /**
-     * @var \CoreBundle\Entity\Garden
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="CoreBundle\Entity\Garden", inversedBy="alerts")
      * @JMS\Expose()
      * @JMS\Groups({"detail-alert"})
      */
-    private $garden;
+    private $gardens;
 
     /**
      * @var \CoreBundle\Entity\Type
@@ -212,30 +212,6 @@ class Alert implements OwnableInterface
     }
 
     /**
-     * Set garden
-     *
-     * @param \CoreBundle\Entity\Garden $garden
-     *
-     * @return Alert
-     */
-    public function setGarden(\CoreBundle\Entity\Garden $garden = null)
-    {
-        $this->garden = $garden;
-
-        return $this;
-    }
-
-    /**
-     * Get garden
-     *
-     * @return \CoreBundle\Entity\Garden
-     */
-    public function getGarden()
-    {
-        return $this->garden;
-    }
-
-    /**
      * Set type
      *
      * @param \CoreBundle\Entity\Type $type
@@ -301,5 +277,46 @@ class Alert implements OwnableInterface
     public function getOwner()
     {
         return $this->owner;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->gardens = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add garden
+     *
+     * @param \CoreBundle\Entity\Garden $garden
+     *
+     * @return Alert
+     */
+    public function addGarden(\CoreBundle\Entity\Garden $garden)
+    {
+        $this->gardens[] = $garden;
+
+        return $this;
+    }
+
+    /**
+     * Remove garden
+     *
+     * @param \CoreBundle\Entity\Garden $garden
+     */
+    public function removeGarden(\CoreBundle\Entity\Garden $garden)
+    {
+        $this->gardens->removeElement($garden);
+    }
+
+    /**
+     * Get gardens
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGardens()
+    {
+        return $this->gardens;
     }
 }

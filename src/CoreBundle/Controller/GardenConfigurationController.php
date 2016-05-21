@@ -14,6 +14,7 @@ use CoreBundle\Security\ConfigurationVoter;
 class GardenConfigurationController extends CoreController
 {
     /**
+     * @View(serializerGroups={"Default"})
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      */
     public function getConfigurationAction(Garden $garden)
@@ -65,6 +66,6 @@ class GardenConfigurationController extends CoreController
 
     protected function getRepositoryName()
     {
-        return 'CoreBundle:Garden';
+        return 'CoreBundle:Configuration';
     }
 }
