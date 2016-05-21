@@ -4,14 +4,42 @@ namespace CoreBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Util\Codes;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use CoreBundle\Event\MeasureSentEvent;
 use CoreBundle\Form\Type\MeasureType;
+use CoreBundle\Security\GardenVoter;
 use CoreBundle\Entity\Measure;
+use CoreBundle\Entity\Garden;
+use CoreBundle\Entity\Type;
 
 class MeasureController extends CoreController
 {
+    /**
+     * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
+     * @ParamConverter("type", options={"mapping": {"type": "slug"}})
+     */
+    public function getGardensMeasuresAction(Garden $garden, Type $type)
+    {
+        $this->grantedViewMeasure($garden, $type);
+
+        /** @var \CoreBundle\Repository\MeasureRepository $repo */
+        $repo = $this->getRepository();
+
+        $itemPerPage = $this->getItemPerPage('measure');
+
+        $measures = $repo->getMeasureByGardenAndType($garden, $type);
+
+        $totalItems = $repo->countPerGardenAndType($garden, $type);
+
+        return [
+            'measures' => $measures,
+            'total_items' => $totalItems,
+            'item_per_page' => $itemPerPage,
+        ];
+    }
+
     /**
      * @View(serializerGroups={"Default"}, statusCode=201)
      */
@@ -46,6 +74,11 @@ class MeasureController extends CoreController
         return new JsonResponse($this->getAllErrors($form), Codes::HTTP_BAD_REQUEST);
     }
 
+    /**
+     * @param $apiKey
+     *
+     * @return \CoreBundle\Entity\Garden
+     */
     private function getGardenByApiKey($apiKey)
     {
         /** @var \CoreBundle\Repository\GardenRepository $repo */
@@ -57,6 +90,35 @@ class MeasureController extends CoreController
         }
 
         return $garden;
+    }
+
+    /**
+     * @param Garden $garden
+     * @param Type $type
+     */
+    private function grantedViewMeasure(Garden $garden, Type $type)
+    {
+        if (!$this->canViewMeasure($garden, $type)) {
+            throw $this->createAccessDeniedException();
+        }
+    }
+
+    /**
+     * @param Garden $garden
+     * @param Type $type
+     *
+     * @return bool
+     */
+    private function canViewMeasure(Garden $garden, Type $type)
+    {
+        if ($this->isOwner($garden)) {
+            return true;
+        } else {
+            /** @var \CoreBundle\Repository\AccessRepository $repo */
+            $repo = $this->getRepository('CoreBundle:Access');
+
+            return $repo->measureIsPublic($garden, $type);
+        }
     }
 
     /**

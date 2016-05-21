@@ -25,4 +25,19 @@ class AccessRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getOneOrNullResult();
     }
+
+    public function measureIsPublic(Garden $garden, Type $type)
+    {
+        $qb = $this->createQueryBuilder('a')
+                    ->select('COUNT(a.id)')
+                    ->where('a.garden = :garden')
+                    ->andWhere('a.type = :type')
+                    ->andWhere('a.isPublic = true')
+                    ->setParameters([
+                        'garden' => $garden,
+                        'type' => $type,
+                    ]);
+
+        return (bool) $qb->getQuery()->getSingleScalarResult();
+    }
 }

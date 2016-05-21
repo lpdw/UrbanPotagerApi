@@ -29,6 +29,7 @@ parameters:
     # item per page
     configuration_per_page: 10
     garden_per_page: 10
+    measure_per_page: 50
 
     # mail
     mail_sender: 'no-reply@domain.tld'
