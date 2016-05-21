@@ -50,9 +50,7 @@ class Measure
      * @var Garden
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     * @JMS\Expose()
-     * @JMS\Groups({"detail-measure"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $garden;
 
