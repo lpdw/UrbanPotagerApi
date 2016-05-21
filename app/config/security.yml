@@ -19,14 +19,10 @@ security:
             security: false
 
         gettoken:
-            pattern:  ^/token$
-            stateless: true
-            gfreeau_get_jwt: ~
-
-        refresh: # TODO voir si refactoring pas possible (avec gettoken)
-            pattern:  ^/token/refresh
+            pattern:  ^/token($|refresh)
             stateless: true
             anonymous: true
+            gfreeau_get_jwt: ~
 
         api:
             pattern:   ^/
