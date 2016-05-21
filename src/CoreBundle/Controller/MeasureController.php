@@ -6,6 +6,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Util\Codes;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use CoreBundle\Event\MeasureSentEvent;
 use CoreBundle\Form\Type\MeasureType;
 use CoreBundle\Entity\Measure;
 
@@ -27,13 +28,15 @@ class MeasureController extends CoreController
 
     private function formMeasure(Measure $measure, Request $request, $method = 'post')
     {
-        $form = $this->createForm(MeasureType::class, $measure, array('method' => $method));
+        $form = $this->createForm(MeasureType::class, $measure, ['method' => $method]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($measure);
             $em->flush();
+
+            $this->dispatch(MeasureSentEvent::NAME, new MeasureSentEvent($measure));
 
             return [
                 'measure' => $measure,

@@ -4,6 +4,7 @@ namespace CoreBundle\Controller;
 
 use CoreBundle\Entity\Interfaces\OwnableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\Query;
@@ -124,6 +125,18 @@ abstract class CoreController extends Controller
         }
 
         return $owner->getId() === $user->getId();
+    }
+
+    /**
+     * @param string $name
+     * @param Event $event
+     */
+    protected function dispatch($name, Event $event)
+    {
+        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+        $dispatcher = $this->get('event_dispatcher');
+
+        $dispatcher->dispatch($name, $event);
     }
 
     /**
