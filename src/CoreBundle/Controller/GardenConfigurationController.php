@@ -35,7 +35,7 @@ class GardenConfigurationController extends CoreController
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      * @ParamConverter("configuration", options={"mapping": {"configuration": "slug"}})
      */
-    public function postConfigurationAction(Garden $garden, Configuration $configuration)
+    public function postConfigurationsAction(Garden $garden, Configuration $configuration)
     {
         $this->isGranted(GardenVoter::EDIT, $garden);
         $this->isGranted(ConfigurationVoter::VIEW, $configuration);
