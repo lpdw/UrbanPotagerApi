@@ -25,7 +25,7 @@ class AlertController extends CoreController
         $this->isGranted(GardenVoter::VIEW, $garden); // TODO increase voter
 
         return [
-            'alert' => $garden->getAlert(),
+            'alert' => $garden->getAlerts(),
         ];
     }
 

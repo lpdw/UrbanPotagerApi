@@ -102,7 +102,7 @@ class Alert
     /**
      * @var \CoreBundle\Entity\Garden
      *
-     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden", inversedBy="alerts")
      * @JMS\Expose()
      * @JMS\Groups({"detail-alert"})
      */

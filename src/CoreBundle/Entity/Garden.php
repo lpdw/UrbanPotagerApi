@@ -97,7 +97,7 @@ class Garden implements OwnableInterface
      *
      * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Alert", mappedBy="garden")
      */
-    private $alert;
+    private $alerts;
 
     /**
      * @JMS\VirtualProperty()
@@ -442,7 +442,7 @@ class Garden implements OwnableInterface
      */
     public function addAlert(\CoreBundle\Entity\Alert $alert)
     {
-        $this->alert[] = $alert;
+        $this->alerts[] = $alert;
 
         return $this;
     }
@@ -454,16 +454,16 @@ class Garden implements OwnableInterface
      */
     public function removeAlert(\CoreBundle\Entity\Alert $alert)
     {
-        $this->alert->removeElement($alert);
+        $this->alerts->removeElement($alert);
     }
 
     /**
-     * Get alert
+     * Get alerts
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAlert()
+    public function getAlerts()
     {
-        return $this->alert;
+        return $this->alerts;
     }
 }
