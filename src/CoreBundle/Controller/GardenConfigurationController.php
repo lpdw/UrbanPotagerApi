@@ -7,7 +7,6 @@ use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use CoreBundle\Entity\Garden;
-use UserBundle\Entity\User;
 use CoreBundle\Entity\Configuration;
 use CoreBundle\Security\GardenVoter;
 use CoreBundle\Security\ConfigurationVoter;
