@@ -32,6 +32,7 @@ class GardenController extends CoreController
             'total_items' => $pagination->getTotalItemCount(),
             'item_per_page' => $itemPerPage,
             'gardens' => $pagination->getItems(),
+            'page' => $pagination->getPage() + 1,
         ];
     }
 

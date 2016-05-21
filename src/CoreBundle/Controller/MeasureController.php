@@ -36,6 +36,7 @@ class MeasureController extends CoreController
             'measures' => $measures,
             'total_items' => $totalItems,
             'item_per_page' => $itemPerPage,
+            'page' => $page,
         ];
     }
 

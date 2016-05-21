@@ -32,6 +32,7 @@ class ConfigurationController extends CoreController
             'total_items' => $pagination->getTotalItemCount(),
             'item_per_page' => $itemPerPage,
             'configurations' => $pagination->getItems(),
+            'page' => $pagination->getPage() + 1,
         ];
     }
 
