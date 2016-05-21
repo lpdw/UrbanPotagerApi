@@ -18,8 +18,8 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        gettoken:
-            pattern:  ^/token($|/refresh)
+        token:
+            pattern:  ^/token($|refresh)
             stateless: true
             anonymous: true
             gfreeau_get_jwt: ~
@@ -31,7 +31,6 @@ security:
             lexik_jwt: ~
 
     access_control:
-        - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY } # TODO voir si possible de supprimer
         - { path: ^/me($|/), roles: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/configurations$, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/alerts$, role: IS_AUTHENTICATED_FULLY }
