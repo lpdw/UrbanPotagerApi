@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use CoreBundle\Event\MeasureSentEvent;
 use CoreBundle\Form\Type\MeasureType;
-use CoreBundle\Security\GardenVoter;
 use CoreBundle\Entity\Measure;
 use CoreBundle\Entity\Garden;
 use CoreBundle\Entity\Type;
@@ -20,18 +19,18 @@ class MeasureController extends CoreController
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      * @ParamConverter("type", options={"mapping": {"type": "slug"}})
      */
-    public function getGardensMeasuresAction(Garden $garden, Type $type)
+    public function getGardensMeasuresAction(Garden $garden, Type $type, Request $request)
     {
         $this->grantedViewMeasure($garden, $type);
 
         /** @var \CoreBundle\Repository\MeasureRepository $repo */
         $repo = $this->getRepository();
 
-        $itemPerPage = $this->getItemPerPage('measure');
-
-        $measures = $repo->getMeasureByGardenAndType($garden, $type);
-
         $totalItems = $repo->countPerGardenAndType($garden, $type);
+
+        list($page, $itemPerPage) = $this->getPage($request);
+
+        $measures = $repo->getMeasureByGardenAndType($garden, $type, $page, $itemPerPage);
 
         return [
             'measures' => $measures,
@@ -119,6 +118,30 @@ class MeasureController extends CoreController
 
             return $repo->measureIsPublic($garden, $type);
         }
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    private function getPage(Request $request)
+    {
+        $itemPerPage = $request->query->getInt('itemPerPage', 0);
+
+        // avoid itemPerPage negative
+        if ($itemPerPage < 1) {
+            $itemPerPage = $this->getItemPerPage('measure');
+        }
+
+        $page = $request->query->getInt('page', 1);
+
+        // avoid page negative
+        if ($page < 1) {
+            $page = 1;
+        }
+
+        return [$page, $itemPerPage];
     }
 
     /**

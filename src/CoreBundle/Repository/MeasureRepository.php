@@ -26,7 +26,7 @@ class MeasureRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getMeasureByGardenAndType(Garden $garden, Type $type)
+    public function getMeasureByGardenAndType(Garden $garden, Type $type, $page, $itemPerPage)
     {
         $qb = $this->createQueryBuilder('m')
                     ->select('m.value')
@@ -37,7 +37,9 @@ class MeasureRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameters([
                         'garden' => $garden,
                         'type' => $type,
-                    ]);
+                    ])
+                    ->setMaxResults($itemPerPage)
+                    ->setFirstResult(($page - 1) * $itemPerPage);
 
         return $qb->getQuery()->getArrayResult();
     }
