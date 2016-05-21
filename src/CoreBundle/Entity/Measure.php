@@ -58,6 +58,17 @@ class Measure
 
 
     /**
+     * @return \DateTime
+     *
+     * @JMS\VirtualProperty()
+     */
+    public function createdAt()
+    {
+        return $this->createdAt;
+    }
+
+
+    /**
      * Get id
      *
      * @return int
