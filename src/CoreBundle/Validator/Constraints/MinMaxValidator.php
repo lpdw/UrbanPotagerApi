@@ -13,7 +13,7 @@ class MinMaxValidator extends ConstraintValidator
      */
     public function validate($type, Constraint $constraint)
     {
-        if ($type->getMax() >= $type->getMax()) {
+        if ($type->getMin() >= $type->getMax()) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation();
         }
