@@ -18,4 +18,9 @@ class TypeRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getOneOrNullResult();
     }
+
+    public function queryAll()
+    {
+        return $this->createQueryBuilder('t')->getQuery();
+    }
 }

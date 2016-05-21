@@ -17,16 +17,22 @@ class TypeController extends CoreController
     /**
      * @View(serializerGroups={"Default"})
      */
-    public function getTypesAction()
+    public function getTypesAction(Request $request)
     {
         /** @var \CoreBundle\Repository\TypeRepository $repo */
         $repo = $this->getRepository();
 
-        $types = $repo->findAll();
+        $itemPerPage = $this->getItemPerPage('type');
+
+        $query = $repo->queryAll();
+
+        $pagination = $this->getPagination($request, $query, $itemPerPage);
 
         return [
-            'total_items' => count($types),
-            'types' => $types,
+            'total_items' => $pagination->getTotalItemCount(),
+            'item_per_page' => $itemPerPage,
+            'types' => $pagination->getItems(),
+            'page' => $pagination->getPage() + 1,
         ];
     }
 
