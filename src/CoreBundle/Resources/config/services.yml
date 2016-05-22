@@ -1,35 +1,9 @@
+imports:
+    - { resource: repository.yml }
+    - { resource: filter.yml }
+    - { resource: voter.yml }
+
 services:
-    core.base_voter:
-        class: CoreBundle\Security\Voter
-        arguments: ['@security.access.decision_manager']
-        public: false
-        tags:
-            - { name: security.voter }
-
-    core.type_voter:
-        class: CoreBundle\Security\TypeVoter
-        parent: core.base_voter
-        tags:
-            - { name: security.voter }
-
-    core.garden_voter:
-        class: CoreBundle\Security\GardenVoter
-        parent: core.base_voter
-        tags:
-            - { name: security.voter }
-
-    core.configuration_voter:
-        class: CoreBundle\Security\ConfigurationVoter
-        parent: core.base_voter
-        tags:
-            - { name: security.voter }
-
-    core.alert_voter:
-        class: CoreBundle\Security\AlertVoter
-        parent: core.base_voter
-        tags:
-            - { name: security.voter }
-
     core.trigger_alert:
         class: CoreBundle\Service\TriggerAlert
         arguments: ['@doctrine', '@event_dispatcher']

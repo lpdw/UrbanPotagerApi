@@ -1,0 +1,10 @@
+services:
+    core.base_filter:
+        class: CoreBundle\Filter\Filter
+        public: false
+
+    core.type_filter:
+        class: CoreBundle\Filter\TypeFilter
+        parent: core.base_filter
+        arguments: ['@core.type_repository']
+        public: true

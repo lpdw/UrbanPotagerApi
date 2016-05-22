@@ -10,21 +10,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use CoreBundle\Entity\Type;
 use CoreBundle\Security\TypeVoter;
 use CoreBundle\Form\Type\TypeType;
+use CoreBundle\Filter\TypeFilter;
 
 class TypeController extends CoreController
 {
-    // TODO add filter
     /**
      * @View(serializerGroups={"Default"})
      */
     public function getTypesAction(Request $request)
     {
-        /** @var \CoreBundle\Repository\TypeRepository $repo */
-        $repo = $this->getRepository();
+        /** @var \CoreBundle\Filter\TypeFilter $filter */
+        $filter = $this->get('core.type_filter');
+        $filter->setRequest($request);
 
         $itemPerPage = $this->getItemPerPage('type');
 
-        $query = $repo->queryAll();
+        $query = $filter->getQuery('queryBuilderAll');
 
         $pagination = $this->getPagination($request, $query, $itemPerPage);
 
