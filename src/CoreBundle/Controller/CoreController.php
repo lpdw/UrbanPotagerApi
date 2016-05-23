@@ -81,7 +81,7 @@ abstract class CoreController extends Controller
 
         $pagination = $paginator->paginate(
             $query,
-            $request->query->getInt('page', 1),
+            $this->getPage($request),
             $limit
         );
 
@@ -122,6 +122,22 @@ abstract class CoreController extends Controller
         }
 
         return $itemPerPage;
+    }
+
+    /**
+     * @param Request $request
+     * @return int
+     */
+    protected function getPage(Request $request)
+    {
+        $page = $request->query->getInt('page', 1);
+
+        // avoid page negative
+        if ($page < 1) {
+            $page = 1;
+        }
+
+        return $page;
     }
 
     /**

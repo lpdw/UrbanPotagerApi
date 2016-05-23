@@ -28,7 +28,8 @@ class MeasureController extends CoreController
 
         $totalItems = $repo->countPerGardenAndType($garden, $type);
 
-        list($page, $itemPerPage) = $this->getPage($request);
+        $page = $this->getPage($request);
+        $itemPerPage = $this->getItemPerPage('measure', $request);
 
         $measures = $repo->getMeasureByGardenAndType($garden, $type, $page, $itemPerPage);
 
@@ -119,30 +120,6 @@ class MeasureController extends CoreController
 
             return $repo->measureIsPublic($garden, $type);
         }
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    private function getPage(Request $request) // TODO refactoring
-    {
-        $itemPerPage = $request->query->getInt('itemPerPage', 0);
-
-        // avoid itemPerPage negative
-        if ($itemPerPage < 1) {
-            $itemPerPage = $this->getItemPerPage('measure');
-        }
-
-        $page = $request->query->getInt('page', 1);
-
-        // avoid page negative
-        if ($page < 1) {
-            $page = 1;
-        }
-
-        return [$page, $itemPerPage];
     }
 
     /**
