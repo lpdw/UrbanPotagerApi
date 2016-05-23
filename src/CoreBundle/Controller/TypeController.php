@@ -20,10 +20,9 @@ class TypeController extends CoreController
     public function getTypesAction(Request $request)
     {
         /** @var \CoreBundle\Filter\TypeFilter $filter */
-        $filter = $this->get('core.type_filter');
-        $filter->setRequest($request);
+        $filter = $this->getFilter('core.type_filter', $request);
 
-        $itemPerPage = $this->getItemPerPage('type');
+        $itemPerPage = $this->getItemPerPage('type', $request);
 
         $query = $filter->getQuery('queryBuilderAll');
 

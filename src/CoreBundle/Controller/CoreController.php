@@ -2,18 +2,18 @@
 
 namespace CoreBundle\Controller;
 
-use CoreBundle\Entity\Interfaces\OwnableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Doctrine\ORM\Query;
+use FOS\RestBundle\Util\Codes;
+use CoreBundle\Entity\Interfaces\OwnableInterface;
 use UserBundle\Entity\User;
 
 abstract class CoreController extends Controller
 {
-    const DEFAULT_ITEM_PER_PAGE = 10;
-
     /**
      * @param string $name
      *
@@ -32,7 +32,8 @@ abstract class CoreController extends Controller
         return $this->getDoctrine()->getManager();
     }
 
-    /*
+    /**
+     * @param Form $form
      * @return array
      */
     protected function getAllErrors(Form $form)
@@ -87,6 +88,10 @@ abstract class CoreController extends Controller
         return $pagination;
     }
 
+    /**
+     * @param string $groupToAdd
+     * @param Request $request
+     */
     protected function addSerializerGroup($groupToAdd, Request $request)
     {
         $groups = $request->attributes->get('_view')->getSerializerGroups();
@@ -100,13 +105,23 @@ abstract class CoreController extends Controller
      *
      * @return int
      */
-    protected function getItemPerPage($item)
+    protected function getItemPerPage($item, Request $request = null)
     {
-        try {
-            return $this->getParameter($item . '_per_page');
-        } catch (\InvalidArgumentException $e) {
-            return self::DEFAULT_ITEM_PER_PAGE;
+        $itemPerPage = 0;
+
+        if (!is_null($request)) {
+            $itemPerPage = $request->query->getInt('item_per_page', 0);
         }
+
+        if ($itemPerPage < 1) {
+            try {
+                $itemPerPage = $this->getParameter($item . '_per_page');
+            } catch (\InvalidArgumentException $e) {
+                throw new \LogicException('This code should not be reached!', 0, $e);
+            }
+        }
+
+        return $itemPerPage;
     }
 
     /**
@@ -137,6 +152,32 @@ abstract class CoreController extends Controller
         $dispatcher = $this->get('event_dispatcher');
 
         $dispatcher->dispatch($name, $event);
+    }
+
+    /**
+     * @param $name
+     * @param Request $request
+     *
+     * @return \CoreBundle\Filter\Filter
+     */
+    protected function getFilter($name, Request $request)
+    {
+        /** @var \CoreBundle\Filter\Filter $filter */
+        $filter = $this->get($name);
+
+        $filter->setRequest($request);
+
+        if (!$filter->isValid()) {
+            $error = $filter->getError();
+
+            if (empty($error)) {
+                $error = $this->t('core.error.bad_filter');
+            }
+
+            throw new HttpException(Codes::HTTP_BAD_REQUEST, $error); // TODO add more info
+        }
+
+        return $filter;
     }
 
     /**

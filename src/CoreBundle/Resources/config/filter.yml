@@ -1,6 +1,7 @@
 services:
     core.base_filter:
         class: CoreBundle\Filter\Filter
+        arguments: ['@translator']
         public: false
 
     core.type_filter:

@@ -126,7 +126,7 @@ class MeasureController extends CoreController
      *
      * @return array
      */
-    private function getPage(Request $request)
+    private function getPage(Request $request) // TODO refactoring
     {
         $itemPerPage = $request->query->getInt('itemPerPage', 0);
 
