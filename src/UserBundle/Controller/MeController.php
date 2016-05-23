@@ -26,16 +26,15 @@ class MeController extends CoreController
         /** @var \CoreBundle\Repository\GardenRepository $repo */
         $repo = $this->getRepository('CoreBundle:Garden');
 
-        $itemPerPage = $this->getItemPerPage('garden');
-
         $query = $repo->queryMeGardens($this->getUser());
 
-        $pagination = $this->getPagination($request, $query, $itemPerPage);
+        $pagination = $this->getPagination($request, $query, 'garden');
 
         return [
             'total_items' => $pagination->getTotalItemCount(),
-            'item_per_page' => $itemPerPage,
+            'item_per_page' => $pagination->getItemNumberPerPage(),
             'gardens' => $pagination->getItems(),
+            'page' => $pagination->getCurrentPageNumber(),
         ];
     }
 

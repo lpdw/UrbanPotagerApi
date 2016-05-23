@@ -21,17 +21,15 @@ class AlertController extends CoreController
         /** @var \CoreBundle\Repository\AlertRepository $repo */
         $repo = $this->getRepository();
 
-        $itemPerPage = $this->getItemPerPage('alert');
-
         $query = $repo->queryMeAlerts($this->getUser());
 
-        $pagination = $this->getPagination($request, $query, $itemPerPage);
+        $pagination = $this->getPagination($request, $query, 'alert');
 
         return [
             'total_items' => $pagination->getTotalItemCount(),
-            'item_per_page' => $itemPerPage,
+            'item_per_page' => $pagination->getItemNumberPerPage(),
             'alerts' => $pagination->getItems(),
-            'page' => $pagination->getPage() + 1,
+            'page' => $pagination->getCurrentPageNumber(),
         ];
     }
 

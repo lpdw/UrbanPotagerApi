@@ -22,17 +22,15 @@ class TypeController extends CoreController
         /** @var \CoreBundle\Filter\TypeFilter $filter */
         $filter = $this->getFilter('core.type_filter', $request);
 
-        $itemPerPage = $this->getItemPerPage('type', $request);
-
         $query = $filter->getQuery('queryBuilderAll');
 
-        $pagination = $this->getPagination($request, $query, $itemPerPage);
+        $pagination = $this->getPagination($request, $query, 'type');
 
         return [
             'total_items' => $pagination->getTotalItemCount(),
-            'item_per_page' => $itemPerPage,
+            'item_per_page' => $pagination->getItemNumberPerPage(),
             'types' => $pagination->getItems(),
-            'page' => $pagination->getPage() + 1,
+            'page' => $pagination->getCurrentPageNumber(),
         ];
     }
 

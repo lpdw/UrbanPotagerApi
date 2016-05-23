@@ -74,7 +74,7 @@ abstract class CoreController extends Controller
      *
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
-    protected function getPagination(Request $request, Query $query, $limit = 10)
+    protected function getPagination(Request $request, Query $query, $item)
     {
         /** @var \Knp\Component\Pager\Paginator $paginator */
         $paginator  = $this->get('knp_paginator');
@@ -82,7 +82,7 @@ abstract class CoreController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $this->getPage($request),
-            $limit
+            $this->getItemPerPage($item, $request)
         );
 
         return $pagination;
