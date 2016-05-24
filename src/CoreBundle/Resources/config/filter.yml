@@ -9,3 +9,9 @@ services:
         parent: core.base_filter
         arguments: ['@core.type_repository']
         public: true
+
+    core.configuration_filter:
+        class: CoreBundle\Filter\ConfigurationFilter
+        parent: core.base_filter
+        arguments: ['@core.configuration_repository']
+        public: true

@@ -17,10 +17,19 @@ class ConfigurationRepository extends \Doctrine\ORM\EntityRepository
      */
     public function queryMeConfiguration(User $user)
     {
-        $qb = $this->createQueryBuilder('c')
-                ->where('c.owner = :user')
-                ->setParameter('user', $user);
+        return $this->queryBuilderMeConfiguration($user)->getQuery();
+    }
 
-        return $qb->getQuery();
+    /**
+     * @param User $user
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function queryBuilderMeConfiguration(User $user)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->where('c.owner = :user')
+            ->setParameter('user', $user);
+
+        return $qb;
     }
 }

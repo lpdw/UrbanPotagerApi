@@ -19,10 +19,10 @@ class ConfigurationController extends CoreController
      */
     public function getConfigurationsAction(Request $request)
     {
-        /** @var \CoreBundle\Repository\ConfigurationRepository $repo */
-        $repo = $this->getRepository();
+        /** @var \CoreBundle\Filter\TypeFilter $filter */
+        $filter = $this->getFilter('core.configuration_filter', $request);
 
-        $query = $repo->queryMeConfiguration($this->getUser());
+        $query = $filter->getQuery('queryBuilderMeConfiguration', [$this->getUser()]);
 
         $pagination = $this->getPagination($request, $query, 'configuration');
 

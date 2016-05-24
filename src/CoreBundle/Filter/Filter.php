@@ -142,13 +142,13 @@ abstract class Filter
      *
      * @return \Doctrine\ORM\Query
      */
-    public function getQuery($method)
+    public function getQuery($method, $params = [])
     {
         if (!method_exists($this->repo, $method)) {
             throw new \LogicException('This code should not be reached!');
         }
 
-        $qb = $this->repo->$method();
+        $qb = call_user_func_array([$this->repo, $method], $params);
         $this->alias = $this->getAlias($qb);
 
         $query = $this->filter($qb)->getQuery();
