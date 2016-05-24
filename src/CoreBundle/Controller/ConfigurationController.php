@@ -13,7 +13,6 @@ use CoreBundle\Form\Type\ConfigurationType;
 
 class ConfigurationController extends CoreController
 {
-    // TODO add filter
     /**
      * @View(serializerGroups={"Default"})
      */
