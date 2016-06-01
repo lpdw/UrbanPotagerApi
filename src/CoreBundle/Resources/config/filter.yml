@@ -4,6 +4,11 @@ services:
         arguments: ['@translator']
         public: false
 
+    core.date_filter:
+        class: CoreBundle\Filter\DateFilter
+        parent: core.base_filter
+        public: false
+
     core.type_filter:
         class: CoreBundle\Filter\TypeFilter
         parent: core.base_filter
@@ -12,6 +17,6 @@ services:
 
     core.configuration_filter:
         class: CoreBundle\Filter\ConfigurationFilter
-        parent: core.base_filter
+        parent: core.date_filter
         arguments: ['@core.configuration_repository']
         public: true
