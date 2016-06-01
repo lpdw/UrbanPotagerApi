@@ -23,6 +23,9 @@ class MeasureController extends CoreController
     {
         $this->grantedViewMeasure($garden, $type);
 
+        /** @var \CoreBundle\Filter\MeasureFilter $filter */
+        $filter = $this->getFilter('core.measure_filter', $request);
+
         /** @var \CoreBundle\Repository\MeasureRepository $repo */
         $repo = $this->getRepository();
 
@@ -31,7 +34,7 @@ class MeasureController extends CoreController
         $page = $this->getPage($request);
         $itemPerPage = $this->getItemPerPage('measure', $request);
 
-        $measures = $repo->getMeasureByGardenAndType($garden, $type, $page, $itemPerPage);
+        $measures = $filter->getResult('queryMeasureByGardenAndType', [$garden, $type, $page, $itemPerPage]);
 
         return [
             'measures' => $measures,

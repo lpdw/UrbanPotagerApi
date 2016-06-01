@@ -20,3 +20,9 @@ services:
         parent: core.date_filter
         arguments: ['@core.configuration_repository']
         public: true
+
+    core.measure_filter:
+        class: CoreBundle\Filter\MeasureFilter
+        parent: core.date_filter
+        arguments: ['@core.measure_repository']
+        public: true
