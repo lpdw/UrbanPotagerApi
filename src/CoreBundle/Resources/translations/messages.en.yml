@@ -4,3 +4,5 @@ core:
     filter:
         field_not_found: "%field% is not a valid field for order_by"
         bad_order: "%order% is not valid. ASC or DESC only"
+        bad_date_before: "%timestamp% is not a valid timestamp for date_before"
+        bad_date_after: "%timestamp% is not a valid timestamp for date_after"

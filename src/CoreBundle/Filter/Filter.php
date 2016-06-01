@@ -61,6 +61,13 @@ abstract class Filter
     {
         $this->request = $request;
 
+        $this->buildParams();
+
+        return $this;
+    }
+
+    protected function buildParams()
+    {
         if ($this->has(self::ORDER_BY)) {
             $orderBy = $this->get(self::ORDER_BY);
 
@@ -80,8 +87,6 @@ abstract class Filter
                 $this->orders = $order;
             }
         }
-
-        return $this;
     }
 
     /**
@@ -186,6 +191,15 @@ abstract class Filter
     public function getError()
     {
         return $this->error;
+    }
+
+    /**
+     * @param int $timestamp
+     * @return \DateTime
+     */
+    protected function dateFromTimestamp($timestamp)
+    {
+        return \DateTime::createFromFormat('U', $timestamp);
     }
 
     abstract protected function getFields();
