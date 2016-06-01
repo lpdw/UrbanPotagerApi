@@ -18,7 +18,7 @@ class ConfigurationController extends CoreController
      */
     public function getConfigurationsAction(Request $request)
     {
-        /** @var \CoreBundle\Filter\TypeFilter $filter */
+        /** @var \CoreBundle\Filter\ConfigurationFilter $filter */
         $filter = $this->getFilter('core.configuration_filter', $request);
 
         $query = $filter->getQuery('queryBuilderMeConfiguration', [$this->getUser()]);

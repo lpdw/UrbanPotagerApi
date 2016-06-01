@@ -6,3 +6,4 @@ core:
         bad_order: "%order% n'est pas valide. ASC ou DESC uniquement"
         bad_date_before: "%timestamp% n'est pas une timestamp valide pour 'date_before'"
         bad_date_after: "%timestamp% n'est pas une timestamp valide pour 'date_after'"
+        comparison_not_found: "%field% n'est pas une comparaison valide"

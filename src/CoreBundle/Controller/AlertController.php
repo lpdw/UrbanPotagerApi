@@ -18,10 +18,10 @@ class AlertController extends CoreController
      */
     public function getAlertsAction(Request $request)
     {
-        /** @var \CoreBundle\Repository\AlertRepository $repo */
-        $repo = $this->getRepository();
+        /** @var \CoreBundle\Filter\AlertFilter $filter */
+        $filter = $this->getFilter('core.alert_filter', $request);
 
-        $query = $repo->queryMeAlerts($this->getUser());
+        $query = $filter->getQuery('queryBuilderMeAlerts', [$this->getUser()]);
 
         $pagination = $this->getPagination($request, $query, 'alert');
 

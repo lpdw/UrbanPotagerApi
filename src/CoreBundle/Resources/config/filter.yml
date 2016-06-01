@@ -26,3 +26,9 @@ services:
         parent: core.date_filter
         arguments: ['@core.measure_repository']
         public: true
+
+    core.alert_filter:
+        class: CoreBundle\Filter\AlertFilter
+        parent: core.date_filter
+        arguments: ['@core.alert_repository']
+        public: true

@@ -27,12 +27,17 @@ class AlertRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function queryMeAlerts(User $user)
+    public function queryBuilderMeAlerts(User $user)
     {
         $qb = $this->createQueryBuilder('a')
-                    ->where('a.owner = :user')
-                    ->setParameter('user', $user);
+            ->where('a.owner = :user')
+            ->setParameter('user', $user);
 
-        return $qb->getQuery();
+        return $qb;
+    }
+
+    public function queryMeAlerts(User $user)
+    {
+        return $this->queryBuilderMeAlerts($user)->getQuery();
     }
 }
