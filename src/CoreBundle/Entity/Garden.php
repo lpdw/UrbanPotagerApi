@@ -70,7 +70,6 @@ class Garden implements OwnableInterface
      *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="SET NULL")
-     * @Assert\Valid
      * @JMS\Expose()
      * @JMS\Groups({"detail-garden"})
      */
