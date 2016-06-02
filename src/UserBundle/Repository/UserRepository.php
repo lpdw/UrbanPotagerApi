@@ -10,4 +10,10 @@ namespace UserBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function queryAdminUsers()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb->getQuery();
+    }
 }

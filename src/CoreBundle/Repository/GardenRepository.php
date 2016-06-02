@@ -17,6 +17,13 @@ class GardenRepository extends \Doctrine\ORM\EntityRepository
         return $this->queryBuilderPublicGardens()->getQuery();
     }
 
+    public function queryAdminGardens()
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->getQuery();
+    }
+
     public function queryMeGardens(User $user)
     {
         $qb = $this->createQueryBuilder('g')

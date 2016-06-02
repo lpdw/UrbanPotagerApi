@@ -36,3 +36,8 @@ garden_alert:
     type:     rest
     parent:   garden
     resource: CoreBundle\Controller\GardenAlertController
+
+admin_garden:
+    type:      rest
+    prefix:    /admin
+    resource:  CoreBundle\Controller\AdminController
