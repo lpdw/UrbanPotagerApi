@@ -34,10 +34,10 @@ class AdminController extends CoreController
 
     public function getUsersAction(Request $request)
     {
-        /** @var \UserBundle\Repository\UserRepository $repo */
-        $repo = $this->getRepository('UserBundle:User');
+        /** @var \CoreBundle\Filter\UserFilter $filter */
+        $filter = $this->getFilter('core.user_filter', $request);
 
-        $query = $repo->queryAdminUsers();
+        $query = $filter->getQuery('queryBuilderAdminUsers');
 
         $pagination = $this->getPagination($request, $query, 'user');
 

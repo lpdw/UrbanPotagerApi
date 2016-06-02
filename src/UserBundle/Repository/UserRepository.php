@@ -12,8 +12,11 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 {
     public function queryAdminUsers()
     {
-        $qb = $this->createQueryBuilder('u');
+        return $this->queryBuilderAdminUsers()->getQuery();
+    }
 
-        return $qb->getQuery();
+    public function queryBuilderAdminUsers()
+    {
+        return $this->createQueryBuilder('u');
     }
 }

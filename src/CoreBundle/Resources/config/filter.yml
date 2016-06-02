@@ -38,3 +38,9 @@ services:
         parent: core.date_filter
         arguments: ['@core.garden_repository']
         public: true
+
+    core.user_filter:
+        class: CoreBundle\Filter\UserFilter
+        parent: core.base_filter
+        arguments: ['@core.user_repository']
+        public: true
