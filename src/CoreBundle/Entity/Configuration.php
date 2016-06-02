@@ -123,7 +123,6 @@ class Configuration implements OwnableInterface
      *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="SET NULL")
-     * @Assert\Valid
      */
     private $owner;
 
