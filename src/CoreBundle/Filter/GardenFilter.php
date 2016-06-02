@@ -75,6 +75,6 @@ class GardenFilter extends DateFilter
 
     protected function getFields()
     {
-        return [self::NAME];
+        return [self::NAME, 'zipCode', 'city'];
     }
 }

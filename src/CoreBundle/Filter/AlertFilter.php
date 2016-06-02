@@ -113,6 +113,6 @@ class AlertFilter extends DateFilter
 
     protected function getFields()
     {
-        return [self::NAME, self::TYPE, self::COMPARISON, self::GARDEN];
+        return [self::NAME, self::TYPE, 'comparison', self::GARDEN];
     }
 }
