@@ -71,7 +71,7 @@ class AlertFilter extends DateFilter
         }
 
         foreach ($this->comparisons as $comparison) {
-            if (!in_array($comparison, Alert::$OPERATOR)) { // maybe use array_values()
+            if (!in_array($comparison, Alert::$OPERATOR)) {
                 $this->error = $this->translator->trans('core.filter.comparison_not_found', ['%field%' => $comparison]);
                 return false;
             }

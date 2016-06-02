@@ -32,3 +32,9 @@ services:
         parent: core.date_filter
         arguments: ['@core.alert_repository']
         public: true
+
+    core.garden_filter:
+        class: CoreBundle\Filter\GardenFilter
+        parent: core.date_filter
+        arguments: ['@core.garden_repository']
+        public: true

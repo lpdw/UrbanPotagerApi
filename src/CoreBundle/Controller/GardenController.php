@@ -13,16 +13,15 @@ use CoreBundle\Form\Type\GardenType;
 
 class GardenController extends CoreController
 {
-    // TODO add filter
     /**
      * @View(serializerGroups={"Default"})
      */
     public function getGardensAction(Request $request)
     {
-        /** @var \CoreBundle\Repository\GardenRepository $repo */
-        $repo = $this->getRepository();
+        /** @var \CoreBundle\Filter\GardenFilter $filter */
+        $filter = $this->getFilter('core.garden_filter', $request);
 
-        $query = $repo->queryPublicGardens();
+        $query = $filter->getQuery('queryBuilderPublicGardens');
 
         $pagination = $this->getPagination($request, $query, 'garden');
 

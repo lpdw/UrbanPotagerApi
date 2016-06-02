@@ -14,10 +14,7 @@ class GardenRepository extends \Doctrine\ORM\EntityRepository
 {
     public function queryPublicGardens()
     {
-        $qb = $this->createQueryBuilder('g')
-                    ->where('g.isPublic = true');
-
-        return $qb->getQuery();
+        return $this->queryBuilderPublicGardens()->getQuery();
     }
 
     public function queryMeGardens(User $user)
@@ -36,5 +33,13 @@ class GardenRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('apiKey', $apiKey);
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function queryBuilderPublicGardens()
+    {
+        $qb = $this->createQueryBuilder('g')
+            ->where('g.isPublic = true');
+
+        return $qb;
     }
 }

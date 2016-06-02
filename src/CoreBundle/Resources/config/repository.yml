@@ -18,3 +18,8 @@ services:
         class: Doctrine\ORM\EntityRepository
         factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['CoreBundle\Entity\Alert']
+
+    core.garden_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['CoreBundle\Entity\Garden']
