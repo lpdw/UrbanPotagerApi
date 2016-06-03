@@ -17,7 +17,7 @@ class GardenConfigurationController extends CoreController
      * @View(serializerGroups={"Default"})
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      */
-    public function getConfigurationAction(Garden $garden)
+    public function getConfigurationsAction(Garden $garden)
     {
         $configuration = $garden->getConfiguration();
 
