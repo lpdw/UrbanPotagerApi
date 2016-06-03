@@ -1,0 +1,5 @@
+resetting:
+    email:
+        subject: 'Reset password'
+        message: 'You made a request to reset your password, here is your code : %token%'
+password_request_expired: "Your request has expired"

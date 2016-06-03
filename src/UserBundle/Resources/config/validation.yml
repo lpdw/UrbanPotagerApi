@@ -1,0 +1,22 @@
+UserBundle\Entity\User:
+    properties:
+        username:
+            - NotBlank:
+                message: 'constraints.not_blank'
+            - Length:
+                max: 255
+                maxMessage: 'constraints.length.max'
+        email:
+            - NotBlank:
+                message: 'constraints.not_blank'
+            - Length:
+                max: 255
+                maxMessage: 'constraints.length.max'
+            - Email:
+                message: 'constraints.email'
+        plainPassword:
+            - NotBlank:
+                message: 'constraints.not_blank'
+            - Length:
+                max: 255
+                maxMessage: 'constraints.length.max'

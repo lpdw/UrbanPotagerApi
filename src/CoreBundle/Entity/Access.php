@@ -3,19 +3,27 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JMS\Serializer\Annotation as JMS;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Access
  *
  * @ORM\Table(name="access")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\AccessRepository")
+ * @UniqueEntity(fields={"garden", "type"}, message="constraints.unique")
+ * @JMS\ExclusionPolicy("all")
  */
 class Access
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,14 +32,20 @@ class Access
     /**
      * @var bool
      *
-     * @ORM\Column(name="isPublic", type="boolean")
+     * @ORM\Column(type="boolean")
+     * @Assert\Type(
+     *     type="bool",
+     *     message="constraints.type"
+     * )
+     * @JMS\Expose()
      */
     private $isPublic;
 
     /**
      * @var Garden
      *
-     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden", inversedBy="access")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $garden;
 
@@ -39,7 +53,8 @@ class Access
      * @var Type
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @JMS\Expose()
      */
     private $type;
 

@@ -5,9 +5,12 @@ namespace CoreBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter as BaseVoter;
+use CoreBundle\Entity\Interfaces\OwnableInterface;
+use UserBundle\Entity\User;
 
 class Voter extends BaseVoter
 {
+    const CREATE    = 'create';
     const VIEW      = 'view';
     const EDIT      = 'edit';
     const DELETE    = 'delete';
@@ -22,7 +25,7 @@ class Voter extends BaseVoter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::VIEW, self::EDIT, self::DELETE])) {
+        if (!in_array($attribute, [self::VIEW, self::CREATE, self::EDIT, self::DELETE])) {
             return false;
         }
 
@@ -36,34 +39,65 @@ class Voter extends BaseVoter
             return true;
         }
 
-        $user = $token->getUser();
-
         $method = 'can' . ucfirst($access);
 
         if (method_exists($this, $method)) {
-            return $this->$method($entity, $user);
+            return $this->$method($entity, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
     }
 
-    protected function canView($entity, $user)
+    protected function canCreate($entity, TokenInterface $token)
     {
         return false;
     }
 
-    protected function canEdit($entity, $user)
+    protected function canView($entity, TokenInterface $token)
     {
         return false;
     }
 
-    protected function canDelete($entity, $user)
+    protected function canEdit($entity, TokenInterface $token)
     {
         return false;
     }
 
-    private function isAdmin($token)
+    protected function canDelete($entity, TokenInterface $token)
     {
-        return ($this->decisionManager->decide($token, array('ROLE_SUPER_ADMIN')));
+        return false;
+    }
+
+    protected function isAdmin($token)
+    {
+        return $this->isGranted($token, ['ROLE_SUPER_ADMIN']);
+    }
+
+    protected function isConnected($token)
+    {
+        return $this->isGranted($token, ['IS_AUTHENTICATED_FULLY']);
+    }
+
+    protected function isGranted(TokenInterface $token, array $roles)
+    {
+        return $this->decisionManager->decide($token, $roles);
+    }
+
+    protected function getUser(TokenInterface $token)
+    {
+        $user = $token->getUser();
+
+        return ($user instanceof User) ? $user : null;
+    }
+
+    protected function isOwner(OwnableInterface $ownable, User $user = null)
+    {
+        $owner = $ownable->getOwner();
+
+        if (is_null($owner) || is_null($user)) {
+            return false;
+        }
+
+        return $owner->getId() === $user->getId();
     }
 }

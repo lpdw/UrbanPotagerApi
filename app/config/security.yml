@@ -18,18 +18,20 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        login:
-            pattern:  ^/login
+        token:
+            pattern:  ^/token($|refresh)
             stateless: true
             anonymous: true
-            form_login:
-                check_path:               /login_check
-                success_handler:          lexik_jwt_authentication.handler.authentication_success
-                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
-                require_previous_session: false
+            gfreeau_get_jwt: ~
 
         api:
             pattern:   ^/
             stateless: true
             anonymous: true
             lexik_jwt: ~
+
+    access_control:
+        - { path: ^/me($|/), roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/configurations$, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/alerts$, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/admin/, role: ROLE_SUPER_ADMIN }
