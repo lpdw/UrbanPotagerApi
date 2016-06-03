@@ -17,7 +17,8 @@ class AlertRepository extends \Doctrine\ORM\EntityRepository
     public function getAlertByGardenAndType(Garden $garden, Type $type)
     {
         $qb = $this->createQueryBuilder('a')
-                    ->where('a.garden = :garden')
+                    ->leftJoin('a.gardens', 'g')
+                    ->where('g = :garden')
                     ->andWhere('a.type = :type')
                     ->setParameters([
                         'garden' => $garden,

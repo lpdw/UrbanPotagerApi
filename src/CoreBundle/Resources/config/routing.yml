@@ -39,5 +39,4 @@ garden_alert:
 
 admin_garden:
     type:      rest
-    prefix:    /admin
     resource:  CoreBundle\Controller\AdminController

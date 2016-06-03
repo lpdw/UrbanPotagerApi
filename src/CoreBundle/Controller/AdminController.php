@@ -15,7 +15,7 @@ class AdminController extends CoreController
     /**
      * @View(serializerGroups={"Default"})
      */
-    public function getGardensAction(Request $request)
+    public function getAdminGardensAction(Request $request)
     {
         /** @var \CoreBundle\Filter\GardenFilter $filter */
         $filter = $this->getFilter('core.garden_filter', $request);
@@ -32,7 +32,7 @@ class AdminController extends CoreController
         ];
     }
 
-    public function getUsersAction(Request $request)
+    public function getAdminUsersAction(Request $request)
     {
         /** @var \CoreBundle\Filter\UserFilter $filter */
         $filter = $this->getFilter('core.user_filter', $request);
