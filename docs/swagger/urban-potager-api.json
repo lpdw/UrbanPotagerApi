@@ -8,17 +8,16 @@
         "contact": {
             "name": "UrbanaPlant",
             "email": "contact@urbanaplant.com",
-            "url": "http://urbanaplant.com/"
+            "url": "https://urbanpotager.labesse.me"
         },
         "license": {
             "name": "CC by-nc-sa 4.0 ?",
             "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
         }
     },
-    "host": "userstore.swagger.io",
-    "basePath": "/api",
+    "host": "urbanpotager.labesse.me",
     "schemes": [
-        "http"
+        "https"
     ],
     "consumes": [
         "application/json"
@@ -26,31 +25,1011 @@
     "produces": [
         "application/json"
     ],
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
     "paths": {
-        "/users": {
+        "/types": {
             "get": {
-                "description": "Returns all users from the system\n",
-                "operationId": "findUsers",
+                "tags": [
+                    "Types"
+                ],
+                "description": "List all data types",
+                "operationId": "findTypes",
                 "responses": {
                     "200": {
-                        "description": "user infos",
+                        "description": "types infos",
                         "schema": {
-                            "title": "arrayOfUsers",
+                            "title": "arrayOfType",
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/User"
+                                "$ref": "#/definitions/Type"
                             }
-                        }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
                         }
                     }
                 }
             },
             "post": {
+                "tags": [
+                    "Types"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Add new type",
+                "operationId": "addType",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "body",
+                        "description": "Type to add to the store\n\nname:  not blank, 250 char max\n\ndescription: not null\n\nmin: min -> -9999.99, max -> 9999.99\n\nmax: min -> -9999.99, max -> 9999.99\n\ntype: 0 ou 1, 0 = plant | 1 = sensor\n",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Type created",
+                        "schema": {
+                            "$ref": "#/definitions/Type"
+                        }
+                    }
+                }
+            }
+        },
+        "/types/{slug}": {
+            "get": {
+                "tags": [
+                    "Types"
+                ],
+                "description": "Get informations of type by slug",
+                "operationId": "findType",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of type to find",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "type infos"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Types"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Patch information of type by slug",
+                "operationId": "patchType",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of type to patch",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "body",
+                        "description": "Infos to edit",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PatchType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Patched type",
+                        "schema": {
+                            "$ref": "#/definitions/Type"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Types"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Delete type by slug\n\n/!\\ Attention  les Types sont liés aux Measures et aux Access\n",
+                "operationId": "deleteType",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of type to patch",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Content deleted"
+                    }
+                }
+            }
+        },
+        "/configurations": {
+            "get": {
+                "tags": [
+                    "Configurations"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Return all configurations created by current user",
+                "operationId": "findConfigurations",
+                "responses": {
+                    "200": {
+                        "description": "configurations infos",
+                        "schema": {
+                            "title": "arrayOfConfigurations",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Configuration"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Configurations"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Add new configuration for the current user",
+                "operationId": "addConfiguration",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "body",
+                        "description": "Configuration to add to the store\n\nname: not blank, 250 char max\n\ndescription: not null\n\nlightTreshold: min: 0.000 | max = 100.00\n\nlightingStart: Heure valide, ex: \"hour\": 15, \"minute\": 37\n\nlightingEnd: Heure valide, ex: \"hour\": 15, \"minute\": 37\n\nisWateringActive: une valeur = true, pas de valeur = false, default: false\n\nwateringStart: Heure valide, ex: \"hour\": 15, \"minute\": 37\n\nwateringEnd: Heure valide, ex: \"hour\": 15, \"minute\": 37\n",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewConfiguration"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Configuration created",
+                        "schema": {
+                            "$ref": "#/definitions/Type"
+                        }
+                    }
+                }
+            }
+        },
+        "/configuration/{slug}": {
+            "get": {
+                "tags": [
+                    "Configurations"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Get informations of configuration by slug",
+                "operationId": "findConfiguration",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of configuration to find",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "configuration infos"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Configurations"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Patch information of configuration by slug",
+                "operationId": "patchConfiguration",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of configuration to patch",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "configuration",
+                        "in": "body",
+                        "description": "Infos to edit",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PatchConfiguration"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Patched configuration",
+                        "schema": {
+                            "$ref": "#/definitions/Configuration"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Configurations"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Delete configuration by slug",
+                "operationId": "deleteConfiguration",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of configuration to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Content deleted"
+                    }
+                }
+            }
+        },
+        "/garden/{slugGarden}/configuration": {
+            "get": {
+                "tags": [
+                    "Configurations"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Get informations of configuration by garden slug",
+                "operationId": "findGardenConfiguration",
+                "parameters": [
+                    {
+                        "name": "slugGarden",
+                        "in": "path",
+                        "description": "Slug of garden to find his configuration",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "garden's configuration infos"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Configurations"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Delete garden's configuration by garden slug",
+                "operationId": "deleteGardenConfiguration",
+                "parameters": [
+                    {
+                        "name": "slugGarden",
+                        "in": "path",
+                        "description": "Slug of garden",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Content deleted"
+                    }
+                }
+            }
+        },
+        "/garden/{slugGarden}/configuration/{slugConfiguration}": {
+            "post": {
+                "tags": [
+                    "Configurations"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Associate a configuration to a garden",
+                "operationId": "addConfigurationToGarden",
+                "parameters": [
+                    {
+                        "name": "slugGarden",
+                        "in": "path",
+                        "description": "Slug of garden",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "slugConfiguration",
+                        "in": "path",
+                        "description": "Slug of configuration that will be add to the garden",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Configuration created",
+                        "schema": {
+                            "$ref": "#/definitions/Type"
+                        }
+                    }
+                }
+            }
+        },
+        "/gardens": {
+            "get": {
+                "tags": [
+                    "Gardens"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Returns all gardens from the system",
+                "operationId": "findGardens",
+                "responses": {
+                    "200": {
+                        "description": "gardens infos",
+                        "schema": {
+                            "title": "arrayOfGardens",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Garden"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Gardens"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Creates a garden in the sytem.",
+                "operationId": "addGarden",
+                "parameters": [
+                    {
+                        "name": "garden",
+                        "in": "body",
+                        "description": "Garden to add to the store\n\nname: not blank, 250 char max\n\ndescription: not null\n\nisPublic: une valeur = true, pas de valeur = false\n\nlatitude: min -90.00 | max 90.00\n\nlongitude: min -180.00 | 180.00\n\nshowLocation: une valeur = true, pas de valeur = false\n\ncountry: 100 char max\n\ncity: 100 char max\n\nzipCode: 10 char max\n\naddress1: 255 char max\n\naddress2: 255 char max\n",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewGarden"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "garden created",
+                        "schema": {
+                            "$ref": "#/definitions/Garden"
+                        }
+                    }
+                }
+            }
+        },
+        "/gardens/{slug}": {
+            "patch": {
+                "tags": [
+                    "Gardens"
+                ],
+                "description": "Patch information of garden by slug",
+                "operationId": "patchGarden",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of garden to patch",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "garden",
+                        "in": "body",
+                        "description": "Infos to edit",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PatchGarden"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Patched garden",
+                        "schema": {
+                            "$ref": "#/definitions/Garden"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Gardens"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Delete garden by slug",
+                "operationId": "deleteGarden",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of garden",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Content deleted"
+                    }
+                }
+            }
+        },
+        "/gardens/{slugGarden}/access": {
+            "get": {
+                "tags": [
+                    "Access"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Returns all acces form a garden",
+                "operationId": "findGardenAccess",
+                "parameters": [
+                    {
+                        "name": "slugGarden",
+                        "in": "path",
+                        "description": "Slug of garden",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "access garden infos",
+                        "schema": {
+                            "title": "arrayOfAccess",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Access"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Access"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Creates a access for a garden in the sytem.",
+                "operationId": "addAccessToGarden",
+                "parameters": [
+                    {
+                        "name": "slugGarden",
+                        "in": "path",
+                        "description": "Slug of garden",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "access",
+                        "in": "body",
+                        "description": "access to add to the store",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewAccess"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "access created",
+                        "schema": {
+                            "$ref": "#/definitions/Access"
+                        }
+                    }
+                }
+            }
+        },
+        "/gardens/{slugGarden}/access/{slugType}": {
+            "get": {
+                "tags": [
+                    "Access"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Returns access form a garden by type slug",
+                "operationId": "findOneGardenAccess",
+                "parameters": [
+                    {
+                        "name": "slugGarden",
+                        "in": "path",
+                        "description": "Slug of garden",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "slugType",
+                        "in": "path",
+                        "description": "Slug of type",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "access garden infos",
+                        "schema": {
+                            "$ref": "#/definitions/Access"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Access"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Patch access of garden by access's type slug",
+                "operationId": "patchAccessGarden",
+                "parameters": [
+                    {
+                        "name": "slugGarden",
+                        "in": "path",
+                        "description": "Slug of garden",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "slugType",
+                        "in": "path",
+                        "description": "Slug of access's type to patch",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "access",
+                        "in": "body",
+                        "description": "Infos to edit",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PatchAccess"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Patched access",
+                        "schema": {
+                            "$ref": "#/definitions/Access"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Access"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Delete access of garden by access's type slug",
+                "operationId": "deleteAccessGarden",
+                "parameters": [
+                    {
+                        "name": "slugGarden",
+                        "in": "path",
+                        "description": "Slug of garden",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "slugType",
+                        "in": "path",
+                        "description": "Slug of access's type to patch",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Access deleted"
+                    }
+                }
+            }
+        },
+        "/measures?api_key=###": {
+            "post": {
+                "tags": [
+                    "Measures"
+                ],
+                "description": "Measure from garden",
+                "operationId": "addmeasure",
+                "parameters": [
+                    {
+                        "name": "api_key",
+                        "in": "query",
+                        "description": "api key of garden",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "measure",
+                        "in": "body",
+                        "description": "data of measure",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewMeasures"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "measure created",
+                        "schema": {
+                            "$ref": "#/definitions/Measures"
+                        }
+                    }
+                }
+            }
+        },
+        "/gardens/{slugGarden}/measures/{slugType}/?page=###&itemPerPage=###": {
+            "get": {
+                "tags": [
+                    "Measures"
+                ],
+                "description": "Returns measures form a garden by type slug",
+                "operationId": "findOneGardenMeasures",
+                "parameters": [
+                    {
+                        "name": "slugGarden",
+                        "in": "path",
+                        "description": "Slug of garden",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "slugType",
+                        "in": "path",
+                        "description": "Slug of type",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "itemPerPage",
+                        "in": "query",
+                        "description": "page number",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Measures garden infos",
+                        "schema": {
+                            "$ref": "#/definitions/Measures"
+                        }
+                    }
+                }
+            }
+        },
+        "/alerts": {
+            "get": {
+                "tags": [
+                    "Alerts"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Returns all alerts from the system",
+                "operationId": "findAlerts",
+                "responses": {
+                    "200": {
+                        "description": "alerts infos",
+                        "schema": {
+                            "title": "arrayOfAlerts",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Alerts"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Alerts"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Alert for garden",
+                "operationId": "addAlert",
+                "parameters": [
+                    {
+                        "name": "alert",
+                        "in": "body",
+                        "description": "data of alert",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewAlerts"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "measures created",
+                        "schema": {
+                            "$ref": "#/definitions/Alerts"
+                        }
+                    }
+                }
+            }
+        },
+        "/alerts/{slug}": {
+            "get": {
+                "tags": [
+                    "Alerts"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Returns alerts by slug",
+                "operationId": "findAlert",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of alert",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "alert infos",
+                        "schema": {
+                            "$ref": "#/definitions/Alerts"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Alerts"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Patch alert",
+                "operationId": "patchAlert",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of alert",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "alert",
+                        "in": "body",
+                        "description": "Infos to edit",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PatchAlerts"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Patched access",
+                        "schema": {
+                            "$ref": "#/definitions/Alerts"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Alerts"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Delete alert",
+                "operationId": "deleteAlert",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of alert",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Alert deleted"
+                    }
+                }
+            }
+        },
+        "/gardens/{slugGarden}/alerts/{slugAlert}": {
+            "post": {
+                "tags": [
+                    "Alerts"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Alert for garden",
+                "operationId": "addAlertToGarden",
+                "parameters": [
+                    {
+                        "name": "slugGarden",
+                        "in": "path",
+                        "description": "Slug of the garden",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "slugAlert",
+                        "in": "path",
+                        "description": "Slug of the alert",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "measures created",
+                        "schema": {
+                            "$ref": "#/definitions/Alerts"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Alerts"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Delete alert",
+                "operationId": "deleteAlertToGarden",
+                "parameters": [
+                    {
+                        "name": "slugGarden",
+                        "in": "path",
+                        "description": "Slug of the garden",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "slugAlert",
+                        "in": "path",
+                        "description": "Slug of the alert",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Alert deleted"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
                 "description": "Creates a new user in the sytem.",
                 "operationId": "addUser",
                 "parameters": [
@@ -70,57 +1049,42 @@
                         "schema": {
                             "$ref": "#/definitions/User"
                         }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
                     }
                 }
             }
         },
-        "/users/{id}": {
+        "/me": {
             "get": {
-                "description": "Returns a user based on a single ID",
-                "operationId": "find user by id",
-                "parameters": [
+                "tags": [
+                    "Users"
+                ],
+                "security": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of user to fetch",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
+                        "Bearer": []
                     }
                 ],
+                "description": "Returns the connected user.",
                 "responses": {
                     "200": {
-                        "description": "user infos",
+                        "description": "User infos",
                         "schema": {
                             "$ref": "#/definitions/User"
-                        }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
                         }
                     }
                 }
             },
-            "put": {
-                "description": "Edit user",
-                "operationId": "editUser",
-                "parameters": [
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "security": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of user to edit",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    },
+                        "Bearer": []
+                    }
+                ],
+                "description": "Edit connected User",
+                "operationId": "editMe",
+                "parameters": [
                     {
                         "name": "user",
                         "in": "body",
@@ -137,36 +1101,194 @@
                         "schema": {
                             "$ref": "#/definitions/User"
                         }
-                    },
-                    "default": {
-                        "description": "unexpected error",
+                    }
+                }
+            }
+        },
+        "/me/gardens": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Returns the garden of the connected user.",
+                "responses": {
+                    "200": {
+                        "description": "Gardens of the user",
                         "schema": {
-                            "$ref": "#/definitions/Error"
+                            "title": "arrayOfGarden",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Garden"
+                            }
                         }
                     }
                 }
-            },
-            "delete": {
-                "description": "deletes a single user based on the ID supplied",
-                "operationId": "deleteUser",
+            }
+        },
+        "/token": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Login user",
+                "operationId": "logUser",
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of user to delete",
+                        "name": "user",
+                        "in": "body",
+                        "description": "User to log",
                         "required": true,
-                        "type": "integer",
-                        "format": "int64"
+                        "schema": {
+                            "$ref": "#/definitions/LogUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "user logged",
+                        "schema": {
+                            "$ref": "#/definitions/Token"
+                        }
+                    }
+                }
+            }
+        },
+        "/token/refresh": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Login user",
+                "operationId": "refreshToken",
+                "parameters": [
+                    {
+                        "name": "refresh_token",
+                        "in": "body",
+                        "description": "token to refresh logToken",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RefreshToken"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "user logged",
+                        "schema": {
+                            "$ref": "#/definitions/Token"
+                        }
+                    }
+                }
+            }
+        },
+        "/forgot-password": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Ask for reset password",
+                "operationId": "resetPasswordAsk",
+                "parameters": [
+                    {
+                        "name": "ResetPassword",
+                        "in": "body",
+                        "description": "email to reset password",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ResetPassword"
+                        }
                     }
                 ],
                 "responses": {
                     "204": {
-                        "description": "user deleted"
+                        "description": "email send"
+                    }
+                }
+            }
+        },
+        "/forgot-password/{token}": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Ask for reset password",
+                "operationId": "resetPassword",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    {
+                        "name": "NewPassword",
+                        "in": "body",
+                        "description": "new password",
+                        "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Error"
+                            "$ref": "#/definitions/EditUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "new password created"
+                    }
+                }
+            }
+        },
+        "/admin/users": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "List all users",
+                "operationId": "findUsers",
+                "responses": {
+                    "200": {
+                        "description": "users infos",
+                        "schema": {
+                            "title": "arrayOfUsers",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/garden": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "List all gardens",
+                "operationId": "findAllGardens",
+                "responses": {
+                    "200": {
+                        "description": "gardens infos",
+                        "schema": {
+                            "title": "arrayOfGardens",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Garden"
+                            }
                         }
                     }
                 }
@@ -174,6 +1296,496 @@
         }
     },
     "definitions": {
+        "Type": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "min": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "max": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "type": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "NewType": {
+            "type": "object",
+            "required": [
+                "name",
+                "description",
+                "min",
+                "max",
+                "type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "min": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "max": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "type": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "PatchType": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "min": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "max": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "type": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Configuration": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "lightTreshold": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "lightingStart": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "lightingEnd": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "isWategringActive": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "wateringStart": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "wateringEnd": {
+                    "type": "number",
+                    "format": "data"
+                }
+            }
+        },
+        "NewConfiguration": {
+            "type": "object",
+            "required": [
+                "name",
+                "description",
+                "lightTreshold",
+                "lightingStart",
+                "lightingEnd",
+                "wateringStart",
+                "wateringEnd"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "lightTreshold": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "lightingStart": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "lightingEnd": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "isWategringActive": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "wateringStart": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "wateringEnd": {
+                    "type": "number",
+                    "format": "data"
+                }
+            }
+        },
+        "PatchConfiguration": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "lightTreshold": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "lightingStart": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "lightingEnd": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "isWategringActive": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "wateringStart": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "wateringEnd": {
+                    "type": "number",
+                    "format": "int"
+                }
+            }
+        },
+        "Garden": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "isPublic": {
+                    "type": "string"
+                },
+                "lattitude": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "showLocation": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "zipcode": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "adress1": {
+                    "type": "string"
+                },
+                "adress2": {
+                    "type": "string"
+                }
+            }
+        },
+        "NewGarden": {
+            "type": "object",
+            "required": [
+                "name",
+                "lattitude",
+                "longitude",
+                "country",
+                "zipcode",
+                "adress1",
+                "adress2"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "isPublic": {
+                    "type": "string"
+                },
+                "lattitude": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "showLocation": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "zipcode": {
+                    "type": "string"
+                },
+                "adress1": {
+                    "type": "string"
+                },
+                "adress2": {
+                    "type": "string"
+                }
+            }
+        },
+        "PatchGarden": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 2
+                },
+                "isPublic": {
+                    "type": "string"
+                },
+                "lattitude": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "showLocation": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "zipcode": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "adress1": {
+                    "type": "string"
+                },
+                "adress2": {
+                    "type": "string"
+                }
+            }
+        },
+        "Access": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "isPublic": {
+                    "type": "number",
+                    "format": "int"
+                }
+            }
+        },
+        "NewAccess": {
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "isPublic": {
+                    "type": "number",
+                    "format": "int"
+                }
+            }
+        },
+        "PatchAccess": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "isPublic": {
+                    "type": "number",
+                    "format": "int"
+                }
+            }
+        },
+        "Measures": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "isPublic": {
+                    "type": "number",
+                    "format": "int"
+                }
+            }
+        },
+        "NewMeasures": {
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number",
+                    "format": "int"
+                }
+            }
+        },
+        "Alerts": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "threshold": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "message": {
+                    "format": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "NewAlerts": {
+            "type": "object",
+            "required": [
+                "name",
+                "threshold",
+                "description",
+                "message",
+                "type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "threshold": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "message": {
+                    "format": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "PatchAlerts": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "threshold": {
+                    "type": "number",
+                    "format": "int"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "message": {
+                    "format": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "User": {
             "type": "object",
             "properties": {
@@ -194,7 +1806,7 @@
             "required": [
                 "username",
                 "email",
-                "password"
+                "plainPassword"
             ],
             "properties": {
                 "username": {
@@ -203,7 +1815,55 @@
                 "email": {
                     "type": "string"
                 },
+                "plainPassword": {
+                    "type": "string"
+                }
+            }
+        },
+        "LogUser": {
+            "type": "object",
+            "required": [
+                "username",
+                "password"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
                 "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "Token": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "RefreshToken": {
+            "type": "object",
+            "required": [
+                "refresh_token"
+            ],
+            "properties": {
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "ResetPassword": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
                     "type": "string"
                 }
             }
@@ -211,28 +1871,7 @@
         "EditUser": {
             "type": "object",
             "properties": {
-                "username": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "Error": {
-            "required": [
-                "code",
-                "message"
-            ],
-            "properties": {
-                "code": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "message": {
+                "plainPassword": {
                     "type": "string"
                 }
             }
