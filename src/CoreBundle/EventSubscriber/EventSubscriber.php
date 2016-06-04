@@ -2,6 +2,7 @@
 
 namespace CoreBundle\EventSubscriber;
 
+use CoreBundle\Service\SendNotification;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use CoreBundle\Service\TriggerAlert;
 use CoreBundle\Event\AlertTriggeredEvent;
@@ -13,6 +14,11 @@ class EventSubscriber implements EventSubscriberInterface
      * @var TriggerAlert
      */
     private $triggerAlert;
+
+    /**
+     * @var \CoreBundle\Service\SendNotification
+     */
+    private $sendNotification;
 
     public static function getSubscribedEvents()
     {
@@ -26,9 +32,10 @@ class EventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function __construct(TriggerAlert $triggerAlert)
+    public function __construct(TriggerAlert $triggerAlert, SendNotification $sendNotification)
     {
         $this->triggerAlert = $triggerAlert;
+        $this->sendNotification = $sendNotification;
     }
 
     public function measureSent(MeasureSentEvent $event)
@@ -38,6 +45,6 @@ class EventSubscriber implements EventSubscriberInterface
 
     public function alertTriggered(AlertTriggeredEvent $event)
     {
-        // TODO use service for send alert
+        $this->sendNotification->send($event->getAlert());
     }
 }
