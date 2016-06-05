@@ -18,3 +18,9 @@ services:
     core.history_notification_handler:
         class: CoreBundle\Service\HistoryNotificationHandler
         arguments: ['@core.history_notification_repository']
+
+    core.locale_listener:
+        class: CoreBundle\EventSubscriber\LocaleListener
+        arguments: ['%kernel.default_locale%']
+        tags:
+            - { name: kernel.event_subscriber }
