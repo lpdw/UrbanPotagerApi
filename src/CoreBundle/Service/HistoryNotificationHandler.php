@@ -2,6 +2,7 @@
 
 namespace CoreBundle\Service;
 
+use Doctrine\ORM\EntityManager;
 use CoreBundle\Entity\HistoryNotification;
 use CoreBundle\Entity\Garden;
 use CoreBundle\Entity\Alert;
@@ -9,13 +10,13 @@ use CoreBundle\Entity\Alert;
 class HistoryNotificationHandler
 {
     /**
-     * @var \CoreBundle\Repository\HistoryNotificationRepository
+     * @var EntityManager
      */
-    private $repo;
+    private $em;
 
-    public function __construct(\CoreBundle\Repository\HistoryNotificationRepository $repo)
+    public function __construct(EntityManager $em)
     {
-        $this->repo = $repo;
+        $this->em = $em;
     }
 
     /**
@@ -25,8 +26,22 @@ class HistoryNotificationHandler
      */
     public function canSendNotification(Garden $garden, Alert $alert)
     {
-        $count = $this->repo->countNotificationLast24Hours($garden, $alert);
+        /** @var \CoreBundle\Repository\HistoryNotificationRepository $repo */
+        $repo = $this->em->getRepository('CoreBundle:HistoryNotification');
+
+        $count = $repo->countNotificationLast24Hours($garden, $alert);
 
         return 0 == $count;
+    }
+
+    public function addHistoryNotification(Garden $garden, Alert $alert)
+    {
+        $notification = new HistoryNotification();
+        $notification->setGarden($garden)
+                    ->setAlert($alert)
+                    ->setSendAt(new \DateTime());
+
+        $this->em->persist($notification);
+        $this->em->flush();
     }
 }

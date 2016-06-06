@@ -17,7 +17,7 @@ services:
 
     core.history_notification_handler:
         class: CoreBundle\Service\HistoryNotificationHandler
-        arguments: ['@core.history_notification_repository']
+        arguments: ['@doctrine.orm.entity_manager']
 
     core.locale_listener:
         class: CoreBundle\EventSubscriber\LocaleListener

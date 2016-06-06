@@ -45,6 +45,6 @@ class EventSubscriber implements EventSubscriberInterface
 
     public function alertTriggered(AlertTriggeredEvent $event)
     {
-        $this->sendNotification->send($event->getAlert());
+        $this->sendNotification->send($event->getGarden(), $event->getAlert());
     }
 }
