@@ -190,7 +190,7 @@ abstract class CoreController extends Controller
                 $error = $this->t('core.error.bad_filter');
             }
 
-            throw new HttpException(Codes::HTTP_BAD_REQUEST, $error); // TODO add more info
+            throw new HttpException(Codes::HTTP_BAD_REQUEST, $error);
         }
 
         return $filter;
