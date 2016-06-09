@@ -2,16 +2,12 @@
 
 namespace Tests\CoreBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
 
-class DefaultControllerTest extends WebTestCase
+class DefaultControllerTest extends AbstractControllerTest
 {
     public function testIndex()
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/');
-
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->isSuccessful(Request::METHOD_GET, '/');
     }
 }
