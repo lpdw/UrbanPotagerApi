@@ -96,7 +96,7 @@ class TypeControllerTest extends AbstractControllerTest
 
     public function testPostForbidden()
     {
-        $user = self::USER;
+        $user = self::USER1;
         $header = $this->getHeaderConnect($user['username'], $user['password']);
 
         $this->isForbidden(Request::METHOD_POST, self::PREFIX_URL, [], $header);
@@ -152,7 +152,7 @@ class TypeControllerTest extends AbstractControllerTest
 
     public function testPatchForbidden()
     {
-        $user = self::USER;
+        $user = self::USER1;
         $header = $this->getHeaderConnect($user['username'], $user['password']);
 
         $slug = "my-new-type";
@@ -192,7 +192,7 @@ class TypeControllerTest extends AbstractControllerTest
 
     public function testDeleteForbidden()
     {
-        $user = self::USER;
+        $user = self::USER1;
         $header = $this->getHeaderConnect($user['username'], $user['password']);
 
         $slug = "water-level";
