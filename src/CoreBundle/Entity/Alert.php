@@ -113,6 +113,7 @@ class Alert implements OwnableInterface
      * @var \CoreBundle\Entity\Type
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
+     * @Assert\NotNull(message="constraints.not_null")
      * @JMS\Expose()
      * @ORM\JoinColumn(onDelete="SET NULL")
      */

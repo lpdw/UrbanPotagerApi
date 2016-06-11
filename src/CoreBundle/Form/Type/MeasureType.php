@@ -23,8 +23,8 @@ class MeasureType extends AbstractType
             ])
             ->add('type', EntityType::class, [
                 'class' => 'CoreBundle:Type',
-                'choice_value' => function(Type $type) {
-                    return $type->getSlug();
+                'choice_value' => function(Type $type = null) {
+                    return (!is_null($type)) ? $type->getSlug() : '';
                 }
             ])
         ;
