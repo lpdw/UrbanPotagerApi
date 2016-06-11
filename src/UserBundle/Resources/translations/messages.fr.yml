@@ -3,3 +3,7 @@ resetting:
         subject: 'Réinitialisation de votre mot de passe'
         message: 'Vous avez fait une demande de réinitialisation de votre mot de passe, voici le code : %token%'
 password_request_expired: "Votre requête a expirée"
+user:
+    error:
+        forget_password:
+            empty_username: "Le nom d'utilisateur ne peut pas être vide"

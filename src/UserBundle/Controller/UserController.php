@@ -62,6 +62,10 @@ class UserController extends CoreController
     {
         $username = $request->request->get('username');
 
+        if (is_null($username)) {
+            return new JsonResponse(['error' => $this->t('user.error.forget_password.empty_username')], Codes::HTTP_BAD_REQUEST);
+        }
+
         /** @var $user \FOS\UserBundle\Model\UserInterface */
         $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
 

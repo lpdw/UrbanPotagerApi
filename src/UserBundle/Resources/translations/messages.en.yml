@@ -3,3 +3,7 @@ resetting:
         subject: 'Reset password'
         message: 'You made a request to reset your password, here is your code : %token%'
 password_request_expired: "Your request has expired"
+user:
+    error:
+        forget_password:
+            empty_username: 'Username can not be empty'
