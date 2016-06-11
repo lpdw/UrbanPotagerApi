@@ -7,6 +7,7 @@ use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use CoreBundle\Security\GardenVoter;
 use CoreBundle\Event\MeasureSentEvent;
 use CoreBundle\Form\Type\MeasureType;
 use CoreBundle\Entity\Measure;
@@ -102,6 +103,8 @@ class MeasureController extends CoreController
      */
     private function grantedViewMeasure(Garden $garden, Type $type)
     {
+        $this->isGranted(GardenVoter::VIEW, $garden);
+
         if (!$this->canViewMeasure($garden, $type)) {
             throw $this->createAccessDeniedException();
         }
