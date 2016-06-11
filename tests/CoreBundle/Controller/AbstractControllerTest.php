@@ -9,7 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class AbstractControllerTest extends WebTestCase
 {
     const ADMIN = ['username' => 'admin', 'password' => 'admin'];
-    const USER = ['username' => 'user1', 'password' => 'userpass'];
+    const USER1 = ['username' => 'user1', 'password' => 'userpass'];
+    const USER2 = ['username' => 'user2', 'password' => 'userpass'];
 
     /**
      * @var \Symfony\Bundle\FrameworkBundle\Client
