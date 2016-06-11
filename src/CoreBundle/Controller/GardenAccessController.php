@@ -44,7 +44,7 @@ class GardenAccessController extends CoreController
     {
         $this->isGranted(GardenVoter::VIEW, $garden);
 
-        $access = $this->findAccess($garden, $type);
+        $access = $this->findAccess($garden, $type, false);
 
         return [
             'access' => $access
@@ -121,10 +121,11 @@ class GardenAccessController extends CoreController
     /**
      * @param Garden $garden
      * @param Type $type
+     * @param bool|null $default
      *
      * @return Access
      */
-    private function findAccess(Garden $garden, Type $type)
+    private function findAccess(Garden $garden, Type $type, $default = null)
     {
         /** @var \CoreBundle\Repository\AccessRepository $repo */
         $repo = $this->getRepository();
@@ -132,9 +133,15 @@ class GardenAccessController extends CoreController
         $access = $repo->findByGardenAndType($garden, $type);
 
         if (is_null($access)) {
-            $access = new Access();
-            $access->setType($type)
-                   ->setIsPublic(false);
+            if (is_null($default)) {
+                throw $this->createNotFoundException();
+            } else {
+                $access = new Access();
+                $access->setType($type)
+                        ->setIsPublic($default);
+
+                return $access;
+            }
         }
 
         return $access;
