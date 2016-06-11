@@ -101,6 +101,18 @@ abstract class AbstractControllerTest extends WebTestCase
     }
 
     /**
+     * @param string $method
+     * @param string $url
+     * @param array $params
+     */
+    protected function isConflict($method, $url, $params = [], $headers = [])
+    {
+        $this->request($method, $url, $params, $headers);
+
+        $this->assertEquals(Response::HTTP_CONFLICT, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
      * @return array
      */
     protected function getResponseContent($key = null)
