@@ -132,7 +132,9 @@ class GardenAccessController extends CoreController
         $access = $repo->findByGardenAndType($garden, $type);
 
         if (is_null($access)) {
-            throw $this->createNotFoundException();
+            $access = new Access();
+            $access->setType($type)
+                   ->setIsPublic(false);
         }
 
         return $access;
