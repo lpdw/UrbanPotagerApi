@@ -34,7 +34,7 @@ class MeasureController extends CoreController
         $page = $this->getPage($request);
         $itemPerPage = $this->getItemPerPage('measure', $request);
 
-        $measures = $filter->getResult('queryMeasureByGardenAndType', [$garden, $type, $page, $itemPerPage]);
+        $measures = $filter->getResult('queryBuilderMeasureByGardenAndType', [$garden, $type, $page, $itemPerPage]);
 
         return [
             'measures' => $measures,
