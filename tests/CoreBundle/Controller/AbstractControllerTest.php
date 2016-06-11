@@ -57,7 +57,10 @@ abstract class AbstractControllerTest extends WebTestCase
     {
         $this->request($method, $url, $params, $headers);
 
-        $this->assertTrue($this->client->getResponse()->isNotFound());
+        $this->assertTrue(
+                $this->client->getResponse()->isNotFound(),
+                sprintf('Status code is %s instead of 404', $this->client->getResponse()->getStatusCode())
+            );
     }
 
     /**
