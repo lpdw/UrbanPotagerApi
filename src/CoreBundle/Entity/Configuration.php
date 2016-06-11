@@ -164,7 +164,7 @@ class Configuration implements OwnableInterface
     /**
      * Set lightTreshold
      *
-     * @param string $lightTreshold
+     * @param float $lightTreshold
      *
      * @return Configuration
      */
@@ -178,7 +178,7 @@ class Configuration implements OwnableInterface
     /**
      * Get lightTreshold
      *
-     * @return string
+     * @return float
      */
     public function getLightTreshold()
     {
