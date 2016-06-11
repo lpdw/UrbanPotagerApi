@@ -261,7 +261,7 @@ class Alert implements OwnableInterface
      *
      * @param \UserBundle\Entity\User $owner
      *
-     * @return Garden
+     * @return Alert
      */
     public function setOwner(\UserBundle\Entity\User $owner = null)
     {
