@@ -33,10 +33,10 @@ abstract class CoreController extends Controller
     }
 
     /**
-     * @param Form $form
+     * @param Form|\Symfony\Component\Form\SubmitButton $form
      * @return array
      */
-    protected function getAllErrors(Form $form)
+    protected function getAllErrors($form)
     {
         $errorsString = [];
 
