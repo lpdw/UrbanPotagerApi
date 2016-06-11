@@ -288,6 +288,10 @@ class GardenAccessControllerTest extends AbstractControllerTest
         $url = self::$prefixUrl . '/water-level';
 
         $this->isSuccessful(Request::METHOD_DELETE, $url, [], $header);
+        $this->isSuccessful(Request::METHOD_GET, $url, [], $header);
+        $access = $this->getResponseContent('access');
+
+        $this->assertTrue(!$access['is_public']);
     }
 
     public function testDeleteUnauthorized()

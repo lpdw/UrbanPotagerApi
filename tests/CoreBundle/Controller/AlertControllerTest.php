@@ -25,6 +25,12 @@ class AlertControllerTest extends AbstractControllerTest
         ];
 
         $this->isSuccessful(Request::METHOD_POST, self::PREFIX_URL, $params, $header);
+        $alert = $this->getResponseContent('alert');
+        $slug = $alert['slug'];
+
+        $url = self::PREFIX_URL . '/' . $slug;
+
+        $this->isSuccessful(Request::METHOD_GET, $url, [], $header);
     }
 
     public function testPostBadRequest()
@@ -197,5 +203,7 @@ class AlertControllerTest extends AbstractControllerTest
         $url = self::PREFIX_URL . '/' . $slug;
 
         $this->isSuccessful(Request::METHOD_DELETE, $url, [], $header);
+
+        $this->isNotFound(Request::METHOD_GET, $url, [], $header);
     }
 }

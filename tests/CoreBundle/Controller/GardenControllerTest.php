@@ -233,6 +233,7 @@ class GardenControllerTest extends AbstractControllerTest
             $url = self::PREFIX_URL . '/' . $slug;
 
             $this->isSuccessful(Request::METHOD_DELETE, $url, [], $header);
+            $this->isNotFound(Request::METHOD_GET, $url, [], $header);
         }
     }
 }
