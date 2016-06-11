@@ -13,6 +13,12 @@ class InRangeTypeValidator extends ConstraintValidator
      */
     public function validate($alert, Constraint $constraint)
     {
+        $type = $alert->getType();
+
+        if (is_null($type)) {
+            return; // avoid 500, constraint handle by constraint on attribut $type
+        }
+
         $min = $alert->getType()->getMin();
         $max = $alert->getType()->getMax();
 
