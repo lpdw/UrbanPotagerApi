@@ -38,7 +38,7 @@ class SendNotification
             return;
         }
 
-        $title = $this->createTitle();
+        $title = $this->createTitle($garden);
         $message = $this->createMessage($alert);
         $email = $alert->getOwner()->getEmail();
 
@@ -52,8 +52,8 @@ class SendNotification
         return $alert->getMessage();
     }
 
-    private function createTitle()
+    private function createTitle(Garden $garden)
     {
-        return $this->translator->trans('core.alert.title');
+        return $this->translator->trans('core.alert.title', ['%garden%' => $garden->getName()]);
     }
 }
