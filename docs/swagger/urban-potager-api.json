@@ -40,6 +40,51 @@
                 ],
                 "description": "List all data types",
                 "operationId": "findTypes",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "itemPerPage",
+                        "in": "query",
+                        "description": "",
+                        "default": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "pour ordonner selon un champs, il faut envoyer un tableau order_by[]=field1&order_by[]=field2",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "ASC or DESC",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "pour faire une recherche via un LIKE (pas besoin de mettre les %)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "0 = plant | 1 = sensor",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "types infos",
@@ -73,6 +118,13 @@
                         "schema": {
                             "$ref": "#/definitions/NewType"
                         }
+                    },
+                    {
+                        "name": "_local",
+                        "in": "query",
+                        "description": "Use it for translating name or description, 'fr' or 'en', default 'fr'",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -124,6 +176,13 @@
                         "in": "path",
                         "description": "Slug of type to patch",
                         "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "_local",
+                        "in": "query",
+                        "description": "Use it for translating name or description, 'fr' or 'en', default 'fr'\nIf you can't patch for the first time in english a type created in french with only name or description. Both are needed.",
+                        "required": false,
                         "type": "string"
                     },
                     {
@@ -184,6 +243,58 @@
                 ],
                 "description": "Return all configurations created by current user",
                 "operationId": "findConfigurations",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "item_per_page",
+                        "in": "query",
+                        "description": "",
+                        "default": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "pour ordonner selon un champs, il faut envoyer un tableau order_by[]=field1&order_by[]=field2",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "ASC or DESC",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "pour faire une recherche via un LIKE (pas besoin de mettre les %)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "create_before",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "create_after",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "configurations infos",
@@ -229,7 +340,7 @@
                 }
             }
         },
-        "/configuration/{slug}": {
+        "/configurations/{slug}": {
             "get": {
                 "tags": [
                     "Configurations"
@@ -321,7 +432,7 @@
                 }
             }
         },
-        "/garden/{slugGarden}/configuration": {
+        "/gardens/{slugGarden}/configurations": {
             "get": {
                 "tags": [
                     "Configurations"
@@ -375,7 +486,7 @@
                 }
             }
         },
-        "/garden/{slugGarden}/configuration/{slugConfiguration}": {
+        "/gardens/{slugGarden}/configurations/{slugConfiguration}": {
             "post": {
                 "tags": [
                     "Configurations"
@@ -720,7 +831,7 @@
                 }
             }
         },
-        "/measures?api_key=###": {
+        "/measures": {
             "post": {
                 "tags": [
                     "Measures"
@@ -755,7 +866,7 @@
                 }
             }
         },
-        "/gardens/{slugGarden}/measures/{slugType}/?page=###&itemPerPage=###": {
+        "/gardens/{slugGarden}/measures/{slugType}": {
             "get": {
                 "tags": [
                     "Measures"
@@ -1186,7 +1297,7 @@
                 }
             }
         },
-        "/forgot-password": {
+        "/forget-password": {
             "post": {
                 "tags": [
                     "Users"
@@ -1197,7 +1308,7 @@
                     {
                         "name": "ResetPassword",
                         "in": "body",
-                        "description": "email to reset password",
+                        "description": "username or email to reset password, use username's key with email",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/ResetPassword"
@@ -1211,12 +1322,12 @@
                 }
             }
         },
-        "/forgot-password/{token}": {
+        "/reset-password/{token}": {
             "post": {
                 "tags": [
                     "Users"
                 ],
-                "description": "Ask for reset password",
+                "description": "Post a new password",
                 "operationId": "resetPassword",
                 "parameters": [
                     {
@@ -1268,7 +1379,7 @@
                 }
             }
         },
-        "/admin/garden": {
+        "/admin/gardens": {
             "get": {
                 "tags": [
                     "Admin"
@@ -1527,7 +1638,7 @@
                 "isPublic": {
                     "type": "string"
                 },
-                "lattitude": {
+                "latitude": {
                     "type": "number",
                     "format": "float"
                 },
@@ -1540,6 +1651,9 @@
                     "format": "int"
                 },
                 "country": {
+                    "type": "string"
+                },
+                "city": {
                     "type": "string"
                 },
                 "zipcode": {
@@ -1558,12 +1672,9 @@
             "type": "object",
             "required": [
                 "name",
-                "lattitude",
+                "latitude",
                 "longitude",
-                "country",
-                "zipcode",
-                "adress1",
-                "adress2"
+                "showLocation"
             ],
             "properties": {
                 "name": {
@@ -1572,7 +1683,7 @@
                 "isPublic": {
                     "type": "string"
                 },
-                "lattitude": {
+                "latitude": {
                     "type": "number",
                     "format": "float"
                 },
@@ -1587,13 +1698,16 @@
                 "country": {
                     "type": "string"
                 },
+                "city": {
+                   "type": "string"
+                },
                 "zipcode": {
                     "type": "string"
                 },
-                "adress1": {
+                "address1": {
                     "type": "string"
                 },
-                "adress2": {
+                "address2": {
                     "type": "string"
                 }
             }
@@ -1608,7 +1722,7 @@
                 "isPublic": {
                     "type": "string"
                 },
-                "lattitude": {
+                "latitude": {
                     "type": "number",
                     "format": "float"
                 },
@@ -1621,6 +1735,9 @@
                     "format": "int"
                 },
                 "country": {
+                    "type": "string"
+                },
+                "city": {
                     "type": "string"
                 },
                 "zipcode": {
@@ -1860,10 +1977,10 @@
         "ResetPassword": {
             "type": "object",
             "required": [
-                "email"
+                "username"
             ],
             "properties": {
-                "email": {
+                "username": {
                     "type": "string"
                 }
             }
