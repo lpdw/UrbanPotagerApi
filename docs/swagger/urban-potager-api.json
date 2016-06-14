@@ -73,7 +73,7 @@
                     {
                         "name": "name",
                         "in": "query",
-                        "description": "pour faire une recherche via un LIKE (pas besoin de mettre les %)",
+                        "description": "To make search via a LIKE (no need to put %)",
                         "required": false,
                         "type": "string"
                     },
@@ -276,7 +276,7 @@
                     {
                         "name": "name",
                         "in": "query",
-                        "description": "pour faire une recherche via un LIKE (pas besoin de mettre les %)",
+                        "description": "To make search via a LIKE (no need to put %)",
                         "required": false,
                         "type": "string"
                     },
@@ -534,6 +534,86 @@
                         "Bearer": []
                     }
                 ],
+                "parameters":[
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "itemPerPage",
+                        "in": "query",
+                        "description": "",
+                        "default": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "To order with a field, send an array order_by[]=field1&order_by[]=field2",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "ASC or DESC",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "zip_code",
+                        "in": "query",
+                        "description": "possibility to send an array, see order_by description for more infos",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "query",
+                        "description": "must be use with longitude, find garden around this point",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "query",
+                        "description": "must be use with latitude, find garden around this point",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "create_before",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "create_after",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "To make search via a LIKE (no need to put %)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "owners",
+                        "in": "query",
+                        "description": "username of the owner, possibility to do an array, see order_by",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "description": "Returns all gardens from the system",
                 "operationId": "findGardens",
                 "responses": {
@@ -548,7 +628,7 @@
                         }
                     }
                 }
-            },
+            ],
             "post": {
                 "tags": [
                     "Gardens"
@@ -652,7 +732,7 @@
                         "Bearer": []
                     }
                 ],
-                "description": "Returns all acces form a garden",
+                "description": "Returns all access form a garden",
                 "operationId": "findGardenAccess",
                 "parameters": [
                     {
@@ -901,6 +981,20 @@
                         "description": "page number",
                         "required": false,
                         "type": "string"
+                    },
+                    {
+                        "name": "create_before",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "create_after",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -924,6 +1018,79 @@
                     }
                 ],
                 "description": "Returns all alerts from the system",
+                "parameters":[
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "itemPerPage",
+                        "in": "query",
+                        "description": "",
+                        "default": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "To order with a field, send an array order_by[]=field1&order_by[]=field2",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "ASC or DESC",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "create_before",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "create_after",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "To make search via a LIKE (no need to put %)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "comparisons",
+                        "in": "query",
+                        "description": "Possibility to make an array, go to POST endpoints to see operators list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "gardens",
+                        "in": "query",
+                        "description": "Slug of garden, Possibility to make an array, see order_by",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "types",
+                        "in": "query",
+                        "description": "Slug of type, Possibility to make an array, see order_by",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "operationId": "findAlerts",
                 "responses": {
                     "200": {
@@ -947,7 +1114,7 @@
                         "Bearer": []
                     }
                 ],
-                "description": "Alert for garden",
+                "description": "Alert for garden\n1: ==, 2: !=, 3: <, 4: >",
                 "operationId": "addAlert",
                 "parameters": [
                     {
@@ -1227,6 +1394,79 @@
                     }
                 ],
                 "description": "Returns the garden of the connected user.",
+                "parameters":[
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "itemPerPage",
+                        "in": "query",
+                        "description": "",
+                        "default": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "To order with a field, send an array order_by[]=field1&order_by[]=field2",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "ASC or DESC",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "zip_code",
+                        "in": "query",
+                        "description": "possibility to send an array, see order_by description for more infos",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "query",
+                        "description": "must be use with longitude, find garden around this point",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "query",
+                        "description": "must be use with latitude, find garden around this point",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "create_before",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "create_after",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "To make search via a LIKE (no need to put %)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Gardens of the user",
@@ -1364,6 +1604,52 @@
                     }
                 ],
                 "description": "List all users",
+                "parameters":[
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "itemPerPage",
+                        "in": "query",
+                        "description": "",
+                        "default": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "To order with a field, send an array order_by[]=field1&order_by[]=field2",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "ASC or DESC",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "To make search via a LIKE (no need to put %)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "To make search via a LIKE (no need to put %)",
+                        "required": false,
+                        "type": "string"
+                    }
+
+                ],
                 "operationId": "findUsers",
                 "responses": {
                     "200": {
@@ -1390,6 +1676,86 @@
                     }
                 ],
                 "description": "List all gardens",
+                "parameters":[
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "itemPerPage",
+                        "in": "query",
+                        "description": "",
+                        "default": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "To order with a field, send an array order_by[]=field1&order_by[]=field2",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "ASC or DESC",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "zip_code",
+                        "in": "query",
+                        "description": "possibility to send an array, see order_by description for more infos",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "query",
+                        "description": "must be use with longitude, find garden around this point",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "query",
+                        "description": "must be use with latitude, find garden around this point",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "create_before",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "create_after",
+                        "in": "query",
+                        "description": "timestamp",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "To make search via a LIKE (no need to put %)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "owners",
+                        "in": "query",
+                        "description": "username of the owner, possibility to do an array, see order_by",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "operationId": "findAllGardens",
                 "responses": {
                     "200": {
@@ -1859,6 +2225,7 @@
             "required": [
                 "name",
                 "threshold",
+                "comparison",
                 "description",
                 "message",
                 "type"
@@ -1866,6 +2233,10 @@
             "properties": {
                 "name": {
                     "type": "string"
+                },
+                "comparison":{
+                    "type": "number",
+                    "format": "int"
                 },
                 "threshold": {
                     "type": "number",
