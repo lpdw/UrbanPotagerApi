@@ -1,0 +1,21 @@
+{% block subject %}
+    {% autoescape false %}
+        {{ 'register.email.subject'|trans({'%username%': username}) }}
+    {% endautoescape %}
+{% endblock %}
+
+{% block body_text %}
+    {% autoescape false %}
+        {{ 'register.email.message'|trans({'%username%': username}) }}
+    {% endautoescape %}
+{% endblock %}
+
+{% block body_html %}
+    <!DOCTYPE html>
+    <html>
+        <head></head>
+        <body>
+            {{ 'register.email.message'|trans({'%username%': username}) }}
+        </body>
+    </html>
+{% endblock %}

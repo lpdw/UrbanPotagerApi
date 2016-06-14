@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use CoreBundle\Controller\CoreController;
 use UserBundle\Entity\User;
+use UserBundle\Event\UserCreateEvent;
 use UserBundle\Form\Type\UserType;
 use UserBundle\Form\Type\UserEditType;
 
@@ -47,6 +48,13 @@ class UserController extends CoreController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if ('post' === $method) {
+                $event = new UserCreateEvent($user);
+
+                $this->dispatch(UserCreateEvent::NAME, $event);
+            }
+
             return [
                 'user' => $this->persistUser($user),
             ];
