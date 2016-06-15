@@ -99,6 +99,13 @@ class Garden implements OwnableInterface
     private $alerts;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Share", mappedBy="garden")
+     */
+    private $shares;
+
+    /**
      * @JMS\VirtualProperty()
      * @JMS\Groups({"detail-garden"})
      */
@@ -464,5 +471,39 @@ class Garden implements OwnableInterface
     public function getAlerts()
     {
         return $this->alerts;
+    }
+
+    /**
+     * Add share
+     *
+     * @param \CoreBundle\Entity\Share $share
+     *
+     * @return Garden
+     */
+    public function addShare(\CoreBundle\Entity\Share $share)
+    {
+        $this->shares[] = $share;
+
+        return $this;
+    }
+
+    /**
+     * Remove share
+     *
+     * @param \CoreBundle\Entity\Share $share
+     */
+    public function removeShare(\CoreBundle\Entity\Share $share)
+    {
+        $this->shares->removeElement($share);
+    }
+
+    /**
+     * Get shares
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getShares()
+    {
+        return $this->shares;
     }
 }

@@ -43,7 +43,7 @@ abstract class Share
     /**
      * @var garden
      *
-     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden", inversedBy="shares")
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @JMS\Expose()
      * @JMS\Groups({"detail-share"})
