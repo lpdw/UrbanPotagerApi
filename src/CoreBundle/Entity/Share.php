@@ -14,11 +14,10 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type_entity", type="string")
  * @ORM\DiscriminatorMap({
- *  "measure_share" = "MeasureShare",
  *  "user_share" = "UserShare",
  * })
  */
-class Share
+abstract class Share
 {
     use TimestampableEntity;
 
