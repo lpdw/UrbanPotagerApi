@@ -534,7 +534,7 @@
                         "Bearer": []
                     }
                 ],
-                "parameters":[
+                "parameters": [
                     {
                         "name": "page",
                         "in": "query",
@@ -628,7 +628,7 @@
                         }
                     }
                 }
-            ],
+            },
             "post": {
                 "tags": [
                     "Gardens"
