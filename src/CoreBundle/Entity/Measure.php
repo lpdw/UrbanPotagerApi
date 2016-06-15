@@ -3,28 +3,37 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Measure
  *
  * @ORM\Table(name="measure")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\MeasureRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Measure
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose()
      */
     private $id;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="value", type="float")
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="constraints.not_blank")
+     * @JMS\Expose()
      */
     private $value;
 
@@ -33,6 +42,7 @@ class Measure
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
      * @ORM\JoinColumn(onDelete="SET NULL")
+     * @JMS\Expose()
      */
     private $type;
 
@@ -40,9 +50,20 @@ class Measure
      * @var Garden
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $garden;
+
+
+    /**
+     * @return \DateTime
+     *
+     * @JMS\VirtualProperty()
+     */
+    public function createdAt()
+    {
+        return $this->createdAt;
+    }
 
 
     /**

@@ -1,6 +1,8 @@
 <?php
 
 namespace CoreBundle\Repository;
+use CoreBundle\Entity\Garden;
+use CoreBundle\Entity\Type;
 
 /**
  * MeasureRepository
@@ -10,4 +12,48 @@ namespace CoreBundle\Repository;
  */
 class MeasureRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function countPerGardenAndType(Garden $garden, Type $type)
+    {
+        $qb = $this->createQueryBuilder('m')
+                    ->select('COUNT(m.id)')
+                    ->where('m.garden = :garden')
+                    ->andWhere('m.type = :type')
+                    ->setParameters([
+                        'garden' => $garden,
+                        'type' => $type,
+                    ]);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getMeasureByGardenAndType(Garden $garden, Type $type, $page, $itemPerPage)
+    {
+        return $this->queryBuilderMeasureByGardenAndType($garden, $type, $page, $itemPerPage)->getQuery()->getArrayResult();
+    }
+
+    /**
+     * @param Garden $garden
+     * @param Type $type
+     * @param $page
+     * @param $itemPerPage
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function queryBuilderMeasureByGardenAndType(Garden $garden, Type $type, $page, $itemPerPage)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('m.value')
+            ->addSelect('m.createdAt')
+            ->where('m.garden = :garden')
+            ->andWhere('m.type = :type')
+            ->orderBy('m.createdAt', 'DESC')
+            ->setParameters([
+                'garden' => $garden,
+                'type' => $type,
+            ])
+            ->setMaxResults($itemPerPage)
+            ->setFirstResult(($page - 1) * $itemPerPage);
+
+        return $qb;
+    }
 }
