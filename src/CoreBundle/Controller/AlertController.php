@@ -47,7 +47,7 @@ class AlertController extends CoreController
     }
 
     /**
-     * @FOSRest\View(serializerGroups={"Default"}, statusCode=201)
+     * @FOSRest\View(serializerGroups={"Default", "detail-alert"}, statusCode=201)
      */
     public function postAlertAction(Request $request)
     {
@@ -59,7 +59,7 @@ class AlertController extends CoreController
     }
 
     /**
-     * @FOSRest\View(serializerGroups={"Default"})
+     * @FOSRest\View(serializerGroups={"Default", "detail-alert"})
      * @ParamConverter("alert", options={"mapping": {"alert": "slug"}})
      */
     public function patchAlertAction(Alert $alert, Request $request)
