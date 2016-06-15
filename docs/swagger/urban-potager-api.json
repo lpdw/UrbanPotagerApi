@@ -83,6 +83,13 @@
                         "description": "0 = plant | 1 = sensor",
                         "required": false,
                         "type": "string"
+                    },
+                    {
+                        "name": "_local",
+                        "in": "query",
+                        "description": "Use it for translating name or description, 'fr' or 'en', default 'fr'",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -323,7 +330,7 @@
                     {
                         "name": "type",
                         "in": "body",
-                        "description": "Configuration to add to the store\n\nname: not blank, 250 char max\n\ndescription: not null\n\nlightTreshold: min: 0.000 | max = 100.00\n\nlightingStart: Heure valide, ex: \"hour\": 15, \"minute\": 37\n\nlightingEnd: Heure valide, ex: \"hour\": 15, \"minute\": 37\n\nisWateringActive: une valeur = true, pas de valeur = false, default: false\n\nwateringStart: Heure valide, ex: \"hour\": 15, \"minute\": 37\n\nwateringEnd: Heure valide, ex: \"hour\": 15, \"minute\": 37\n",
+                        "description": "Configuration to add to the store\n\nname: not blank, 250 char max\n\ndescription: not null\n\nlightTreshold: min: 0.000 | max = 100.00\n\nlightingStart: Heure valide, ex: {\"hour\": 15, \"minute\": 37}\n\nlightingEnd: Heure valide, ex: {\"hour\": 15, \"minute\": 37}\n\nisWateringActive: une valeur = true, pas de valeur = false, default: false\n\nwateringStart: Heure valide, ex: {\"hour\": 15, \"minute\": 37}\n\nwateringEnd: Heure valide, ex: {\"hour\": 15, \"minute\": 37}\n",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/NewConfiguration"
@@ -662,6 +669,30 @@
             }
         },
         "/gardens/{slug}": {
+            "get":{
+                "tags": [
+                    "Gardens"
+                ],
+                "description": "Get garden by slug",
+                "operationId": "patchGarden",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of garden",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Garden",
+                        "schema": {
+                            "$ref": "#/definitions/Garden"
+                        }
+                    }
+                }
+            },
             "patch": {
                 "tags": [
                     "Gardens"
@@ -679,7 +710,7 @@
                     {
                         "name": "garden",
                         "in": "body",
-                        "description": "Infos to edit",
+                        "description": "Infos to edit\nIf no informatin send for isPublic, isPublic = false",
                         "required": false,
                         "schema": {
                             "$ref": "#/definitions/PatchGarden"
@@ -778,7 +809,7 @@
                     {
                         "name": "access",
                         "in": "body",
-                        "description": "access to add to the store",
+                        "description": "access to add to the store\nIf isPublic is not send, default false, if is send isPublic always = true",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/NewAccess"
@@ -861,7 +892,7 @@
                     {
                         "name": "access",
                         "in": "body",
-                        "description": "Infos to edit",
+                        "description": "Infos to edit\nTo set isPublic at false, send \"submit\":0 with no other value",
                         "required": false,
                         "schema": {
                             "$ref": "#/definitions/PatchAccess"
@@ -1198,7 +1229,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Patched access",
+                        "description": "Patched alert",
                         "schema": {
                             "$ref": "#/definitions/Alerts"
                         }
@@ -1907,10 +1938,6 @@
                 "wateringEnd"
             ],
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -1929,7 +1956,7 @@
                     "type": "number",
                     "format": "int"
                 },
-                "isWategringActive": {
+                "isWateringActive": {
                     "type": "number",
                     "format": "int"
                 },
@@ -1946,17 +1973,10 @@
         "PatchConfiguration": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
                 "name": {
                     "type": "string"
                 },
                 "description": {
-                    "type": "string"
-                },
-                "slug": {
                     "type": "string"
                 },
                 "lightTreshold": {
@@ -2035,12 +2055,16 @@
             "type": "object",
             "required": [
                 "name",
+                "description",
                 "latitude",
                 "longitude",
                 "showLocation"
             ],
             "properties": {
                 "name": {
+                    "type": "string"
+                },
+                "description":{
                     "type": "string"
                 },
                 "isPublic": {
@@ -2064,7 +2088,7 @@
                 "city": {
                    "type": "string"
                 },
-                "zipcode": {
+                "zipCode": {
                     "type": "string"
                 },
                 "address1": {
@@ -2103,14 +2127,14 @@
                 "city": {
                     "type": "string"
                 },
-                "zipcode": {
+                "zipCode": {
                     "type": "number",
                     "format": "int"
                 },
-                "adress1": {
+                "address1": {
                     "type": "string"
                 },
-                "adress2": {
+                "address2": {
                     "type": "string"
                 }
             }
@@ -2149,9 +2173,6 @@
         "PatchAccess": {
             "type": "object",
             "properties": {
-                "type": {
-                    "type": "string"
-                },
                 "isPublic": {
                     "type": "number",
                     "format": "int"
@@ -2243,7 +2264,7 @@
                     "type": "string"
                 },
                 "message": {
-                    "format": "string"
+                    "type": "string"
                 },
                 "type": {
                     "type": "string"
@@ -2264,7 +2285,7 @@
                     "type": "string"
                 },
                 "message": {
-                    "format": "string"
+                    "type": "string"
                 },
                 "type": {
                     "type": "string"
