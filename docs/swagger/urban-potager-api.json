@@ -334,7 +334,7 @@
                     "201": {
                         "description": "Configuration created",
                         "schema": {
-                            "$ref": "#/definitions/Type"
+                            "$ref": "#/definitions/Configuration"
                         }
                     }
                 }
