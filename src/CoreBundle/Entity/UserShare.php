@@ -2,6 +2,7 @@
 
 namespace CoreBundle\Entity;
 
+use CoreBundle\Entity\Interfaces\OwnableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
@@ -10,7 +11,7 @@ use JMS\Serializer\Annotation as JMS;
  *
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\UserShareRepository")
  */
-class UserShare extends Share
+class UserShare extends Share implements OwnableInterface
 {
     /**
      * @var \UserBundle\Entity\User
