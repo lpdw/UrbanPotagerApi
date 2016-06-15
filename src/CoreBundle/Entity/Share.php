@@ -3,22 +3,25 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Post
  *
- * @ORM\Table(name="post")
- * @ORM\Entity(repositoryClass="CoreBundle\Repository\PostRepository")
+ * @ORM\Table(name="share")
+ * @ORM\Entity(repositoryClass="CoreBundle\Repository\ShareRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="postType", type="string")
+ * @ORM\DiscriminatorColumn(name="type_entity", type="string")
  * @ORM\DiscriminatorMap({
- *  "Post" = "Post",
- *  "MeasurePost" = "MeasurePost",
- *  "UserPost" = "UserPost",
+ *  "measure_share" = "MeasureShare",
+ *  "user_share" = "UserShare",
  * })
  */
-class Post
+class Share
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *
@@ -29,16 +32,10 @@ class Post
     protected $id;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="datetime")
-     */
-    protected $date;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="message", type="string", length=255)
+     * @JMS\Expose()
      */
     protected $message;
 
@@ -47,6 +44,8 @@ class Post
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden")
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @JMS\Expose()
+     * @JMS\Groups({"detail-share"})
      */
     protected $garden;
 
@@ -61,35 +60,11 @@ class Post
     }
 
     /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Post
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
      * Set message
      *
      * @param string $message
      *
-     * @return Post
+     * @return Share
      */
     public function setMessage($message)
     {
@@ -113,7 +88,7 @@ class Post
      *
      * @param \CoreBundle\Entity\Garden $garden
      *
-     * @return Post
+     * @return Share
      */
     public function setGarden(\CoreBundle\Entity\Garden $garden = null)
     {

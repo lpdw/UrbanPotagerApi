@@ -6,12 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * UserPost
+ * UserShare
  *
- * @ORM\Table(name="user_post")
- * @ORM\Entity(repositoryClass="CoreBundle\Repository\UserPostRepository")
+ * @ORM\Entity(repositoryClass="CoreBundle\Repository\UserShareRepository")
  */
-class UserPost extends Post
+class UserShare extends Share
 {
     /**
      * @var \UserBundle\Entity\User
@@ -19,7 +18,6 @@ class UserPost extends Post
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @JMS\Expose()
-     * @JMS\Groups({"detail-post"})
      */
     private $owner;
 
@@ -28,7 +26,7 @@ class UserPost extends Post
      *
      * @param \UserBundle\Entity\User $owner
      *
-     * @return UserPost
+     * @return UserShare
      */
     public function setOwner(\UserBundle\Entity\User $owner = null)
     {
@@ -45,29 +43,5 @@ class UserPost extends Post
     public function getOwner()
     {
         return $this->owner;
-    }
-
-    /**
-     * Set garden
-     *
-     * @param \CoreBundle\Entity\Garden $garden
-     *
-     * @return UserPost
-     */
-    public function setGarden(\CoreBundle\Entity\Garden $garden = null)
-    {
-        $this->garden = $garden;
-
-        return $this;
-    }
-
-    /**
-     * Get garden
-     *
-     * @return \CoreBundle\Entity\Garden
-     */
-    public function getGarden()
-    {
-        return $this->garden;
     }
 }
