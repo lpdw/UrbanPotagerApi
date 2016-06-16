@@ -91,7 +91,7 @@ class MeasureController extends CoreController
         $garden = $repo->findByApiKey($apiKey);
 
         if (is_null($garden)) {
-            throw $this->createNotFoundException();
+            throw $this->createNotFoundException($this->t('core.error.garden_not_found'));
         }
 
         return $garden;
