@@ -89,6 +89,9 @@ fos_user:
         mailer: user.mailer
 
 jms_serializer:
+    handlers:
+        datetime:
+            default_format: "c" # ISO8601
     metadata:
         auto_detection: true
         directories:
