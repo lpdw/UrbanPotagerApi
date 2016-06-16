@@ -14,7 +14,7 @@ use CoreBundle\Security\ConfigurationVoter;
 class GardenConfigurationController extends CoreController
 {
     /**
-     * @View(serializerGroups={"Default"})
+     * @View(serializerGroups={"Default", "detail-configuration"})
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      */
     public function getConfigurationsAction(Garden $garden)
