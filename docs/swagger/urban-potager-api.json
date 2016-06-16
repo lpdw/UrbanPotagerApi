@@ -1807,10 +1807,6 @@
         "Type": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -1887,10 +1883,6 @@
         "Configuration": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -2008,10 +2000,6 @@
         "Garden": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -2142,10 +2130,6 @@
         "Access": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
                 "type": {
                     "type": "string"
                 },
@@ -2182,10 +2166,6 @@
         "Measures": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
                 "type": {
                     "type": "string"
                 },
@@ -2213,10 +2193,6 @@
         "Alerts": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -2295,10 +2271,6 @@
         "User": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
                 "username": {
                     "type": "string"
                 },
