@@ -2,6 +2,8 @@
 
 namespace CoreBundle\Repository;
 
+use CoreBundle\Entity\Garden;
+
 /**
  * ShareRepository
  *
@@ -10,4 +12,12 @@ namespace CoreBundle\Repository;
  */
 class ShareRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function queryShareByGarden(Garden $garden)
+    {
+        $qb = $this->createQueryBuilder('s')
+                ->where('s.garden = :garden')
+                ->setParameter('garden', $garden);
+
+        return $qb->getQuery();
+    }
 }

@@ -33,6 +33,7 @@ parameters:
     measure_per_page: 50
     type_per_page: 50
     alert_per_page: 30
+    share_per_page: 50
 
     # mail
     mail_sender: 'no-reply@domain.tld'

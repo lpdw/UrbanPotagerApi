@@ -37,6 +37,11 @@ garden_alert:
     parent:   garden
     resource: CoreBundle\Controller\GardenAlertController
 
+garden_share:
+    type:     rest
+    parent:   garden
+    resource: CoreBundle\Controller\GardenShareController
+
 admin_garden:
     type:      rest
     resource:  CoreBundle\Controller\AdminController

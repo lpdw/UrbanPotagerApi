@@ -5,7 +5,6 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation as JMS;
 
 /**
  * Post
@@ -36,7 +35,6 @@ abstract class Share
      *
      * @ORM\Column(name="message", type="text")
      * @Assert\NotNull(message="constraints.not_null")
-     * @JMS\Expose()
      */
     protected $message;
 
@@ -45,10 +43,19 @@ abstract class Share
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Garden", inversedBy="shares")
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @JMS\Expose()
-     * @JMS\Groups({"detail-share"})
      */
     protected $garden;
+
+    /**
+     * use by JMS (config/serializer/Entity.UserShare.yml)
+     */
+    public function garden()
+    {
+        return [
+            'slug' => $this->garden->getSlug(),
+            'name' => $this->garden->getName(),
+        ];
+    }
 
     /**
      * Get id
