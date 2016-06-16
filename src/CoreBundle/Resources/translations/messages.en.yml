@@ -2,6 +2,8 @@ core:
     error:
         bad_filter: "The filter is invalid"
         garden_not_found: "No garden associated with this API key"
+        configuration_not_found: "No configuration associated with this garden"
+        access_not_found: "No access configured for this type"
     filter:
         field_not_found: "%field% is not a valid field for order_by"
         bad_order: "%order% is not valid. ASC or DESC only"

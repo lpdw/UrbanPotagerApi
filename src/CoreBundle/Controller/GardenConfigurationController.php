@@ -22,7 +22,7 @@ class GardenConfigurationController extends CoreController
         $configuration = $garden->getConfiguration();
 
         if (is_null($configuration)) {
-            throw $this->createNotFoundException();
+            throw $this->createNotFoundException(['message' => $this->t('core.error.configuration_not_found')]);
         }
 
         $this->isGranted(ConfigurationVoter::VIEW, $configuration);

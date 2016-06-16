@@ -2,6 +2,8 @@ core:
     error:
         bad_filter: "Le filtre est invalide"
         garden_not_found: "Aucun jardin associé à cette clé d'api"
+        configuration_not_found: "Aucune configuration associée à ce jardin"
+        access_not_found: "Aucun accès n'est configuré pour ce type de données"
     filter:
         field_not_found: "%field% n'est pas un champs valide pour l'order_by"
         bad_order: "%order% n'est pas valide. ASC ou DESC uniquement"

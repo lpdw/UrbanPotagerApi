@@ -134,7 +134,7 @@ class GardenAccessController extends CoreController
 
         if (is_null($access)) {
             if (is_null($default)) {
-                throw $this->createNotFoundException();
+                throw $this->createNotFoundException(['message' => $this->t('core.error.access_not_found')]);
             } else {
                 $access = new Access();
                 $access->setType($type)
