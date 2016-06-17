@@ -5,4 +5,4 @@ services:
 
     core.email_notification:
         class: CoreBundle\Service\Notification\EmailNotification
-        arguments: ['@mailer']
+        arguments: ['@mailer', '@twig']

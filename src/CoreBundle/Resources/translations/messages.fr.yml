@@ -11,4 +11,7 @@ core:
         bad_date_after: "%timestamp% n'est pas une timestamp valide pour 'date_after'"
         comparison_not_found: "%field% n'est pas une comparaison valide"
     alert:
-        title: "[%garden%] An alert has been triggered"
+        title: "[%garden%] Une alerte vient d'être déclenchée"
+    email:
+        alert:
+            content: "Vous avez reçu une nouvelle alerte"

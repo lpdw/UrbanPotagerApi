@@ -6,7 +6,7 @@ resetting:
 register:
     email:
         subject: '[UrbanPotager] Compte créé'
-        message: 'Bonjour %username%, votre compte a bien été créé sur UrbanPotager'
+        message: 'Bonjour %username%, votre compte a bien été créé sur %link%'
 
 password_request_expired: "Votre requête a expirée"
 user:
