@@ -56,7 +56,12 @@ class MeasureController extends CoreController
         $garden = $this->getGardenByApiKey($apiKey);
         $measure->setGarden($garden);
 
-        return $this->formMeasure($measure, $request, "post");
+        $response = $this->formMeasure($measure, $request, "post");
+
+        // tmp, because garden can not get configuration from the api (behing ADSL box)
+        $response['configuration'] = $garden->getConfiguration();
+
+        return $response;
     }
 
     private function formMeasure(Measure $measure, Request $request, $method = 'post')
