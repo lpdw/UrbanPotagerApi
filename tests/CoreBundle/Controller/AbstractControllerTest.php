@@ -97,7 +97,10 @@ abstract class AbstractControllerTest extends WebTestCase
     {
         $this->request($method, $url, $params, $headers);
 
-        $this->assertTrue($this->client->getResponse()->isForbidden());
+        $this->assertTrue(
+            $this->client->getResponse()->isForbidden(),
+            sprintf('Status code is %s instead of 403', $this->client->getResponse()->getStatusCode())
+        );
     }
 
     /**

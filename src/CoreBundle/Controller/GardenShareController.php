@@ -58,6 +58,7 @@ class GardenShareController extends CoreController
      */
     public function postShareAction(Garden $garden, Request $request)
     {
+        $this->isGranted(GardenVoter::EDIT, $garden);
         $this->isGranted(UserShareVoter::CREATE, $share = new UserShare());
 
         $share->setOwner($this->getUser());
@@ -99,7 +100,7 @@ class GardenShareController extends CoreController
     /**
      * @FOSRest\Delete("/shares/{id}")
      */
-    public function deleteAction(UserShare $share)
+    public function deleteShareAction(UserShare $share)
     {
         $this->isGranted(UserShareVoter::DELETE, $share);
 
