@@ -34,7 +34,7 @@ abstract class Share
      * @var string
      *
      * @ORM\Column(name="message", type="text")
-     * @Assert\NotNull(message="constraints.not_null")
+     * @Assert\NotBlank(message="constraints.not_blank")
      */
     protected $message;
 
