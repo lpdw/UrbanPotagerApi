@@ -158,6 +158,11 @@ abstract class CoreController extends Controller
         return $owner->getId() === $user->getId();
     }
 
+    public function isAdmin(User $user = null)
+    {
+        return parent::isGranted('ROLE_SUPER_ADMIN', $user);
+    }
+
     /**
      * @param string $name
      * @param Event $event

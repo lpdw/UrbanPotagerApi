@@ -123,7 +123,7 @@ class MeasureController extends CoreController
      */
     private function canViewMeasure(Garden $garden, Type $type)
     {
-        if ($this->isOwner($garden)) {
+        if ($this->isOwner($garden) || $this->isAdmin()) {
             return true;
         } else {
             /** @var \CoreBundle\Repository\AccessRepository $repo */
