@@ -58,9 +58,6 @@ class MeasureController extends CoreController
 
         $response = $this->formMeasure($measure, $request, "post");
 
-        // tmp, because garden can not get configuration from the api (behing ADSL box)
-        $response['configuration'] = $garden->getConfiguration();
-
         return $response;
     }
 
@@ -78,6 +75,7 @@ class MeasureController extends CoreController
 
             return [
                 'measure' => $measure,
+                'configuration' => $measure->getGarden()->getConfiguration(),
             ];
         }
 
