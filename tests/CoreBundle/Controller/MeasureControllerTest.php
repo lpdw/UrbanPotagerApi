@@ -12,7 +12,7 @@ class MeasureControllerTest extends AbstractControllerTest
 
     private static $apiKey;
     private static $slug;
-    private static $user = ['username' => 'dummy user', 'password' => 'coucou'];
+    private static $user = ['username' => 'dummy user2', 'password' => 'coucou'];
 
     // === SETUP ===
     public static function setUpBeforeClass()
