@@ -96,7 +96,7 @@ class Alert implements OwnableInterface
      * @JMS\Expose()
      * @Assert\NotBlank(message="constraints.not_blank")
      * @Assert\Length(max=255, maxMessage="constraints.length.max")
-     * @JMS\Groups({"detail-alert"})
+     * @JMS\Expose()
      */
     private $message;
 
