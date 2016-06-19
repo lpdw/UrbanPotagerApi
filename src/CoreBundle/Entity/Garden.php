@@ -80,7 +80,6 @@ class Garden implements OwnableInterface
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Configuration")
      * @ORM\JoinColumn(onDelete="SET NULL")
-     * @Assert\Valid
      */
     private $configuration;
 
