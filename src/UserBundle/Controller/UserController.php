@@ -95,7 +95,7 @@ class UserController extends CoreController
         $user->setPasswordRequestedAt(new \DateTime());
         $this->get('fos_user.user_manager')->updateUser($user, true);
 
-        return new JsonResponse([], Codes::HTTP_OK);
+        return new JsonResponse([], Codes::HTTP_NO_CONTENT);
     }
 
     /**
