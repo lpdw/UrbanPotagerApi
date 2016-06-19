@@ -46,7 +46,7 @@ class MeasureController extends CoreController
     }
 
     /**
-     * @View(serializerGroups={"Default"}, statusCode=201)
+     * @View(serializerGroups={"Default", "detail-configuration"}, statusCode=201)
      */
     public function postMeasureAction(Request $request)
     {
