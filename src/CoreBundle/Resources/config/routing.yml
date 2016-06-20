@@ -1,3 +1,47 @@
 default:
     type:     rest
     resource: CoreBundle\Controller\DefaultController
+
+type:
+    type:     rest
+    resource: CoreBundle\Controller\TypeController
+
+configuration:
+    type:     rest
+    resource: CoreBundle\Controller\ConfigurationController
+
+garden:
+    type:     rest
+    resource: CoreBundle\Controller\GardenController
+
+measure:
+    type:     rest
+    resource: CoreBundle\Controller\MeasureController
+
+alert:
+    type:     rest
+    resource: CoreBundle\Controller\AlertController
+
+garden_configuration:
+    type:     rest
+    parent:   garden
+    resource: CoreBundle\Controller\GardenConfigurationController
+
+garden_access:
+    type:     rest
+    parent:   garden
+    resource: CoreBundle\Controller\GardenAccessController
+
+garden_alert:
+    type:     rest
+    parent:   garden
+    resource: CoreBundle\Controller\GardenAlertController
+
+garden_share:
+    type:     rest
+    parent:   garden
+    resource: CoreBundle\Controller\GardenShareController
+
+admin_garden:
+    type:      rest
+    resource:  CoreBundle\Controller\AdminController

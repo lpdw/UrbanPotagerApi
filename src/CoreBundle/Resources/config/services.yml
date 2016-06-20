@@ -1,4 +1,26 @@
+imports:
+    - { resource: repository.yml }
+    - { resource: filter.yml }
+    - { resource: voter.yml }
+    - { resource: notification.yml }
+
 services:
-#    core.example:
-#        class: CoreBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    core.trigger_alert:
+        class: CoreBundle\Service\TriggerAlert
+        arguments: ['@doctrine', '@event_dispatcher']
+
+    core.event_subscriber:
+        class: CoreBundle\EventSubscriber\EventSubscriber
+        arguments: ['@core.trigger_alert', '@core.send_notification']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    core.history_notification_handler:
+        class: CoreBundle\Service\HistoryNotificationHandler
+        arguments: ['@doctrine.orm.entity_manager']
+
+    core.locale_listener:
+        class: CoreBundle\EventSubscriber\LocaleListener
+        arguments: ['%kernel.default_locale%']
+        tags:
+            - { name: kernel.event_subscriber }
