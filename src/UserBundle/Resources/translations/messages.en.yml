@@ -1,0 +1,15 @@
+resetting:
+    email:
+        subject: '[UrbanPotager] Reset password'
+        message: 'You made a request to reset your password, here is your code : %token%'
+
+register:
+    email:
+        subject: '[UrbanPotager] Account create'
+        message: 'Hello %username%, Your account is create on %link%'
+
+password_request_expired: "Your request has expired"
+user:
+    error:
+        forget_password:
+            empty_username: 'Username can not be empty'

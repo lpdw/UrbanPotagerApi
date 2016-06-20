@@ -1,0 +1,46 @@
+services:
+    core.base_filter:
+        class: CoreBundle\Filter\Filter
+        arguments: ['@translator']
+        public: false
+
+    core.date_filter:
+        class: CoreBundle\Filter\DateFilter
+        parent: core.base_filter
+        public: false
+
+    core.type_filter:
+        class: CoreBundle\Filter\TypeFilter
+        parent: core.base_filter
+        arguments: ['@core.type_repository']
+        public: true
+
+    core.configuration_filter:
+        class: CoreBundle\Filter\ConfigurationFilter
+        parent: core.date_filter
+        arguments: ['@core.configuration_repository']
+        public: true
+
+    core.measure_filter:
+        class: CoreBundle\Filter\MeasureFilter
+        parent: core.date_filter
+        arguments: ['@core.measure_repository']
+        public: true
+
+    core.alert_filter:
+        class: CoreBundle\Filter\AlertFilter
+        parent: core.date_filter
+        arguments: ['@core.alert_repository']
+        public: true
+
+    core.garden_filter:
+        class: CoreBundle\Filter\GardenFilter
+        parent: core.date_filter
+        arguments: ['@core.garden_repository']
+        public: true
+
+    core.user_filter:
+        class: CoreBundle\Filter\UserFilter
+        parent: core.base_filter
+        arguments: ['@core.user_repository']
+        public: true
