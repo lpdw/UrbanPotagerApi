@@ -7,6 +7,7 @@ use FOS\RestBundle\Util\Codes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use CoreBundle\Security\GardenVoter;
 use CoreBundle\Event\MeasureSentEvent;
 use CoreBundle\Form\Type\MeasureType;
 use CoreBundle\Entity\Measure;
@@ -34,7 +35,7 @@ class MeasureController extends CoreController
         $page = $this->getPage($request);
         $itemPerPage = $this->getItemPerPage('measure', $request);
 
-        $measures = $filter->getResult('queryMeasureByGardenAndType', [$garden, $type, $page, $itemPerPage]);
+        $measures = $filter->getResult('queryBuilderMeasureByGardenAndType', [$garden, $type, $page, $itemPerPage]);
 
         return [
             'measures' => $measures,
@@ -45,7 +46,7 @@ class MeasureController extends CoreController
     }
 
     /**
-     * @View(serializerGroups={"Default"}, statusCode=201)
+     * @View(serializerGroups={"Default", "detail-configuration"}, statusCode=201)
      */
     public function postMeasureAction(Request $request)
     {
@@ -55,7 +56,9 @@ class MeasureController extends CoreController
         $garden = $this->getGardenByApiKey($apiKey);
         $measure->setGarden($garden);
 
-        return $this->formMeasure($measure, $request, "post");
+        $response = $this->formMeasure($measure, $request, "post");
+
+        return $response;
     }
 
     private function formMeasure(Measure $measure, Request $request, $method = 'post')
@@ -72,6 +75,7 @@ class MeasureController extends CoreController
 
             return [
                 'measure' => $measure,
+                'configuration' => $measure->getGarden()->getConfiguration(),
             ];
         }
 
@@ -90,7 +94,7 @@ class MeasureController extends CoreController
         $garden = $repo->findByApiKey($apiKey);
 
         if (is_null($garden)) {
-            throw $this->createNotFoundException();
+            throw $this->createNotFoundException($this->t('core.error.garden_not_found'));
         }
 
         return $garden;
@@ -102,6 +106,8 @@ class MeasureController extends CoreController
      */
     private function grantedViewMeasure(Garden $garden, Type $type)
     {
+        $this->isGranted(GardenVoter::VIEW, $garden);
+
         if (!$this->canViewMeasure($garden, $type)) {
             throw $this->createAccessDeniedException();
         }
@@ -115,7 +121,7 @@ class MeasureController extends CoreController
      */
     private function canViewMeasure(Garden $garden, Type $type)
     {
-        if ($this->isOwner($garden)) {
+        if ($this->isOwner($garden) || $this->isAdmin()) {
             return true;
         } else {
             /** @var \CoreBundle\Repository\AccessRepository $repo */

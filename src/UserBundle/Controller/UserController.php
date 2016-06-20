@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use CoreBundle\Controller\CoreController;
 use UserBundle\Entity\User;
+use UserBundle\Event\UserCreateEvent;
 use UserBundle\Form\Type\UserType;
 use UserBundle\Form\Type\UserEditType;
 
@@ -47,6 +48,13 @@ class UserController extends CoreController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if ('post' === $method) {
+                $event = new UserCreateEvent($user);
+
+                $this->dispatch(UserCreateEvent::NAME, $event);
+            }
+
             return [
                 'user' => $this->persistUser($user),
             ];
@@ -61,6 +69,10 @@ class UserController extends CoreController
     public function postForgetPasswordAction(Request $request)
     {
         $username = $request->request->get('username');
+
+        if (is_null($username)) {
+            return new JsonResponse(['error' => $this->t('user.error.forget_password.empty_username')], Codes::HTTP_BAD_REQUEST);
+        }
 
         /** @var $user \FOS\UserBundle\Model\UserInterface */
         $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
@@ -83,7 +95,7 @@ class UserController extends CoreController
         $user->setPasswordRequestedAt(new \DateTime());
         $this->get('fos_user.user_manager')->updateUser($user, true);
 
-        return new JsonResponse([], Codes::HTTP_OK);
+        return new JsonResponse([], Codes::HTTP_NO_CONTENT);
     }
 
     /**

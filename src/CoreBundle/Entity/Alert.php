@@ -96,7 +96,7 @@ class Alert implements OwnableInterface
      * @JMS\Expose()
      * @Assert\NotBlank(message="constraints.not_blank")
      * @Assert\Length(max=255, maxMessage="constraints.length.max")
-     * @JMS\Groups({"detail-alert"})
+     * @JMS\Expose()
      */
     private $message;
 
@@ -113,6 +113,7 @@ class Alert implements OwnableInterface
      * @var \CoreBundle\Entity\Type
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
+     * @Assert\NotNull(message="constraints.not_null")
      * @JMS\Expose()
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
@@ -260,7 +261,7 @@ class Alert implements OwnableInterface
      *
      * @param \UserBundle\Entity\User $owner
      *
-     * @return Garden
+     * @return Alert
      */
     public function setOwner(\UserBundle\Entity\User $owner = null)
     {

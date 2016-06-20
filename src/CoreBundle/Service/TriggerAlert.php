@@ -37,7 +37,7 @@ class TriggerAlert
         /** @var Alert $alert */
         foreach ($alerts as $alert) {
             if ($this->isTriggered($measure, $alert)) {
-                $event = new AlertTriggeredEvent($alert);
+                $event = new AlertTriggeredEvent($measure->getGarden(), $alert);
 
                 $this->dispatcher->dispatch(AlertTriggeredEvent::NAME, $event);
             }

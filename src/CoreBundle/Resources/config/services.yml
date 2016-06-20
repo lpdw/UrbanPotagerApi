@@ -2,6 +2,7 @@ imports:
     - { resource: repository.yml }
     - { resource: filter.yml }
     - { resource: voter.yml }
+    - { resource: notification.yml }
 
 services:
     core.trigger_alert:
@@ -10,6 +11,16 @@ services:
 
     core.event_subscriber:
         class: CoreBundle\EventSubscriber\EventSubscriber
-        arguments: ['@core.trigger_alert']
+        arguments: ['@core.trigger_alert', '@core.send_notification']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    core.history_notification_handler:
+        class: CoreBundle\Service\HistoryNotificationHandler
+        arguments: ['@doctrine.orm.entity_manager']
+
+    core.locale_listener:
+        class: CoreBundle\EventSubscriber\LocaleListener
+        arguments: ['%kernel.default_locale%']
         tags:
             - { name: kernel.event_subscriber }

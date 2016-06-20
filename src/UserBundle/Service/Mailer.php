@@ -29,6 +29,17 @@ class Mailer implements MailerInterface
         $this->parameters = $parameters;
     }
 
+    public function sendRegisterEmailMessage(UserInterface $user)
+    {
+        $template = "UserBundle:Register:email.txt.twig";
+
+        $context = [
+            'username' => $user->getUsername(),
+        ];
+
+        $this->sendMessage($template, $context, $this->parameters['from_email']['register'], $user->getEmail());
+    }
+
     public function sendConfirmationEmailMessage(UserInterface $user)
     {
         $template = $this->parameters['template']['confirmation'];

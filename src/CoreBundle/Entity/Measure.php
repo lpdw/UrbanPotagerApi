@@ -24,7 +24,6 @@ class Measure
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Expose()
      */
     private $id;
 
@@ -41,6 +40,7 @@ class Measure
      * @var Type
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type")
+     * @Assert\NotNull(message="constraints.not_null")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @JMS\Expose()
      */

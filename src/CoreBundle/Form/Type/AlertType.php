@@ -33,8 +33,8 @@ class AlertType extends AbstractType
             ->add('message', TextType::class)
             ->add('type', EntityType::class, [
                 'class' => 'CoreBundle:Type',
-                'choice_value' => function(Type $type) {
-                    return $type->getSlug();
+                'choice_value' => function(Type $type = null) {
+                    return (!is_null($type)) ? $type->getSlug() : '';
                 }
             ])
         ;

@@ -23,10 +23,10 @@ class GardenType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('isPublic', CheckboxType::class)
             ->add('latitude', NumberType::class, [
-                'scale' => 2,
+                'scale' => 10,
             ])
             ->add('longitude', NumberType::class, [
-                'scale' => 2,
+                'scale' => 10,
             ])
             ->add('showLocation', CheckboxType::class)
             ->add('country', TextType::class)

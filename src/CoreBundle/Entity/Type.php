@@ -5,11 +5,11 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Translatable\Translatable;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use CoreBundle\Validator\Constraints as CoreAssert;
-use CoreBundle\Entity\Traits\NameableTrait;
 
 /**
  * Type
@@ -20,14 +20,13 @@ use CoreBundle\Entity\Traits\NameableTrait;
  * @CoreAssert\MinMax
  * @JMS\ExclusionPolicy("all")
  */
-class Type
+class Type implements Translatable
 {
     // Need change ? See constraint Range for $type
     const PLANT     = 0;
     const SENSOR    = 1;
 
     use TimestampableEntity;
-    use NameableTrait;
 
     /**
      * @var int
@@ -41,6 +40,27 @@ class Type
     /**
      * @var string
      *
+     * @Gedmo\Translatable
+     * @ORM\Column(type="string", length=250)
+     * @Assert\NotBlank(message="constraints.not_blank")
+     * @Assert\Length(max=250, maxMessage="constraints.length.max")
+     * @JMS\Expose()
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"}, updatable=false)
+     * @ORM\Column(length=255, unique=true)
+     * @JMS\Expose()
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Translatable
      * @ORM\Column(type="text")
      * @Assert\NotNull(message="constraints.not_null")
      * @JMS\Expose()
@@ -203,5 +223,41 @@ class Type
     public function getMax()
     {
         return $this->max;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
     }
 }

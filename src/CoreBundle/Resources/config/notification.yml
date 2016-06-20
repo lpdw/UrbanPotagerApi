@@ -1,0 +1,8 @@
+services:
+    core.send_notification:
+        class: CoreBundle\Service\SendNotification
+        arguments: ['@core.history_notification_handler', '@core.email_notification', '@translator']
+
+    core.email_notification:
+        class: CoreBundle\Service\Notification\EmailNotification
+        arguments: ['@mailer', '@twig']

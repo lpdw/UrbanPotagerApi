@@ -8,7 +8,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi:             ~
@@ -60,6 +60,13 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        mappings:
+            translatable:
+                type: annotation
+                is_bundle: false
+                prefix: Gedmo\Translatable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                alias: GedmoTranslatable
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -68,6 +75,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     port:      "%mailer_port%"
+    sender_address: "%mail_sender%"
     spool:     { type: memory }
 
 fos_user:
@@ -81,6 +89,9 @@ fos_user:
         mailer: user.mailer
 
 jms_serializer:
+    handlers:
+        datetime:
+            default_format: "c" # ISO8601
     metadata:
         auto_detection: true
         directories:
@@ -117,6 +128,7 @@ stof_doctrine_extensions:
         default:
             sluggable: true
             timestampable: true
+            translatable: true
 
 nelmio_cors:
     paths:

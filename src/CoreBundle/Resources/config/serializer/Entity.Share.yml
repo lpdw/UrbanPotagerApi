@@ -1,0 +1,13 @@
+CoreBundle\Entity\Share:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        message:
+            expose: true
+        createdAt:
+            expose: true
+    virtual_properties:
+        garden:
+            expose: true
+            type: array

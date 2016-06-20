@@ -14,15 +14,15 @@ use CoreBundle\Security\ConfigurationVoter;
 class GardenConfigurationController extends CoreController
 {
     /**
-     * @View(serializerGroups={"Default"})
+     * @View(serializerGroups={"Default", "detail-configuration"})
      * @ParamConverter("garden", options={"mapping": {"garden": "slug"}})
      */
-    public function getConfigurationAction(Garden $garden)
+    public function getConfigurationsAction(Garden $garden)
     {
         $configuration = $garden->getConfiguration();
 
         if (is_null($configuration)) {
-            throw $this->createNotFoundException();
+            throw $this->createNotFoundException($this->t('core.error.configuration_not_found'));
         }
 
         $this->isGranted(ConfigurationVoter::VIEW, $configuration);

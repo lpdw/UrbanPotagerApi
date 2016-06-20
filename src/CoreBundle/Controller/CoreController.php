@@ -33,10 +33,10 @@ abstract class CoreController extends Controller
     }
 
     /**
-     * @param Form $form
+     * @param Form|\Symfony\Component\Form\SubmitButton $form
      * @return array
      */
-    protected function getAllErrors(Form $form)
+    protected function getAllErrors($form)
     {
         $errorsString = [];
 
@@ -158,6 +158,11 @@ abstract class CoreController extends Controller
         return $owner->getId() === $user->getId();
     }
 
+    public function isAdmin(User $user = null)
+    {
+        return parent::isGranted('ROLE_SUPER_ADMIN', $user);
+    }
+
     /**
      * @param string $name
      * @param Event $event
@@ -190,7 +195,7 @@ abstract class CoreController extends Controller
                 $error = $this->t('core.error.bad_filter');
             }
 
-            throw new HttpException(Codes::HTTP_BAD_REQUEST, $error); // TODO add more info
+            throw new HttpException(Codes::HTTP_BAD_REQUEST, $error);
         }
 
         return $filter;

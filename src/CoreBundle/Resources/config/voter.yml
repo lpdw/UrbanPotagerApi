@@ -29,3 +29,9 @@ services:
         parent: core.base_voter
         tags:
             - { name: security.voter }
+
+    core.user_share_voter:
+        class: CoreBundle\Security\UserShareVoter
+        parent: core.base_voter
+        tags:
+            - { name: security.voter }

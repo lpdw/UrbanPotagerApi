@@ -43,7 +43,7 @@ class MeasureRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb = $this->createQueryBuilder('m')
             ->select('m.value')
-            ->addSelect('m.createdAt')
+            ->addSelect('m.createdAt AS created_at')
             ->where('m.garden = :garden')
             ->andWhere('m.type = :type')
             ->orderBy('m.createdAt', 'DESC')

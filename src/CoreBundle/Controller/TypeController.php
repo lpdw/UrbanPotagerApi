@@ -65,7 +65,7 @@ class TypeController extends CoreController
     {
         $this->isGranted(TypeVoter::EDIT, $type);
 
-        return $this->formType($type, $request, 'patch'); // TODO form for edit (can not change name ?)
+        return $this->formType($type, $request, 'patch');
     }
 
     /**
