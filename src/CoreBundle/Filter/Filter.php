@@ -101,12 +101,13 @@ abstract class Filter
 
     /**
      * @param $key
+     * @param $default
      *
      * @return mixed
      */
-    public function get($key)
+    public function get($key, $default = null)
     {
-        return $this->request->query->get($key);
+        return $this->request->query->get($key, $default);
     }
 
     /**
