@@ -75,6 +75,8 @@ class GardenFilter extends DateFilter
 
     protected function getFields()
     {
-        return [self::NAME, 'zipCode', 'city'];
+        $fields = parent::getFields();
+
+        return array_merge([self::NAME, 'zipCode', 'city'], $fields);
     }
 }

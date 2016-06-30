@@ -40,6 +40,8 @@ class TypeFilter extends Filter
 
     protected function getFields()
     {
-        return [self::TYPE, self::NAME];
+        $fields = parent::getFields();
+
+        return array_merge([self::TYPE, self::NAME], $fields);
     }
 }
