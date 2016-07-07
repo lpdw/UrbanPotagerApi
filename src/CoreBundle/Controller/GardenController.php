@@ -23,7 +23,7 @@ class GardenController extends CoreController
 
         $query = $filter->getQuery('queryBuilderPublicGardens');
 
-        $pagination = $this->getPagination($request, $query, 'garden');
+        $pagination = $this->getPagination($request, $query, 'garden', ['wrap-queries' => true]);
 
         return [
             'total_items' => $pagination->getTotalItemCount(),

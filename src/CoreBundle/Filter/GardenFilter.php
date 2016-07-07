@@ -10,6 +10,11 @@ class GardenFilter extends DateFilter
     const NAME = 'name';
     const ZIP_CODE = 'zip_code';
     const OWNER = 'owners';
+    const RADIUS = 'radius';
+    const LAT = 'latitude';
+    const LNG = 'longitude';
+
+    const DEFAULT_RADIUS = 5000;
 
     private $owners;
     private $zipCodes;
@@ -48,6 +53,39 @@ class GardenFilter extends DateFilter
         }
     }
 
+    public function isValid()
+    {
+        $isValid = parent::isValid();
+
+        if (!$isValid) {
+            return false;
+        }
+
+        if ($this->has(self::LAT) xor $this->has(self::LNG)) {
+            $this->error = $this->translator->trans("core.filter.bad_geoloc");
+            return false;
+        }
+
+        $lng = $this->get(self::LNG);
+        $lat = $this->get(self::LAT);
+
+        if (!is_null($lng)) {
+            if ($lng > 180 || $lng < -180) {
+                $this->error = $this->translator->trans("core.filter.lng_out_of_range");
+                return false;
+            }
+        }
+
+        if (!is_null($lat)) {
+            if ($lat > 90 || $lat < -90) {
+                $this->error = $this->translator->trans("core.filter.lat_out_of_range");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function filter(QueryBuilder $qb)
     {
         $qb = parent::filter($qb);
@@ -70,11 +108,24 @@ class GardenFilter extends DateFilter
                 ->setParameter('zipcodes', $this->zipCodes);
         }
 
+        if ($this->has(self::LAT)) {
+            $lng = $this->get(self::LNG);
+            $lat = $this->get(self::LAT);
+            $radius = $this->get(self::RADIUS, self::DEFAULT_RADIUS) / 1000;
+            $qb->addSelect('GEO_DISTANCE(:latOrigin, :lngOrigin, ' . $this->alias . 'latitude, ' . $this->alias . 'longitude) AS HIDDEN distance')
+                ->having('distance <= :radius')
+                ->setParameter('latOrigin', $lat)
+                ->setParameter('lngOrigin', $lng)
+                ->setParameter('radius', $radius);
+        }
+
         return $qb;
     }
 
     protected function getFields()
     {
-        return [self::NAME, 'zipCode', 'city'];
+        $fields = parent::getFields();
+
+        return array_merge([self::NAME, 'zipCode', 'city'], $fields);
     }
 }

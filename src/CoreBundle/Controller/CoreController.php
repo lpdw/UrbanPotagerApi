@@ -70,11 +70,12 @@ abstract class CoreController extends Controller
     /**
      * @param Request $request
      * @param Query $query
-     * @param int $limit
+     * @param int $item
+     * @param array $options
      *
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
-    protected function getPagination(Request $request, Query $query, $item)
+    protected function getPagination(Request $request, Query $query, $item, array $options = [])
     {
         /** @var \Knp\Component\Pager\Paginator $paginator */
         $paginator  = $this->get('knp_paginator');
@@ -82,7 +83,8 @@ abstract class CoreController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $this->getPage($request),
-            $this->getItemPerPage($item, $request)
+            $this->getItemPerPage($item, $request),
+            $options
         );
 
         return $pagination;

@@ -113,6 +113,8 @@ class AlertFilter extends DateFilter
 
     protected function getFields()
     {
-        return [self::NAME, self::TYPE, 'comparison', self::GARDEN];
+        $fields = parent::getFields();
+
+        return array_merge([self::NAME, self::TYPE, 'comparison', self::GARDEN], $fields);
     }
 }
